@@ -33,7 +33,6 @@ func ResSuccess(c *gin.Context, data interface{}) {
 	}
 
 	c.JSON(200, res)
-	return
 }
 
 func ResSuccessWithMsg(c *gin.Context, data interface{}, msg string) {
@@ -47,7 +46,6 @@ func ResSuccessWithMsg(c *gin.Context, data interface{}, msg string) {
 	}
 
 	c.JSON(200, res)
-	return
 }
 
 // ResError 返回逻辑错误
@@ -67,7 +65,6 @@ func ResError(c *gin.Context, errorCode ErrorCode, subMsg string) {
 		Time:  time.Now().Unix(),
 	}
 	c.JSON(200, res)
-	return
 }
 
 // ResError 返回逻辑错误
@@ -87,5 +84,4 @@ func ResErrorWithData(c *gin.Context, errorCode ErrorCode, subMsg string, data i
 		Time:  time.Now().Unix(),
 	}
 	c.JSON(200, res)
-	return
 }

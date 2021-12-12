@@ -3,6 +3,8 @@ package main
 import (
 	"log"
 
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/spf13/viper"
@@ -18,9 +20,14 @@ func main() {
 
 	r := gin.New()
 
+	// session
+	store := cookie.NewStore([]byte(viper.GetString("session.key")))
+	r.Use(sessions.Sessions("session", store))
+
 	// 注册中间件
 	r.Use(gin.Recovery())
 	r.Use(middleware.Access())
+	r.Use(middleware.CheckLogin())
 
 	// 静态文件
 	r.Static("/public", "./public")

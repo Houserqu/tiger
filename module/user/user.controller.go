@@ -56,6 +56,7 @@ func GetUserList(c *gin.Context) {
 
 	if err != nil {
 		core.ResError(c, core.ErrDB, err.Error())
+		return
 	}
 
 	core.ResSuccess(c, data)
