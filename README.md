@@ -1,37 +1,120 @@
-### 3 分钟了解如何进入开发
+# gin-start
 
-欢迎使用云效 Codeup，通过阅读以下内容，你可以快速熟悉 Codeup ，并立即开始今天的工作。
+gin web 开发脚手架，根据个人开发经验封装的一些基础能力，并提供一些接入 mysql、redis 等中间件的示例。
 
-### 提交**文件**
+基础架构代码在 master 分支，示例代码在独立分支
 
-首先，你需要了解在 Codeup 中如何提交代码文件，跟着文档「[__提交第一行代码__](https://thoughts.aliyun.com/sharespace/5e8c37eb546fd9001aee8242/docs/5e8c37e7546fd9001aee81fd)」一起操作试试看吧。
+## 功能分支
 
-### 开启扫描
+- [mysql](https://github.com/Houserqu/gin-starter/tree/mysql): 使用 gorm 接入 mysql，并提供**增删改查**示例。
 
-开发过程中，为了更好的管理你的代码资产，Codeup 内置了「[__代码规约扫描__](https://thoughts.aliyun.com/sharespace/5e8c37eb546fd9001aee8242/docs/5e8c37e8546fd9001aee821c)」和「[__敏感信息检测__](https://thoughts.aliyun.com/sharespace/5e8c37eb546fd9001aee8242/docs/5e8c37e8546fd9001aee821b)」服务，你可以在代码库设置-集成与服务中一键开启，开启后提交或合并请求的变更将自动触发扫描，并及时提供结果反馈。
+## 目录结构
 
-![](https://img.alicdn.com/tfs/TB1nRDatoz1gK0jSZLeXXb9kVXa-1122-380.png "")
+```go
+.
+├── Dockerfile
+├── README.md
+├── build.sh       // 构建脚本
+├── config.yaml    // 系统配置（也可以放业务配置，修改实时生效）
+├── core           // 脚手架公共代码
+├── dev.sh         // 开发模式服务启动脚手架
+├── docs           // 文档目录
+├── go.mod
+├── go.sum
+├── main.go
+├── middleware     // 中间件目录
+├── module         // 业务代码模块目录
+│   ├── router.go  // 路由定义文件
+│   ├── user       // 用户模块
+│   ├── view       // 视图模块，展示页面
+│   └── ...
+├── public         // 静态目录，访问路径 /public/
+└── view           // 视图渲染模板文件目录
+```
 
-![](https://img.alicdn.com/tfs/TB1PrPatXY7gK0jSZKzXXaikpXa-1122-709.png "")
+## 开发
 
-### 代码评审
+```bash
+go run main.go # 直接启动服务
+````
 
-功能开发完毕后，通常你需要发起「[__代码合并和评审__](https://thoughts.aliyun.com/sharespace/5e8c37eb546fd9001aee8242/docs/5e8c37e8546fd9001aee8216)」，Codeup 支持多人协作的代码评审服务，你可以通过「[__保护分支__](https://thoughts.aliyun.com/sharespace/5e8c37eb546fd9001aee8242/docs/5e8c37e9546fd9001aee8221)」策略及「[__合并请求设置__](https://thoughts.aliyun.com/sharespace/5e8c37eb546fd9001aee8242/docs/5e8c37e9546fd9001aee8224)」对合并过程进行流程化管控，同时提供 WebIDE 在线代码评审及冲突解决能力，让你的评审过程更加流畅。
+### 自动重启
 
-![](https://img.alicdn.com/tfs/TB1XHrctkP2gK0jSZPxXXacQpXa-1432-887.png "")
+使用 [air](https://github.com/cosmtrek/air/blob/master/README.md) 工具可以监听文件改动，自动重启服务，便于开发。
 
-![](https://img.alicdn.com/tfs/TB1V3fctoY1gK0jSZFMXXaWcVXa-1432-600.png "")
+1. 安装 air 工具
 
-### 编写文档
+```bash
+# binary will be $(go env GOPATH)/bin/air
+curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
 
-项目推进过程中，你的经验和感悟可以直接记录到 Codeup 代码库的「[__文档__](https://thoughts.aliyun.com/sharespace/5e8c37eb546fd9001aee8242/docs/5e8c37e8546fd9001aee8213)」内，让智慧可视化。
+# or install it into ./bin/
+curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s
 
-![](https://img.alicdn.com/tfs/TB1BN2ateT2gK0jSZFvXXXnFXXa-1432-700.png "")
+air -v
+```
 
-### 成员协作
+2. 启动 air
 
-是时候邀请成员一起编写卓越的代码工程了，请点击右上角「成员」邀请你的小伙伴开始协作吧！
+项目自带 air 配置文件（.air.toml），只需要在项目根目录运行 air
 
-### 更多
+```bash
+air       # 全局安装启动
+./bin/air # 指定目录安装启动
+```
 
-Git 使用教学、高级功能指引等更多说明，参见[__Codeup帮助文档__](https://thoughts.aliyun.com/sharespace/5e8c37eb546fd9001aee8242/docs/5e8c37e6546fd9001aee81fa)。
+## 特性
+
+### 配置
+
+使用 [viper](https://github.com/spf13/viper) 库来管理系统配置，同时开启 watch 模式（修改文件后 viper 能获取到最新的配置），默认加载项目根目录的 config.yaml 文件
+config.yaml 配置文件不应该包含在版本库中
+
+### 日志
+
+使用 [logrus](https://github.com/sirupsen/logrus) 日志工具，支持记录请求ID，用于查看日志链路。
+
+```golang
+import 	"houserqu.com/gin-starter/core"
+
+internal.Log(c).Info("123") // 由于无法获取协程上下文，所以需要显式的传递 gin.Context，才能记录 request id
+```
+
+### 数据库
+
+使用 [gorm](https://gorm.io) 作为 ORM 库，支持多种类型的数据库，本项目默认使用 Mysql。
+
+```bash
+go get -u gorm.io/gorm
+```
+
+#### Mysql
+
+```bash
+go get -u github.com/go-sql-driver/mysql
+```
+
+## 部署
+
+### Docker 部署
+
+1. 构建镜像
+```bash
+docker build -t gin-starter:latest .
+```
+
+2. 启动容器
+```bash
+docker run -d --env-file prod.env -p 8090:8088 -v /Users/houserqu/gin-starter/logs:/app/logs gin-starter:latest
+```
+
+-p: 指定映射端口，容器内服务端口可以通过 config.yaml 文件配置  
+-v: 指定日志文件主机挂载目录，容器内日志目录可以通过 config.yaml 文件配置
+
+### 直接部署
+
+```bash
+go build main.go # 构建
+./main           # 直接启动
+pm2 start ./main # pm2 守护进程启动
+```
