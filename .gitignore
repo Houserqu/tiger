@@ -13,3 +13,11 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+config.yaml
+/.idea
+/.vscode
+.DS_Store
+__MACOSX/
+logs/
+tmp
