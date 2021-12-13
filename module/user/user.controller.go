@@ -2,7 +2,6 @@ package user
 
 import (
 	"strconv"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	"houserqu.com/gin-starter/core"
@@ -70,7 +69,7 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
-	result := &User{Name: params.Name, Age: params.Age, Email: params.Email, Birthday: time.Now()}
+	result := &User{Phone: "123456", Password: "123456"}
 	err := CreateModel(result)
 	if err != nil {
 		core.ResError(c, core.ErrCreateFail, "")
