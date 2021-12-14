@@ -1,16 +1,19 @@
-package core
+package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"houserqu.com/gin-starter/module/perm"
+	"houserqu.com/gin-starter/core"
+	"houserqu.com/gin-starter/module/auth"
 )
 
 // 校验当前登录用户是否有权限
 func CheckPerm(permission string) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		permissions, err := perm.GetUserPermissions(c.GetInt("userId")) // 登录中间件 set
+		permissions, err := auth.GetUserPermissions(c.GetInt("userId")) // 登录中间件 set
 		if err != nil {
-			ResError(c, ErrNoPermission, err.Error())
+			core.ResError(c, core.ErrNoPermission, err.Error())
+			c.Abort()
+			return
 		}
 
 		for _, v := range permissions {
@@ -20,7 +23,7 @@ func CheckPerm(permission string) gin.HandlerFunc {
 			}
 		}
 
-		ResError(c, ErrNoPermission, "")
+		core.ResError(c, core.ErrNoPermission, "")
 		c.Abort()
 		return
 	}
