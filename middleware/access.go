@@ -25,7 +25,7 @@ func Access() gin.HandlerFunc {
 		clientIP := c.ClientIP()              // 请求IP
 
 		core.Logger.WithFields(logrus.Fields{
-			"type":         "ACCESSS",
+			"type":         "ACCESS",
 			"reqId":        reqId,
 			"status_code":  statusCode,
 			"latency_time": latencyTime,

@@ -27,7 +27,7 @@ func main() {
 	// 注册中间件
 	r.Use(gin.Recovery())
 	r.Use(middleware.Access())
-	r.Use(middleware.CheckLogin())
+	// r.Use(middleware.CheckLogin())
 
 	// 静态文件
 	r.Static("/public", "./public")

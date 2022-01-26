@@ -10,22 +10,28 @@ import (
 )
 
 func InitRouter(r *gin.Engine) {
+	// 首页
 	r.GET("/", view.IndexView)
 
-	r.GET("/example", example.GetModel)
-	r.GET("/error", example.ErrorExample)
+	// 无需鉴权的 api接口
+	pub := r.Group("pub")
+	{
+		pub.POST("/login", login.Login) // 登录
+		pub.GET("/example", example.GetModel)
+		pub.GET("/error", example.ErrorExample)
+	}
 
-	// 登录相关
-	loginRouter := r.Group("login")
-	loginRouter.POST("/login", login.Login)        // 登录
-	loginRouter.POST("/logout", login.Logout)      // 注销
-	loginRouter.GET("/loginInfo", login.LoginInfo) // 用户信息
+	// 需要鉴权的 api接口
+	api := r.Group("api", middleware.CheckLogin())
+	{
+		api.POST("/logout", login.Logout)      // 注销
+		api.GET("/loginInfo", login.LoginInfo) // 用户信息
 
-	// 用户相关
-	userRouter := r.Group("user")
-	userRouter.GET("/:id", user.GetUser)                                        // 查单个
-	userRouter.GET("/list", middleware.CheckPerm("USER_ALL"), user.GetUserList) // 查列表
-	userRouter.POST("/create", user.CreateUser)                                 // 创建
-	userRouter.POST("/update", user.UpdateUser)                                 // 更新
-	userRouter.POST("/delete/:id", user.DeleteUser)                             // 删除
+		// 用户相关
+		api.GET("/user/:id", user.GetUser)                                        // 查单个
+		api.GET("/user/list", middleware.CheckPerm("USER_ALL"), user.GetUserList) // 查列表
+		api.POST("/user/create", user.CreateUser)                                 // 创建
+		api.POST("/user/update", user.UpdateUser)                                 // 更新
+		api.POST("/user/delete/:id", user.DeleteUser)                             // 删除
+	}
 }
