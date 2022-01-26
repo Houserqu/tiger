@@ -1,12 +1,6 @@
-# gin-start
+# tiger
 
-gin web 开发脚手架，根据个人开发经验封装的一些基础能力，并提供一些接入 mysql、redis 等中间件的示例。
-
-基础架构代码在 master 分支，示例代码在独立分支
-
-## 功能分支
-
-- [mysql](https://github.com/Houserqu/gin-starter/tree/mysql): 使用 gorm 接入 mysql，并提供**增删改查**示例。
+基于 golang 的 web 起始工程，封装了常用的基础能力，以及包含一个可配置化的管理后台，便于快速开始项目开发
 
 ## 目录结构
 
@@ -16,9 +10,10 @@ gin web 开发脚手架，根据个人开发经验封装的一些基础能力，
 ├── README.md
 ├── build.sh       // 构建脚本
 ├── config.yaml    // 系统配置（也可以放业务配置，修改实时生效）
-├── core           // 脚手架公共代码
+├── core           // 脚手架框架代码
 ├── dev.sh         // 开发模式服务启动脚手架
 ├── docs           // 文档目录
+├── logs           // 日志目录
 ├── go.mod
 ├── go.sum
 ├── main.go
@@ -28,8 +23,8 @@ gin web 开发脚手架，根据个人开发经验封装的一些基础能力，
 │   ├── user       // 用户模块
 │   ├── view       // 视图模块，展示页面
 │   └── ...
-├── public         // 静态目录，访问路径 /public/
-└── view           // 视图渲染模板文件目录
+├── public         // 静态文件和 html 模板目录，访问路径 /public/
+└── admin          // 管理后台源代码目录
 ```
 
 ## 开发
