@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import '../node_modules/amis/lib/themes/cxd.css';
+import '../node_modules/amis/lib/helper.css';
+import '../node_modules/amis/sdk/iconfont.css';
 
 ReactDOM.render(
   <React.StrictMode>
