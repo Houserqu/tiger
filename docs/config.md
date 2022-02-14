@@ -1,4 +1,6 @@
+```yaml
 server:
   addr: 0.0.0.0:8089
 log:
   path: './logs'
+```
