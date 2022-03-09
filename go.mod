@@ -5,8 +5,8 @@ go 1.15
 require (
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/fsnotify/fsnotify v1.5.1
-	github.com/gin-contrib/sessions v0.0.4 // indirect
-	github.com/gin-gonic/gin v1.7.4
+	github.com/gin-contrib/sessions v0.0.4
+	github.com/gin-gonic/gin v1.7.7
 	github.com/go-playground/validator/v10 v10.8.0 // indirect
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/joho/godotenv v1.3.0
@@ -23,8 +23,6 @@ require (
 	github.com/spf13/viper v1.9.0
 	github.com/tebeka/strftime v0.1.5 // indirect
 	github.com/ugorji/go v1.2.6 // indirect
-	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
-	gopkg.in/go-playground/validator.v9 v9.29.1 // indirect
 	gorm.io/driver/mysql v1.1.2
 	gorm.io/gorm v1.21.13
 )
