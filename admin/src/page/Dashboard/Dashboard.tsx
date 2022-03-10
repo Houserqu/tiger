@@ -1,3 +1,3 @@
 export default function Dashboard({children}: any) {
-  return <div>home</div>
+  return <div>dashboard</div>
 }

@@ -8,7 +8,7 @@ import (
 
 // Response 响应协议
 type Response struct {
-	Code  int         `json:"code"`
+	Code  int         `json:"errno"`
 	Msg   string      `json:"msg"`
 	Data  interface{} `json:"data"`
 	ReqId interface{} `json:"reqId"`

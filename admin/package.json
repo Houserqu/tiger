@@ -8,7 +8,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "amis": "^1.8.0-beta.2",
+    "amis": "^1.7.0",
+    "amis-editor": "^4.0.2-beta.16",
     "axios": "^0.26.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

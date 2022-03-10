@@ -1,13 +1,18 @@
 import { useRoutes } from "react-router-dom";
 import AdminLayout from "./layout/AdminLayout";
+import AmisEditor from "./page/AmisEditor/AmisEditor";
 import Dashboard from "./page/Dashboard/Dashboard";
-import Home from "./page/Dashboard/Dashboard";
+import Index from "./page/Index/Index";
 import NotFound from "./page/NotFound";
 
 export const routes = [
   {
     path: "/",
-    element: <Home />,
+    element: <Index />,
+  },
+  {
+    path: "/editor",
+    element: <AmisEditor />,
   },
   {
     path: "/admin",
