@@ -12,6 +12,7 @@
     "amis": "^1.7.0",
     "amis-editor": "^4.0.2-beta.16",
     "axios": "^0.26.1",
+    "lodash": "^4.17.21",
     "mockjs": "^1.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -19,6 +20,7 @@
     "recoil": "^0.6.1"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.180",
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
     "@vitejs/plugin-react": "^1.0.7",

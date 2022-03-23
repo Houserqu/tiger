@@ -1,10 +1,11 @@
-import { Button } from "amis";
-import renderAmis from "../../util/renderAmis";
+import { useRenderAmis } from "../../hook/amis";
 
 export default function Dashboard({ children }: any) {
+  const [render] = useRenderAmis()
+
   return (
     <div>
-      {renderAmis({
+      {render({
         "type": "page",
         "body": {
           "type": "panel",

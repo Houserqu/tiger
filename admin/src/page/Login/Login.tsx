@@ -1,9 +1,11 @@
-import renderAmis from "../../util/renderAmis";
+import { useRenderAmis } from "../../hook/amis"
 
 export default function Index() {
+  const [render] = useRenderAmis()
+
   return (
     <div style={{height: '100vh'}} className="flex h-full justify-center items-center">
-      {renderAmis({
+      {render({
         "type": "page",
         "className": 'w-1/4 h-auto',
         "body": {
@@ -12,7 +14,7 @@ export default function Index() {
           redirect: '/admin',
           "api": {
             "method": "post",
-            "url": "/pub/login",
+            "url": "/api/user/login",
             "data": {
               "&": "$$"
             }
