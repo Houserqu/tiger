@@ -6,7 +6,7 @@ import { useMemo } from "react";
 import { useRenderAmis } from "../hook/amis";
 
 // 生成菜单树
-function genMenuTree(root: string, data: { id: string, parent_id: string}[]): any[] {
+function genMenuTree(root: number, data: { id: number, parent_id: number}[]): any[] {
   const list: any[] = _.filter(data, { parent_id: root })
 
   return list.map((v) => {
@@ -23,7 +23,7 @@ function genMenuTree(root: string, data: { id: string, parent_id: string}[]): an
 export default function AdminLayout({ children }: any) {
   const { loginMenu } = useLoginInfo()
   const [render] = useRenderAmis()
-  const menuData = useMemo(() => genMenuTree('', loginMenu), [loginMenu])
+  const menuData = useMemo(() => genMenuTree(0, loginMenu), [loginMenu])
 
   return (
     <div>

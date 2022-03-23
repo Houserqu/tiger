@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <RecoilRoot>
-        <BrowserRouter>
+        <BrowserRouter basename='/admin'>
           <Global>
             <MyRouter />
           </Global>

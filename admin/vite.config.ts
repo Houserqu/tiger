@@ -7,6 +7,7 @@ import { UserConfigExport } from 'vite'
 // https://vitejs.dev/config/
 export default ({ command }: ConfigEnv): UserConfigExport => {
   return ({
+    base: 'admin',
     plugins: [
       react(),
       viteMockServe({

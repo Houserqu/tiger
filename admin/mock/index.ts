@@ -4,11 +4,11 @@ import { response } from './mockUtil'
 const loginInfo = {
   userInfo: { id: 1, name: 'tom' },
   menu: [
-    { id: 'dashboard', parent_id: '', label: '工作台', to: '/admin', icon: 'fa fa-user', target: '', permission: '', },
-    { id: 'product', parent_id: '', label: '物品', to: '', icon: 'fa fa-user', target: '', permission: '' },
-    { id: 'productList', parent_id: 'product', label: '物品列表', to: '/admin/product/list', icon: 'fa fa-user', target: '', permission: '' },
-    { id: 'user', parent_id: '', label: '用户', to: '', icon: 'fa fa-user', target: '', permission: '' },
-    { id: 'userList', parent_id: 'user', label: '用户列表', to: '/admin/user/list', icon: 'fa fa-user', target: '_blank', permission: '' },
+    { id: 1, parent_id: 0, label: '工作台', to: '/', icon: 'fa fa-user', target: '', permission: '', },
+    { id: 2, parent_id: 0, label: '物品', to: '', icon: 'fa fa-user', target: '', permission: '' },
+    { id: 3, parent_id: 2, label: '物品列表', to: '/product/list', icon: 'fa fa-user', target: '', permission: '' },
+    { id: 4, parent_id: 0, label: '用户', to: '', icon: 'fa fa-user', target: '', permission: '' },
+    { id: 5, parent_id: 4, label: '用户列表', to: '/user/list', icon: 'fa fa-user', target: '_blank', permission: '' },
   ],
   permissions: []
 }

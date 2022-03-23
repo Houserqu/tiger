@@ -11,7 +11,7 @@ import (
 
 func InitRouter(r *gin.Engine) {
 	// 首页
-	r.GET("/", view.IndexView)
+	r.GET("/admin", view.IndexView)
 
 	// 无需鉴权的 api接口
 	pub := r.Group("pub")
