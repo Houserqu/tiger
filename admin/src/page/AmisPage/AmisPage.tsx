@@ -1,6 +1,20 @@
-import { useNavigate } from "react-router-dom"
+import Loading from "../../component/Loading"
+import { usePageAmisConfig, useRenderAmis } from "../../hook/amis"
+import NotFound from "../NotFound"
 
 export default function AmisPage({children}: any) {
-  const navgiate = useNavigate()
-  return <div>AmisPage</div>
+  const [loading, page] = usePageAmisConfig()
+  const [render] = useRenderAmis()
+
+  if(loading) {
+    return <Loading />
+  }
+
+  if(!page) {
+    return <NotFound />
+  }
+
+  return (
+    <div>{render(page?.config)}</div>
+  )
 }

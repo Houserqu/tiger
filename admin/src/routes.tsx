@@ -19,7 +19,7 @@ export const routes = [
     element: <AdminLayout />,
     children: [
       { index: true, element: <Dashboard /> },
-      { path: "*", element: <AmisPage /> }
+      { path: "*", element: <AmisPage /> } // 未匹配到的路径，则代表通过 amis 加载，
     ],
   },
   { path: "*", element: <NotFound /> }

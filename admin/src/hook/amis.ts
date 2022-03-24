@@ -1,5 +1,10 @@
 import { render } from 'amis';
-import { useNavigate } from 'react-router-dom';
+import _ from 'lodash';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { PagesState } from '../model/page';
+import { getPageByPath } from '../service/page';
 import fetcher from '../util/fetcher';
 
 export function useRenderAmis() {
@@ -17,11 +22,33 @@ export function useRenderAmis() {
       fetcher,
       jumpTo(to, action) {
         navigate(to)
-        console.log(to)
-        console.log(action)
       }
     })
   }
 
   return [renderAmis]
+}
+
+export function usePageAmisConfig(): [boolean, Page | undefined] {
+  const [loading, setLoading] = useState(false);
+  const [pages, setPages] = useRecoilState(PagesState)
+  const location = useLocation()
+
+  // 根据路径查找页面配置
+  let page = _.find(pages, { path: location.pathname })
+
+  useEffect(() => {  
+    let page = _.find(pages, { path: location.pathname })
+
+    if(!page) {
+      setLoading(true)
+      getPageByPath(location.pathname).then((res) => {
+        setPages([...pages, res])
+      })
+      .catch(() => {})
+      .finally(() => { setLoading(false) })
+    }
+  }, [location.pathname])
+
+  return [loading, page]
 }
