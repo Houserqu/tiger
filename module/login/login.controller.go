@@ -6,6 +6,10 @@ import (
 	"houserqu.com/gin-starter/core"
 )
 
+// @Summary 账号密码登录
+// @Tags 登录
+// @Success 200 {number} 1
+// @Router /api/login [get]
 func Login(c *gin.Context) {
 	userId := 1
 

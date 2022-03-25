@@ -1,0 +1,26 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "API 文档",
+        "contact": {},
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/login": {
+            "get": {
+                "tags": [
+                    "登录"
+                ],
+                "summary": "账号密码登录",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

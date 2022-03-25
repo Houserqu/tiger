@@ -47,3 +47,11 @@ cd admin && npm run dev
 # 启动文档预览服务
 docsify serve docs
 ```
+
+### 生成环境构建
+
+```bash
+go build --tags=production
+```
+
+生产环境构建会删除 swagger 相关功能

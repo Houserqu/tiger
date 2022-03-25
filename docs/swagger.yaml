@@ -1,0 +1,16 @@
+info:
+  contact: {}
+  title: API 文档
+  version: "1.0"
+paths:
+  /api/login:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: number
+      summary: 账号密码登录
+      tags:
+      - 登录
+swagger: "2.0"

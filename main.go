@@ -9,9 +9,15 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/spf13/viper"
 	"houserqu.com/gin-starter/core"
+	_ "houserqu.com/gin-starter/docs"
 	"houserqu.com/gin-starter/middleware"
 	"houserqu.com/gin-starter/module"
 )
+
+var swagHandler gin.HandlerFunc
+
+// @title API 文档
+// @version 1.0
 
 func main() {
 	core.InitConfig()
@@ -33,6 +39,11 @@ func main() {
 	r.Static("/public", "./public")
 	// html 模板文件
 	r.LoadHTMLGlob("./public/*.html")
+
+	// swagger
+	if swagHandler != nil {
+		r.GET("/swagger/*any", swagHandler)
+	}
 
 	// 注册路由
 	module.InitRouter(r)
