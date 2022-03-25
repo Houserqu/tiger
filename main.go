@@ -18,6 +18,7 @@ var swagHandler gin.HandlerFunc
 
 // @title API 文档
 // @version 1.0
+// https://swaggo.github.io/swaggo.io/
 
 func main() {
 	core.InitConfig()

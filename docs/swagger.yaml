@@ -1,3 +1,14 @@
+definitions:
+  login.LoginDto:
+    properties:
+      password:
+        type: string
+      phone:
+        type: string
+    required:
+    - password
+    - phone
+    type: object
 info:
   contact: {}
   title: API 文档
@@ -11,6 +22,23 @@ paths:
           schema:
             type: number
       summary: 账号密码登录
+      tags:
+      - 登录
+  /api/login/phone:
+    post:
+      parameters:
+      - description: 'cansh '
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/login.LoginDto'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: number
+      summary: 手机号密码登录
       tags:
       - 登录
 swagger: "2.0"

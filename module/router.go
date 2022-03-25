@@ -3,7 +3,6 @@ package module
 import (
 	"github.com/gin-gonic/gin"
 	"houserqu.com/gin-starter/middleware"
-	"houserqu.com/gin-starter/module/example"
 	"houserqu.com/gin-starter/module/login"
 	"houserqu.com/gin-starter/module/user"
 	"houserqu.com/gin-starter/module/view"
@@ -14,12 +13,7 @@ func InitRouter(r *gin.Engine) {
 	r.GET("/admin", view.IndexView)
 
 	// 无需鉴权的 api接口
-	pub := r.Group("pub")
-	{
-		pub.POST("/login", login.Login) // 登录
-		pub.GET("/example", example.GetModel)
-		pub.GET("/error", example.ErrorExample)
-	}
+	r.POST("/api/login/phone", login.LoginByPhone) // 登录
 
 	// 需要鉴权的 api接口
 	api := r.Group("api", middleware.CheckLogin())

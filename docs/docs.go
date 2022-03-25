@@ -31,6 +31,50 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/login/phone": {
+            "post": {
+                "tags": [
+                    "登录"
+                ],
+                "summary": "手机号密码登录",
+                "parameters": [
+                    {
+                        "description": "cansh ",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/login.LoginDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "login.LoginDto": {
+            "type": "object",
+            "required": [
+                "password",
+                "phone"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                }
+            }
         }
     }
 }`

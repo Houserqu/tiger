@@ -17,5 +17,5 @@ type User struct {
 
 // TableName 会将 User 的表名重写为 `profiles`
 func (User) TableName() string {
-	return "auth_user"
+	return "user"
 }

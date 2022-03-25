@@ -11,4 +11,7 @@ var (
 	ErrDeleteFail = ErrorCode{Code: 1000, Msg: "删除失败"}
 	ErrCreateFail = ErrorCode{Code: 1001, Msg: "创建失败"}
 	ErrUpdateFail = ErrorCode{Code: 1002, Msg: "更新失败"}
+
+	// 登录注册相关
+	ErrLoginFail = ErrorCode{Code: 2000, Msg: "登录失败"}
 )
