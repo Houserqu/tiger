@@ -9,6 +9,11 @@ import (
 	"houserqu.com/gin-starter/module/user"
 )
 
+type AdminLoginInfo struct {
+	ID    uint   `json:"id"`
+	Phone string `json:"phone"`
+}
+
 // 根据手机号+密码校验用户
 func CheckUserByPhoneAndPassword(c *gin.Context, phone string, password string) (user.User, error) {
 	var user user.User
@@ -24,8 +29,26 @@ func CheckUserByPhoneAndPassword(c *gin.Context, phone string, password string) 
 	}
 
 	if user.Password != password {
-		err = errors.New("密码错误")
+		return user, errors.New("密码错误")
 	}
 
 	return user, nil
+}
+
+// 获取管理台用户登录信息
+func GetAdminLoginInfoByUserId(adminLoginInfo *AdminLoginInfo, userId uint) error {
+	var user user.User
+	err := core.Mysql.First(&user, userId).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return errors.New("手机号不存在")
+		}
+
+		return errors.New("查询用户信息失败")
+	}
+
+	adminLoginInfo.ID = user.ID
+	adminLoginInfo.Phone = user.Phone
+
+	return nil
 }

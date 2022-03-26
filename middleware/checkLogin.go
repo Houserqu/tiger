@@ -1,8 +1,6 @@
 package middleware
 
 import (
-	"fmt"
-
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"houserqu.com/gin-starter/core"
@@ -12,7 +10,7 @@ func CheckLogin() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		session := sessions.Default(c)
 		userId := session.Get("userId")
-		fmt.Println(userId)
+
 		if userId == nil {
 			core.ResError(c, core.ErrNotLogin, "")
 			c.Abort()

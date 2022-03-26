@@ -13,5 +13,6 @@ var (
 	ErrUpdateFail = ErrorCode{Code: 1002, Msg: "更新失败"}
 
 	// 登录注册相关
-	ErrLoginFail = ErrorCode{Code: 2000, Msg: "登录失败"}
+	ErrLoginFail     = ErrorCode{Code: 2000, Msg: "登录失败"}
+	ErrLoginInfoFail = ErrorCode{Code: 2001, Msg: "获取登录信息失败"}
 )

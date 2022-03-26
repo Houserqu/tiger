@@ -18,8 +18,8 @@ func InitRouter(r *gin.Engine) {
 	// 需要鉴权的 api接口
 	api := r.Group("api", middleware.CheckLogin())
 	{
-		api.POST("/logout", login.Logout)      // 注销
-		api.GET("/loginInfo", login.LoginInfo) // 用户信息
+		api.GET("/login/logout", login.Logout)                    // 注销
+		api.GET("/login/adminloginInfo", login.GetAdminLoginInfo) // 用户信息
 
 		// 用户相关
 		api.GET("/user/:id", user.GetUser)                                        // 查单个

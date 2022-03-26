@@ -1,4 +1,11 @@
 definitions:
+  login.AdminLoginInfo:
+    properties:
+      id:
+        type: integer
+      phone:
+        type: string
+    type: object
   login.LoginDto:
     properties:
       password:
@@ -14,14 +21,24 @@ info:
   title: API 文档
   version: "1.0"
 paths:
-  /api/login:
+  /api/login/adminloginInfo:
     get:
       responses:
         "200":
           description: OK
           schema:
-            type: number
-      summary: 账号密码登录
+            $ref: '#/definitions/login.AdminLoginInfo'
+      summary: 获取管理员登录信息
+      tags:
+      - 登录
+  /api/login/logout:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: 注销
       tags:
       - 登录
   /api/login/phone:
@@ -37,7 +54,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: number
+            $ref: '#/definitions/login.AdminLoginInfo'
       summary: 手机号密码登录
       tags:
       - 登录

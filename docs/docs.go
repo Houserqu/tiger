@@ -16,17 +16,33 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/login": {
+        "/api/login/adminloginInfo": {
             "get": {
                 "tags": [
                     "登录"
                 ],
-                "summary": "账号密码登录",
+                "summary": "获取管理员登录信息",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "number"
+                            "$ref": "#/definitions/login.AdminLoginInfo"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login/logout": {
+            "get": {
+                "tags": [
+                    "登录"
+                ],
+                "summary": "注销",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -53,7 +69,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "number"
+                            "$ref": "#/definitions/login.AdminLoginInfo"
                         }
                     }
                 }
@@ -61,6 +77,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "login.AdminLoginInfo": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "phone": {
+                    "type": "string"
+                }
+            }
+        },
         "login.LoginDto": {
             "type": "object",
             "required": [
