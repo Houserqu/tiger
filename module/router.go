@@ -31,5 +31,6 @@ func InitRouter(r *gin.Engine) {
 
 		// 系统配置相关
 		api.GET("/config/menus", config.GetMenus) // 查菜单列表
+		api.GET("/config/page", config.GetPage)   // 页面配置
 	}
 }

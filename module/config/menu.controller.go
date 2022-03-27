@@ -6,7 +6,7 @@ import (
 )
 
 // @Summary 获取菜单
-// @Tags 登录
+// @Tags 配置
 // @Router /api/config/menus [get]
 func GetMenus(c *gin.Context) {
 	var menus []Menu

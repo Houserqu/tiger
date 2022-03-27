@@ -19,9 +19,27 @@ const docTemplate = `{
         "/api/config/menus": {
             "get": {
                 "tags": [
-                    "登录"
+                    "配置"
                 ],
                 "summary": "获取菜单",
+                "responses": {}
+            }
+        },
+        "/api/config/page": {
+            "get": {
+                "tags": [
+                    "配置"
+                ],
+                "summary": "获取页面配置",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "page id",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
                 "responses": {}
             }
         },

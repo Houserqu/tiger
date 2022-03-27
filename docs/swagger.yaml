@@ -26,7 +26,19 @@ paths:
       responses: {}
       summary: 获取菜单
       tags:
-      - 登录
+      - 配置
+  /api/config/page:
+    get:
+      parameters:
+      - description: page id
+        in: query
+        name: id
+        required: true
+        type: integer
+      responses: {}
+      summary: 获取页面配置
+      tags:
+      - 配置
   /api/login/adminloginInfo:
     get:
       responses:

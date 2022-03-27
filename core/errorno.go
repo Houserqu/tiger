@@ -15,5 +15,8 @@ var (
 	// 登录注册相关
 	ErrLoginFail     = ErrorCode{Code: 2000, Msg: "登录失败"}
 	ErrLoginInfoFail = ErrorCode{Code: 2001, Msg: "获取登录信息失败"}
-	ErrGetMenus      = ErrorCode{Code: 2002, Msg: "获取菜单列表失败"}
+
+	// 配置相关
+	ErrGetMenus = ErrorCode{Code: 2002, Msg: "获取菜单列表失败"}
+	ErrGetPage  = ErrorCode{Code: 2003, Msg: "获取页面配置失败"}
 )
