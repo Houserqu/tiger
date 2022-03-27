@@ -16,6 +16,33 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/config/create-page": {
+            "post": {
+                "tags": [
+                    "配置"
+                ],
+                "summary": "创建页面",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/config.CreatePageDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
         "/api/config/menus": {
             "get": {
                 "tags": [
@@ -33,9 +60,9 @@ const docTemplate = `{
                 "summary": "获取页面配置",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "page id",
-                        "name": "id",
+                        "type": "string",
+                        "description": "path",
+                        "name": "path",
                         "in": "query",
                         "required": true
                     }
@@ -104,6 +131,31 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "config.CreatePageDto": {
+            "type": "object",
+            "required": [
+                "config",
+                "extend",
+                "name",
+                "path"
+            ],
+            "properties": {
+                "config": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "extend": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "name": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                }
+            }
+        },
         "login.AdminLoginInfo": {
             "type": "object",
             "properties": {

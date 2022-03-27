@@ -1,4 +1,22 @@
 definitions:
+  config.CreatePageDto:
+    properties:
+      config:
+        additionalProperties: true
+        type: object
+      extend:
+        additionalProperties: true
+        type: object
+      name:
+        type: string
+      path:
+        type: string
+    required:
+    - config
+    - extend
+    - name
+    - path
+    type: object
   login.AdminLoginInfo:
     properties:
       id:
@@ -21,6 +39,23 @@ info:
   title: API 文档
   version: "1.0"
 paths:
+  /api/config/create-page:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/config.CreatePageDto'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: number
+      summary: 创建页面
+      tags:
+      - 配置
   /api/config/menus:
     get:
       responses: {}
@@ -30,11 +65,11 @@ paths:
   /api/config/page:
     get:
       parameters:
-      - description: page id
+      - description: path
         in: query
-        name: id
+        name: path
         required: true
-        type: integer
+        type: string
       responses: {}
       summary: 获取页面配置
       tags:
