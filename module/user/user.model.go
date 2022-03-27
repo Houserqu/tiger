@@ -7,12 +7,12 @@ import (
 )
 
 type User struct {
-	ID       uint           `json:"id";gorm:"primaryKey"`
-	Phone    string         `json:"phone"`
-	Password string         `json:"password"`
-	DeleteAt gorm.DeletedAt `json:"delete_at"`
-	CreateAt time.Time      `json:"create_at"`
-	UpdateAt time.Time      `json:"update_at"`
+	ID        uint           `json:"id";gorm:"primaryKey"`
+	Phone     string         `json:"phone"`
+	Password  string         `json:"password"`
+	DeletedAt gorm.DeletedAt `json:"deleted_at"`
+	CreatedAt time.Time      `json:"created_at"`
+	UpdatedAt time.Time      `json:"updated_at"`
 }
 
 // TableName 会将 User 的表名重写为 `profiles`

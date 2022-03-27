@@ -21,6 +21,12 @@ info:
   title: API 文档
   version: "1.0"
 paths:
+  /api/config/menus:
+    get:
+      responses: {}
+      summary: 获取菜单
+      tags:
+      - 登录
   /api/login/adminloginInfo:
     get:
       responses:

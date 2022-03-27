@@ -3,6 +3,7 @@ package module
 import (
 	"github.com/gin-gonic/gin"
 	"houserqu.com/gin-starter/middleware"
+	"houserqu.com/gin-starter/module/config"
 	"houserqu.com/gin-starter/module/login"
 	"houserqu.com/gin-starter/module/user"
 	"houserqu.com/gin-starter/module/view"
@@ -27,5 +28,8 @@ func InitRouter(r *gin.Engine) {
 		api.POST("/user/create", user.CreateUser)                                 // 创建
 		api.POST("/user/update", user.UpdateUser)                                 // 更新
 		api.POST("/user/delete/:id", user.DeleteUser)                             // 删除
+
+		// 系统配置相关
+		api.GET("/config/menus", config.GetMenus) // 查菜单列表
 	}
 }

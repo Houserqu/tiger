@@ -16,6 +16,15 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/config/menus": {
+            "get": {
+                "tags": [
+                    "登录"
+                ],
+                "summary": "获取菜单",
+                "responses": {}
+            }
+        },
         "/api/login/adminloginInfo": {
             "get": {
                 "tags": [
