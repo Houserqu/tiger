@@ -4,11 +4,21 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"houserqu.com/gin-starter/core"
+	"houserqu.com/gin-starter/middleware"
 )
 
 type LoginDto struct {
 	Phone    string `json:"phone" binding:"required"`
 	Password string `json:"password" binding:"required"`
+}
+
+func Controller(r *gin.Engine) {
+	// 创建 group 并绑定中间件
+	api := r.Group("/api/login")
+
+	api.POST("/phone", LoginByPhone)                                       // 登录
+	api.GET("/logout", middleware.CheckLogin(), Logout)                    // 注销
+	api.GET("/adminloginInfo", middleware.CheckLogin(), GetAdminLoginInfo) // 用户信息
 }
 
 // @Summary 手机号密码登录
