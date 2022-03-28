@@ -37,6 +37,35 @@ func GetPageByPath(c *gin.Context, page *Page, path string) error {
 	return nil
 }
 
+func GetPageList(c *gin.Context, pages *[]Page, params *PageListDto) (int64, error) {
+	query := core.Mysql.Model(&Page{})
+
+	// 处理查询条件
+	if params.Name != "" {
+		query = query.Where("name LIKE ?", "%"+params.Name+"%")
+	}
+
+	if params.Path != "" {
+		query = query.Where("path LIKE ?", "%"+params.Path+"%")
+	}
+
+	// 总数
+	var total int64
+	query.Count(&total)
+
+	// 处理分页
+	query = query.Limit(params.PerPage).Offset((params.Page - 1) * params.PerPage)
+
+	// 开始查询
+	err := query.Find(&pages).Error
+	if err != nil {
+		core.Log(c).Error(err)
+		return total, errors.New("系统异常")
+	}
+
+	return total, nil
+}
+
 func CreatePage(c *gin.Context, params CreatePageDto) (uint, error) {
 	config, err := json.Marshal(params.Config)
 	if err != nil {

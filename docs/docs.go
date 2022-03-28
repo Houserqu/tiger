@@ -70,20 +70,44 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/api/config/pages": {
+            "get": {
+                "tags": [
+                    "配置"
+                ],
+                "summary": "获取页面配置",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "path",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "perPage",
+                        "in": "query"
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/api/login/adminloginInfo": {
             "get": {
                 "tags": [
                     "登录"
                 ],
                 "summary": "获取管理员登录信息",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/login.AdminLoginInfo"
-                        }
-                    }
-                }
+                "responses": {}
             }
         },
         "/api/login/logout": {
@@ -119,14 +143,7 @@ const docTemplate = `{
                         }
                     }
                 ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/login.AdminLoginInfo"
-                        }
-                    }
-                }
+                "responses": {}
             }
         }
     },
@@ -152,17 +169,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "path": {
-                    "type": "string"
-                }
-            }
-        },
-        "login.AdminLoginInfo": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "integer"
-                },
-                "phone": {
                     "type": "string"
                 }
             }

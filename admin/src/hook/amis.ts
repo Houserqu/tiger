@@ -20,9 +20,12 @@ export function useRenderAmis() {
   function renderAmis(schema: any, props?: any, env?: any) {
     return render(schema, props, env || {
       fetcher,
-      jumpTo(to, action) {
+      jumpTo(to) {
         navigate(to)
-      }
+      },
+      updateLocation: (to: string) => {
+        navigate(to)
+      },
     })
   }
 
@@ -48,6 +51,7 @@ export function usePageAmisConfig(): [boolean, Page | undefined] {
           res.extend = JSON.parse(res.extend || '{}')
           setPages([...pages, res])
         } catch (error) {
+          console.log(error)
           throw new Error('解析页面配置失败')
         }
       })

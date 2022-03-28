@@ -36,7 +36,9 @@ func main() {
 	// 注册中间件
 	r.Use(gin.Recovery())
 	r.Use(middleware.Access())
-	// r.Use(middleware.CheckLogin())
+	if viper.GetBool("cors.enable") {
+		r.Use(middleware.Cors())
+	}
 
 	// 静态文件
 	r.Static("/public", "./public")

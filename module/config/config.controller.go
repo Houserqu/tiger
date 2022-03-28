@@ -3,14 +3,21 @@ package config
 import (
 	"github.com/gin-gonic/gin"
 	"houserqu.com/gin-starter/core"
-	"houserqu.com/gin-starter/middleware"
 )
+
+type PageListDto struct {
+	Page    int    `form:"page,default=1"`
+	PerPage int    `form:"perPage,default=20"`
+	Name    string `form:"name"`
+	Path    string `form:"path"`
+}
 
 func Controller(r *gin.Engine) {
 	// 创建 group 并绑定中间件
-	api := r.Group("/api/config", middleware.CheckLogin())
+	api := r.Group("/api/config")
 
 	api.GET("page", getPage)
+	api.GET("pages", getPages)
 	api.GET("menus", getMenus)
 	api.POST("create-page", createPage)
 }
@@ -28,6 +35,31 @@ func getPage(c *gin.Context) {
 	}
 
 	core.ResSuccess(c, page)
+}
+
+// @Summary 获取页面配置
+// @Tags 配置
+// @Param path query config.PageListDto true "query"
+// @Router /api/config/pages [get]
+func getPages(c *gin.Context) {
+	var pageListDto PageListDto
+	if err := c.ShouldBindQuery(&pageListDto); err != nil {
+		core.ResError(c, core.ErrParam, err.Error())
+		return
+	}
+
+	var pages []Page
+	var total int64
+	total, err := GetPageList(c, &pages, &pageListDto)
+	if err != nil {
+		core.ResError(c, core.ErrGetPage, err.Error())
+		return
+	}
+
+	core.ResSuccess(c, gin.H{
+		"items": pages,
+		"total": total,
+	})
 }
 
 // @Summary 获取菜单

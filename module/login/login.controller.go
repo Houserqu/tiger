@@ -24,7 +24,6 @@ func Controller(r *gin.Engine) {
 // @Summary 手机号密码登录
 // @Tags 登录
 // @Param params body login.LoginDto true "cansh "
-// @Success 200 {object} login.AdminLoginInfo
 // @Router /api/login/phone [post]
 func LoginByPhone(c *gin.Context) {
 	// 参数校验
@@ -60,7 +59,6 @@ func LoginByPhone(c *gin.Context) {
 // @Summary 获取管理员登录信息
 // @Tags 登录
 // @Router /api/login/adminloginInfo [get]
-// @Success 200 {object} login.AdminLoginInfo
 func GetAdminLoginInfo(c *gin.Context) {
 	userId := c.GetUint("userId")
 

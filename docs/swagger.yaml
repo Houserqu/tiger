@@ -17,13 +17,6 @@ definitions:
     - name
     - path
     type: object
-  login.AdminLoginInfo:
-    properties:
-      id:
-        type: integer
-      phone:
-        type: string
-    type: object
   login.LoginDto:
     properties:
       password:
@@ -74,13 +67,28 @@ paths:
       summary: 获取页面配置
       tags:
       - 配置
+  /api/config/pages:
+    get:
+      parameters:
+      - in: query
+        name: name
+        type: string
+      - in: query
+        name: page
+        type: integer
+      - in: query
+        name: path
+        type: string
+      - in: query
+        name: perPage
+        type: integer
+      responses: {}
+      summary: 获取页面配置
+      tags:
+      - 配置
   /api/login/adminloginInfo:
     get:
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/login.AdminLoginInfo'
+      responses: {}
       summary: 获取管理员登录信息
       tags:
       - 登录
@@ -103,11 +111,7 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/login.LoginDto'
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/login.AdminLoginInfo'
+      responses: {}
       summary: 手机号密码登录
       tags:
       - 登录

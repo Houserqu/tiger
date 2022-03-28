@@ -19,5 +19,6 @@ var (
 	// 配置相关
 	ErrGetMenus   = ErrorCode{Code: 2002, Msg: "获取菜单列表失败"}
 	ErrGetPage    = ErrorCode{Code: 2003, Msg: "获取页面配置失败"}
-	ErrCreatePage = ErrorCode{Code: 2004, Msg: "创建页面失败"}
+	ErrGetPages   = ErrorCode{Code: 2004, Msg: "获取页面列表失败"}
+	ErrCreatePage = ErrorCode{Code: 2005, Msg: "创建页面失败"}
 )
