@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import { viteMockServe } from 'vite-plugin-mock'
 import { ConfigEnv } from 'vite'
 import { UserConfigExport } from 'vite'
+import monacoEditorPlugin from "vite-plugin-monaco-editor"
 
 // https://vitejs.dev/config/
 export default ({ command }: ConfigEnv): UserConfigExport => {
@@ -10,9 +11,10 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
     base: 'admin',
     plugins: [
       react(),
+      monacoEditorPlugin(),
       viteMockServe({
         mockPath: 'mock',
-        localEnabled: command === 'serve',
+        localEnabled: false,
         ignore: /^mockUtil.ts$/g,
         injectCode: `
           import { setupProdMockServer } from './mockProdServer';
