@@ -33,6 +33,33 @@
                 }
             }
         },
+        "/api/config/delete-page": {
+            "post": {
+                "tags": [
+                    "配置"
+                ],
+                "summary": "删除页面",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/config.DeletePageDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
         "/api/config/menus": {
             "get": {
                 "tags": [
@@ -91,6 +118,33 @@
                 "responses": {}
             }
         },
+        "/api/config/update-page": {
+            "post": {
+                "tags": [
+                    "配置"
+                ],
+                "summary": "更新页面",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/config.UpdatePageDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
         "/api/login/adminloginInfo": {
             "get": {
                 "tags": [
@@ -142,18 +196,52 @@
             "type": "object",
             "required": [
                 "config",
-                "extend",
                 "name",
                 "path"
             ],
             "properties": {
                 "config": {
-                    "type": "object",
-                    "additionalProperties": true
+                    "type": "string"
                 },
                 "extend": {
-                    "type": "object",
-                    "additionalProperties": true
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.DeletePageDto": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "config.UpdatePageDto": {
+            "type": "object",
+            "required": [
+                "config",
+                "id",
+                "name",
+                "path"
+            ],
+            "properties": {
+                "config": {
+                    "type": "string"
+                },
+                "extend": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
                 },
                 "name": {
                     "type": "string"

@@ -2,18 +2,40 @@ definitions:
   config.CreatePageDto:
     properties:
       config:
-        additionalProperties: true
-        type: object
+        type: string
       extend:
-        additionalProperties: true
-        type: object
+        type: string
       name:
         type: string
       path:
         type: string
     required:
     - config
-    - extend
+    - name
+    - path
+    type: object
+  config.DeletePageDto:
+    properties:
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  config.UpdatePageDto:
+    properties:
+      config:
+        type: string
+      extend:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      path:
+        type: string
+    required:
+    - config
+    - id
     - name
     - path
     type: object
@@ -47,6 +69,23 @@ paths:
           schema:
             type: number
       summary: 创建页面
+      tags:
+      - 配置
+  /api/config/delete-page:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/config.DeletePageDto'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: number
+      summary: 删除页面
       tags:
       - 配置
   /api/config/menus:
@@ -84,6 +123,23 @@ paths:
         type: integer
       responses: {}
       summary: 获取页面配置
+      tags:
+      - 配置
+  /api/config/update-page:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/config.UpdatePageDto'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: number
+      summary: 更新页面
       tags:
       - 配置
   /api/login/adminloginInfo:

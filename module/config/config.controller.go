@@ -18,8 +18,10 @@ func Controller(r *gin.Engine) {
 
 	api.GET("page", getPage)
 	api.GET("pages", getPages)
-	api.GET("menus", getMenus)
 	api.POST("create-page", createPage)
+	api.POST("delete-page", deletePage)
+	api.POST("update-page", updatePage)
+	api.GET("menus", getMenus)
 }
 
 // @Summary 获取页面配置
@@ -77,10 +79,10 @@ func getMenus(c *gin.Context) {
 }
 
 type CreatePageDto struct {
-	Name   string                 `json:"name" binding:"required"`
-	Path   string                 `json:"path" binding:"required"`
-	Config map[string]interface{} `json:"config" binding:"required"`
-	Extend map[string]interface{} `json:"extend" binding:"required"`
+	Name   string `json:"name" binding:"required"`
+	Path   string `json:"path" binding:"required"`
+	Config string `json:"config" binding:"required"`
+	Extend string `form:"extend"`
 }
 
 // @Summary 创建页面
@@ -97,6 +99,59 @@ func createPage(c *gin.Context) {
 	}
 
 	id, err := CreatePage(c, createPagetDto)
+	if err != nil {
+		core.ResError(c, core.ErrCreatePage, err.Error())
+		return
+	}
+
+	core.ResSuccess(c, id)
+}
+
+type DeletePageDto struct {
+	ID uint `form:"id" binding:"required"`
+}
+
+// @Summary 删除页面
+// @Tags 配置
+// @Router /api/config/delete-page [post]
+// @Param params body config.DeletePageDto true "参数"
+// @Success 200 {number} 1
+func deletePage(c *gin.Context) {
+	// 参数校验
+	var deletePageDto DeletePageDto
+	if err := c.ShouldBindJSON(&deletePageDto); err != nil {
+		core.ResError(c, core.ErrParam, err.Error())
+		return
+	}
+
+	id, err := DeletePage(c, deletePageDto.ID)
+	if err != nil {
+		core.ResError(c, core.ErrDeletePage, err.Error())
+		return
+	}
+
+	core.ResSuccess(c, id)
+}
+
+type UpdatePageDto struct {
+	CreatePageDto
+	ID uint `form:"id" binding:"required"`
+}
+
+// @Summary 更新页面
+// @Tags 配置
+// @Router /api/config/update-page [post]
+// @Param params body config.UpdatePageDto true "参数"
+// @Success 200 {number} 1
+func updatePage(c *gin.Context) {
+	// 参数校验
+	var updatePageDto UpdatePageDto
+	if err := c.ShouldBindJSON(&updatePageDto); err != nil {
+		core.ResError(c, core.ErrParam, err.Error())
+		return
+	}
+
+	id, err := UpdatePage(c, updatePageDto)
 	if err != nil {
 		core.ResError(c, core.ErrCreatePage, err.Error())
 		return

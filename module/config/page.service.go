@@ -1,7 +1,6 @@
 package config
 
 import (
-	"encoding/json"
 	"errors"
 
 	"github.com/gin-gonic/gin"
@@ -67,23 +66,35 @@ func GetPageList(c *gin.Context, pages *[]Page, params *PageListDto) (int64, err
 }
 
 func CreatePage(c *gin.Context, params CreatePageDto) (uint, error) {
-	config, err := json.Marshal(params.Config)
-	if err != nil {
-		return 0, errors.New("解析 config 失败")
-	}
+	page := Page{Name: params.Name, Path: params.Path, Config: params.Config, Extend: params.Extend}
 
-	extend, err := json.Marshal(params.Extend)
-	if err != nil {
-		return 0, errors.New("解析 config 失败")
-	}
-
-	page := Page{Name: params.Name, Path: params.Path, Config: string(config), Extend: string(extend)}
-
-	err = core.Mysql.Create(&page).Error
+	err := core.Mysql.Create(&page).Error
 	if err != nil {
 		core.Log(c).Error(err)
 		return 0, errors.New("创建页面失败")
 	}
 
 	return page.ID, nil
+}
+
+func UpdatePage(c *gin.Context, params UpdatePageDto) (uint, error) {
+	page := Page{ID: params.ID, Name: params.Name, Path: params.Path, Config: params.Config, Extend: params.Extend}
+
+	err := core.Mysql.Model(&page).Updates(page).Error
+	if err != nil {
+		core.Log(c).Error(err)
+		return 0, errors.New("更新页面失败")
+	}
+
+	return page.ID, nil
+}
+
+func DeletePage(c *gin.Context, id uint) (uint, error) {
+	err := core.Mysql.Delete(&Page{}, id).Error
+	if err != nil {
+		core.Log(c).Error(err)
+		return id, errors.New("删除页面失败")
+	}
+
+	return id, nil
 }
