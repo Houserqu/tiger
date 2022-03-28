@@ -7,7 +7,7 @@ import (
 	"houserqu.com/gin-starter/core"
 )
 
-func GetModelByID(id int) (user User, err error) {
+func GetUserByID(id uint) (user User, err error) {
 	err = core.Mysql.Take(&user, id).Error
 	return
 }
@@ -39,8 +39,8 @@ func CreateModel(user *User) (err error) {
 	return
 }
 
-func UpdateModel(id int, name string, email string) (user User, err error) {
-	user, err = GetModelByID(id)
+func UpdateModel(id uint, name string, email string) (user User, err error) {
+	user, err = GetUserByID(id)
 	if err != nil {
 		return
 	}

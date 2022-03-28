@@ -15,7 +15,7 @@ type ReqModelCreate struct {
 }
 
 type ReqModelUpdate struct {
-	ID    int    `form:"id" binding:"required"`
+	ID    uint   `form:"id" binding:"required"`
 	Name  string `form:"name" binding:"required"`
 	Email string `form:"email" binding:"required"`
 }
@@ -40,7 +40,7 @@ func GetUser(c *gin.Context) {
 	}
 
 	// 根据 ID 查找
-	data, err := GetModelByID(id)
+	data, err := GetUserByID(uint(id))
 	if err != nil {
 		core.ResError(c, core.ErrNotFound, "")
 		return

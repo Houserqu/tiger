@@ -18,7 +18,7 @@ func Controller(r *gin.Engine) {
 
 	api.POST("/phone", LoginByPhone)                                       // 登录
 	api.GET("/logout", middleware.CheckLogin(), Logout)                    // 注销
-	api.GET("/adminloginInfo", middleware.CheckLogin(), GetAdminLoginInfo) // 用户信息
+	api.GET("/adminLoginInfo", middleware.CheckLogin(), GetAdminLoginInfo) // 用户信息
 }
 
 // @Summary 手机号密码登录
@@ -43,7 +43,7 @@ func LoginByPhone(c *gin.Context) {
 
 	// 获取登录信息
 	var adminLoginInfo AdminLoginInfo
-	err = GetAdminLoginInfoByUserId(&adminLoginInfo, user.ID)
+	err = GetAdminLoginInfoByUserId(c, &adminLoginInfo, user.ID)
 	if err != nil {
 		core.ResError(c, core.ErrLoginInfoFail, err.Error())
 		return
@@ -65,7 +65,7 @@ func GetAdminLoginInfo(c *gin.Context) {
 	userId := c.GetUint("userId")
 
 	var adminLoginInfo AdminLoginInfo
-	err := GetAdminLoginInfoByUserId(&adminLoginInfo, userId)
+	err := GetAdminLoginInfoByUserId(c, &adminLoginInfo, userId)
 	if err != nil {
 		core.ResError(c, core.ErrLoginInfoFail, err.Error())
 		return

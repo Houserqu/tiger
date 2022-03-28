@@ -11,7 +11,7 @@ export function useLogin() {
   useEffect(() => {
     getLoginInfo().then((res: any) => {
       setLoginUserInfo(res.userInfo)
-      setLoginMenu(res.menu)
+      setLoginMenu(res.menus)
       setLoginPermissions(res.permissions)
     }).catch(() => {})
   }, [])

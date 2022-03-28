@@ -1,10 +1,10 @@
-import { render } from 'amis';
+import { render, toast } from 'amis';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { PagesState } from '../model/page';
-import { getPageByPath } from '../service/page';
+import { getPageByPath } from '../service/config';
 import fetcher from '../util/fetcher';
 
 export function useRenderAmis() {
@@ -43,9 +43,19 @@ export function usePageAmisConfig(): [boolean, Page | undefined] {
     if(!page) {
       setLoading(true)
       getPageByPath(location.pathname).then((res) => {
-        setPages([...pages, res])
+        try {
+          res.config = JSON.parse(res.config || '{}')
+          res.extend = JSON.parse(res.extend || '{}')
+          setPages([...pages, res])
+        } catch (error) {
+          throw new Error('解析页面配置失败')
+        }
       })
-      .catch(() => {})
+      .catch((err) => {
+        toast.error(err.message, {
+          title: '页面异常'
+        })
+      })
       .finally(() => { setLoading(false) })
     }
   }, [location.pathname])

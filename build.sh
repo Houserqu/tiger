@@ -1,2 +1,2 @@
 #!/bin/bash
-go build -o tiger main.go
+go build --tags="production" -o tiger main.go

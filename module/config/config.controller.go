@@ -35,7 +35,7 @@ func getPage(c *gin.Context) {
 // @Router /api/config/menus [get]
 func getMenus(c *gin.Context) {
 	var menus []Menu
-	err := GetMenusByPermission(c, &menus, c.GetUint("userId"))
+	err := GetMenus(c, &menus)
 	if err != nil {
 		core.ResError(c, core.ErrGetMenus, err.Error())
 		return

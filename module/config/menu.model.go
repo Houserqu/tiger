@@ -7,7 +7,7 @@ import (
 )
 
 type Menu struct {
-	gorm.Model
+	ID          uint           `json:"id"`
 	ParentID    uint           `json:"parent_id"`
 	Label       string         `json:"label"`
 	To          string         `json:"to"`
