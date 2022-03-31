@@ -14,6 +14,7 @@ import (
 	"houserqu.com/gin-starter/module/config"
 	"houserqu.com/gin-starter/module/login"
 	"houserqu.com/gin-starter/module/user"
+	"houserqu.com/gin-starter/module/view"
 )
 
 var swagHandler gin.HandlerFunc
@@ -41,9 +42,11 @@ func main() {
 	}
 
 	// 静态文件
-	r.Static("/public", "./public")
+	r.Static("/public", "./public")                            // 管理后台静态文件目录
+	r.Static("/amis-editor-demo", "./static/amis-editor-demo") //
 	// html 模板文件
-	r.LoadHTMLGlob("./public/*.html")
+	r.LoadHTMLGlob("./public/*.html")    // 管理后台 html 模板
+	r.LoadHTMLGlob("./static/**/*.html") // 管理后台 html 模板
 
 	// swagger
 	if swagHandler != nil {
@@ -51,6 +54,7 @@ func main() {
 	}
 
 	// 注册每个模块中定义的路由
+	view.Controller(r)
 	config.Controller(r) // 系统配置
 	user.Controller(r)   // 用户
 	login.Controller(r)  // 登录注册

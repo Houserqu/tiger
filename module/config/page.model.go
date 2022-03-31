@@ -10,6 +10,7 @@ type Page struct {
 	ID        uint           `json:"id";gorm:"primaryKey"`
 	Name      string         `json:"name"`
 	Path      string         `json:"path"`
+	Icon      string         `json:"icon"`
 	Config    string         `json:"config"`
 	Extend    string         `json:"extend"`
 	DeletedAt gorm.DeletedAt `json:"deleted_at"`

@@ -66,7 +66,7 @@ func GetPageList(c *gin.Context, pages *[]Page, params *PageListDto) (int64, err
 }
 
 func CreatePage(c *gin.Context, params CreatePageDto) (uint, error) {
-	page := Page{Name: params.Name, Path: params.Path, Config: params.Config, Extend: params.Extend}
+	page := Page{Name: params.Name, Path: params.Path, Config: params.Config, Extend: params.Extend, Icon: params.Icon}
 
 	err := core.Mysql.Create(&page).Error
 	if err != nil {
@@ -77,16 +77,15 @@ func CreatePage(c *gin.Context, params CreatePageDto) (uint, error) {
 	return page.ID, nil
 }
 
-func UpdatePage(c *gin.Context, params UpdatePageDto) (uint, error) {
-	page := Page{ID: params.ID, Name: params.Name, Path: params.Path, Config: params.Config, Extend: params.Extend}
+func UpdatePage(c *gin.Context, params map[string]any) error {
 
-	err := core.Mysql.Model(&page).Updates(page).Error
+	err := core.Mysql.Model(&Page{}).Where("id = ?", params["id"]).Updates(params).Error
 	if err != nil {
 		core.Log(c).Error(err)
-		return 0, errors.New("更新页面失败")
+		return errors.New("系统错误")
 	}
 
-	return page.ID, nil
+	return nil
 }
 
 func DeletePage(c *gin.Context, id uint) (uint, error) {

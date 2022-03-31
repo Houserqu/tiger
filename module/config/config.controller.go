@@ -81,6 +81,7 @@ func getMenus(c *gin.Context) {
 type CreatePageDto struct {
 	Name   string `json:"name" binding:"required"`
 	Path   string `json:"path" binding:"required"`
+	Icon   string `json:"icon"`
 	Config string `json:"config" binding:"required"`
 	Extend string `form:"extend"`
 }
@@ -134,8 +135,12 @@ func deletePage(c *gin.Context) {
 }
 
 type UpdatePageDto struct {
-	CreatePageDto
-	ID uint `form:"id" binding:"required"`
+	ID     uint   `form:"id" binding:"required"`
+	Name   string `form:"name"`
+	Path   string `form:"path"`
+	Icon   string `form:"icon"`
+	Config string `form:"config"`
+	Extend string `form:"extend"`
 }
 
 // @Summary 更新页面
@@ -145,17 +150,17 @@ type UpdatePageDto struct {
 // @Success 200 {number} 1
 func updatePage(c *gin.Context) {
 	// 参数校验
-	var updatePageDto UpdatePageDto
+	var updatePageDto map[string]any
 	if err := c.ShouldBindJSON(&updatePageDto); err != nil {
 		core.ResError(c, core.ErrParam, err.Error())
 		return
 	}
 
-	id, err := UpdatePage(c, updatePageDto)
+	err := UpdatePage(c, updatePageDto)
 	if err != nil {
-		core.ResError(c, core.ErrCreatePage, err.Error())
+		core.ResError(c, core.ErrUpdatePage, err.Error())
 		return
 	}
 
-	core.ResSuccess(c, id)
+	core.ResSuccess(c, updatePageDto["id"])
 }
