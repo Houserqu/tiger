@@ -16,7 +16,7 @@ func Controller(r *gin.Engine) {
 	// 创建 group 并绑定中间件
 	api := r.Group("/api/login")
 
-	api.POST("/phone", LoginByPhone)                                       // 登录
+	api.POST("/loginByPhone", LoginByPhone)                                // 登录
 	api.GET("/logout", middleware.CheckLogin(), Logout)                    // 注销
 	api.GET("/adminLoginInfo", middleware.CheckLogin(), GetAdminLoginInfo) // 用户信息
 }

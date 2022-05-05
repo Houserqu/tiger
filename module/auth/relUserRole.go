@@ -1,9 +1,9 @@
 package auth
 
 type RelUserRole struct {
-	ID     uint   `json:"id";gorm:"primaryKey"`
-	UserID int    `json:"user_id"`
-	RoleID string `json:"role_id"`
+	ID     uint `json:"id";gorm:"primaryKey"`
+	UserID uint `json:"user_id"`
+	RoleID uint `json:"role_id"`
 }
 
 func (RelUserRole) TableName() string {

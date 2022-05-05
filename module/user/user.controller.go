@@ -24,11 +24,11 @@ func Controller(r *gin.Engine) {
 	// 创建 group 并绑定中间件
 	api := r.Group("/api/user", middleware.CheckLogin())
 
-	api.GET("/:id", GetUser)                                        // 查单个
-	api.GET("/list", middleware.CheckPerm("USER_ALL"), GetUserList) // 查列表
-	api.POST("/create", CreateUser)                                 // 创建
-	api.POST("/update", UpdateUser)                                 // 更新
-	api.POST("/delete/:id", DeleteUser)                             // 删除
+	api.GET("/:id", GetUser)                                                     // 查单个
+	api.GET("/list", middleware.CheckPerm("USER_ALL", "USER_LIST"), GetUserList) // 查列表
+	api.POST("/create", CreateUser)                                              // 创建
+	api.POST("/update", UpdateUser)                                              // 更新
+	api.POST("/delete/:id", DeleteUser)                                          // 删除
 }
 
 func GetUser(c *gin.Context) {

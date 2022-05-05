@@ -4,7 +4,7 @@ import (
 	"houserqu.com/gin-starter/core"
 )
 
-func GetUserPermissions(userId int) (allowPermIds []string, err error) {
+func GetUserPermissions(userId uint) (allowPermIds []string, err error) {
 	// 查用户角色
 	var relRoles []RelUserRole
 	err = core.Mysql.Where("user_id = ?", userId).Find(&relRoles).Error
@@ -16,14 +16,14 @@ func GetUserPermissions(userId int) (allowPermIds []string, err error) {
 		return
 	}
 
-	var roleIds []string
+	var roleIds []uint
 	for _, v := range relRoles {
 		roleIds = append(roleIds, v.RoleID)
 	}
 
 	// 查角色权限ID
 	var relRolePermissions []relRolePermission
-	err = core.Mysql.Where("role_id IN (?)", roleIds).Find(&relRolePermissions).Error
+	err = core.Mysql.Where("role_id IN ?", roleIds).Find(&relRolePermissions).Error
 	if err != nil {
 		return
 	}
@@ -35,7 +35,7 @@ func GetUserPermissions(userId int) (allowPermIds []string, err error) {
 
 	// 查权限列表
 	var permissions []Permission
-	err = core.Mysql.Where("id IN (?)", permissionIds).Find(&permissions).Error
+	err = core.Mysql.Where("id IN ?", permissionIds).Find(&permissions).Error
 	if err != nil {
 		return
 	}
