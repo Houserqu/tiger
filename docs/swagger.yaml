@@ -1,44 +1,4 @@
 definitions:
-  config.CreatePageDto:
-    properties:
-      config:
-        type: string
-      extend:
-        type: string
-      name:
-        type: string
-      path:
-        type: string
-    required:
-    - config
-    - name
-    - path
-    type: object
-  config.DeletePageDto:
-    properties:
-      id:
-        type: integer
-    required:
-    - id
-    type: object
-  config.UpdatePageDto:
-    properties:
-      config:
-        type: string
-      extend:
-        type: string
-      id:
-        type: integer
-      name:
-        type: string
-      path:
-        type: string
-    required:
-    - config
-    - id
-    - name
-    - path
-    type: object
   login.LoginDto:
     properties:
       password:
@@ -49,51 +9,35 @@ definitions:
     - password
     - phone
     type: object
+  page.CreatePageReq:
+    properties:
+      config:
+        type: string
+      extend:
+        type: string
+      icon:
+        type: string
+      name:
+        type: string
+      path:
+        type: string
+    required:
+    - config
+    - name
+    - path
+    type: object
+  page.DeletePageReq:
+    properties:
+      id:
+        type: integer
+    required:
+    - id
+    type: object
 info:
   contact: {}
   title: API 文档
   version: "1.0"
 paths:
-  /api/config/create-page:
-    post:
-      parameters:
-      - description: 参数
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/config.CreatePageDto'
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: number
-      summary: 创建页面
-      tags:
-      - 配置
-  /api/config/delete-page:
-    post:
-      parameters:
-      - description: 参数
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/config.DeletePageDto'
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: number
-      summary: 删除页面
-      tags:
-      - 配置
-  /api/config/menus:
-    get:
-      responses: {}
-      summary: 获取菜单
-      tags:
-      - 配置
   /api/config/page:
     get:
       parameters:
@@ -103,45 +47,9 @@ paths:
         required: true
         type: string
       responses: {}
-      summary: 获取页面配置
+      summary: 页面详情
       tags:
-      - 配置
-  /api/config/pages:
-    get:
-      parameters:
-      - in: query
-        name: name
-        type: string
-      - in: query
-        name: page
-        type: integer
-      - in: query
-        name: path
-        type: string
-      - in: query
-        name: perPage
-        type: integer
-      responses: {}
-      summary: 获取页面配置
-      tags:
-      - 配置
-  /api/config/update-page:
-    post:
-      parameters:
-      - description: 参数
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/config.UpdatePageDto'
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: number
-      summary: 更新页面
-      tags:
-      - 配置
+      - 页面
   /api/login/adminloginInfo:
     get:
       responses: {}
@@ -171,4 +79,81 @@ paths:
       summary: 手机号密码登录
       tags:
       - 登录
+  /api/menu/list:
+    get:
+      responses: {}
+      summary: 菜单列表
+      tags:
+      - 菜单
+  /api/page/create:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/page.CreatePageReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: number
+      summary: 创建页面
+      tags:
+      - 页面
+  /api/page/delete:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/page.DeletePageReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: number
+      summary: 删除页面
+      tags:
+      - 页面
+  /api/page/list:
+    get:
+      parameters:
+      - in: query
+        name: name
+        type: string
+      - in: query
+        name: page
+        type: integer
+      - in: query
+        name: path
+        type: string
+      - in: query
+        name: perPage
+        type: integer
+      responses: {}
+      summary: 页面列表
+      tags:
+      - 页面
+  /api/page/update:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: params
+        required: true
+        schema:
+          additionalProperties: true
+          type: object
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: number
+      summary: 更新页面
+      tags:
+      - 页面
 swagger: "2.0"

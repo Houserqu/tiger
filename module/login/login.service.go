@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"houserqu.com/gin-starter/core"
-	"houserqu.com/gin-starter/module/config"
+	"houserqu.com/gin-starter/module/menu"
 	"houserqu.com/gin-starter/module/user"
 )
 
@@ -15,8 +15,8 @@ type UserInfo struct {
 	Phone string `json:"phone"`
 }
 type AdminLoginInfo struct {
-	UserInfo UserInfo      `json:"userInfo"`
-	Menus    []config.Menu `json:"menus"`
+	UserInfo UserInfo    `json:"userInfo"`
+	Menus    []menu.Menu `json:"menus"`
 }
 
 // 根据手机号+密码校验用户
@@ -59,7 +59,7 @@ func GetAdminLoginInfoByUserId(c *gin.Context, adminLoginInfo *AdminLoginInfo, u
 	// 查权限信息
 
 	// 查菜单信息
-	err = config.GetMenusByUserId(c, &adminLoginInfo.Menus, userId)
+	err = menu.GetMenusByUserId(c, &adminLoginInfo.Menus, userId)
 	if err != nil {
 		return err
 	}

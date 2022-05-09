@@ -1,4 +1,4 @@
-package config
+package page
 
 import (
 	"errors"
@@ -36,7 +36,7 @@ func GetPageByPath(c *gin.Context, page *Page, path string) error {
 	return nil
 }
 
-func GetPageList(c *gin.Context, pages *[]Page, params *PageListDto) (int64, error) {
+func GetPageList(c *gin.Context, pages *[]Page, params *PageListReq) (int64, error) {
 	query := core.Mysql.Model(&Page{})
 
 	// 处理查询条件
@@ -65,7 +65,7 @@ func GetPageList(c *gin.Context, pages *[]Page, params *PageListDto) (int64, err
 	return total, nil
 }
 
-func CreatePage(c *gin.Context, params CreatePageDto) (uint, error) {
+func CreatePage(c *gin.Context, params CreatePageReq) (uint, error) {
 	page := Page{Name: params.Name, Path: params.Path, Config: params.Config, Extend: params.Extend, Icon: params.Icon}
 
 	err := core.Mysql.Create(&page).Error

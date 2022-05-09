@@ -11,8 +11,9 @@ import (
 	"houserqu.com/gin-starter/core"
 	_ "houserqu.com/gin-starter/docs"
 	"houserqu.com/gin-starter/middleware"
-	"houserqu.com/gin-starter/module/config"
 	"houserqu.com/gin-starter/module/login"
+	"houserqu.com/gin-starter/module/menu"
+	"houserqu.com/gin-starter/module/page"
 	"houserqu.com/gin-starter/module/user"
 	"houserqu.com/gin-starter/module/view"
 )
@@ -55,9 +56,10 @@ func main() {
 
 	// 注册每个模块中定义的路由
 	view.Controller(r)
-	config.Controller(r) // 系统配置
-	user.Controller(r)   // 用户
-	login.Controller(r)  // 登录注册
+	page.Controller(r)  // 页面
+	menu.Controller(r)  // 菜单
+	user.Controller(r)  // 用户
+	login.Controller(r) // 登录注册
 
 	// 监听端口
 	err := r.Run(viper.GetString("server.addr"))

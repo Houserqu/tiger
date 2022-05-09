@@ -1,4 +1,4 @@
-package config
+package page
 
 import (
 	time "time"

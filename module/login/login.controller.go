@@ -7,7 +7,7 @@ import (
 	"houserqu.com/gin-starter/middleware"
 )
 
-type LoginDto struct {
+type LoginReq struct {
 	Phone    string `json:"phone" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
@@ -27,14 +27,14 @@ func Controller(r *gin.Engine) {
 // @Router /api/login/phone [post]
 func LoginByPhone(c *gin.Context) {
 	// 参数校验
-	var loginDto LoginDto
-	if err := c.ShouldBindJSON(&loginDto); err != nil {
+	var loginReq LoginReq
+	if err := c.ShouldBindJSON(&loginReq); err != nil {
 		core.ResError(c, core.ErrParam, err.Error())
 		return
 	}
 
 	// 查询用户
-	user, err := CheckUserByPhoneAndPassword(c, loginDto.Phone, loginDto.Password)
+	user, err := CheckUserByPhoneAndPassword(c, loginReq.Phone, loginReq.Password)
 	if err != nil {
 		core.ResError(c, core.ErrLoginFail, err.Error())
 		return

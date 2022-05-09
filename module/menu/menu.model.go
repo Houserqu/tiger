@@ -1,4 +1,4 @@
-package config
+package menu
 
 import (
 	time "time"

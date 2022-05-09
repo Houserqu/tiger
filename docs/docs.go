@@ -16,75 +16,12 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/config/create-page": {
-            "post": {
-                "tags": [
-                    "配置"
-                ],
-                "summary": "创建页面",
-                "parameters": [
-                    {
-                        "description": "参数",
-                        "name": "params",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/config.CreatePageDto"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "number"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/config/delete-page": {
-            "post": {
-                "tags": [
-                    "配置"
-                ],
-                "summary": "删除页面",
-                "parameters": [
-                    {
-                        "description": "参数",
-                        "name": "params",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/config.DeletePageDto"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "number"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/config/menus": {
-            "get": {
-                "tags": [
-                    "配置"
-                ],
-                "summary": "获取菜单",
-                "responses": {}
-            }
-        },
         "/api/config/page": {
             "get": {
                 "tags": [
-                    "配置"
+                    "页面"
                 ],
-                "summary": "获取页面配置",
+                "summary": "页面详情",
                 "parameters": [
                     {
                         "type": "string",
@@ -95,64 +32,6 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {}
-            }
-        },
-        "/api/config/pages": {
-            "get": {
-                "tags": [
-                    "配置"
-                ],
-                "summary": "获取页面配置",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "name": "name",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "name": "page",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "name": "path",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "name": "perPage",
-                        "in": "query"
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/api/config/update-page": {
-            "post": {
-                "tags": [
-                    "配置"
-                ],
-                "summary": "更新页面",
-                "parameters": [
-                    {
-                        "description": "参数",
-                        "name": "params",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/config.UpdatePageDto"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "number"
-                        }
-                    }
-                }
             }
         },
         "/api/login/adminloginInfo": {
@@ -199,68 +78,131 @@ const docTemplate = `{
                 ],
                 "responses": {}
             }
+        },
+        "/api/menu/list": {
+            "get": {
+                "tags": [
+                    "菜单"
+                ],
+                "summary": "菜单列表",
+                "responses": {}
+            }
+        },
+        "/api/page/create": {
+            "post": {
+                "tags": [
+                    "页面"
+                ],
+                "summary": "创建页面",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/page.CreatePageReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/page/delete": {
+            "post": {
+                "tags": [
+                    "页面"
+                ],
+                "summary": "删除页面",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/page.DeletePageReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/page/list": {
+            "get": {
+                "tags": [
+                    "页面"
+                ],
+                "summary": "页面列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "path",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "perPage",
+                        "in": "query"
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/api/page/update": {
+            "post": {
+                "tags": [
+                    "页面"
+                ],
+                "summary": "更新页面",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
-        "config.CreatePageDto": {
-            "type": "object",
-            "required": [
-                "config",
-                "name",
-                "path"
-            ],
-            "properties": {
-                "config": {
-                    "type": "string"
-                },
-                "extend": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "path": {
-                    "type": "string"
-                }
-            }
-        },
-        "config.DeletePageDto": {
-            "type": "object",
-            "required": [
-                "id"
-            ],
-            "properties": {
-                "id": {
-                    "type": "integer"
-                }
-            }
-        },
-        "config.UpdatePageDto": {
-            "type": "object",
-            "required": [
-                "config",
-                "id",
-                "name",
-                "path"
-            ],
-            "properties": {
-                "config": {
-                    "type": "string"
-                },
-                "extend": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "path": {
-                    "type": "string"
-                }
-            }
-        },
         "login.LoginDto": {
             "type": "object",
             "required": [
@@ -273,6 +215,42 @@ const docTemplate = `{
                 },
                 "phone": {
                     "type": "string"
+                }
+            }
+        },
+        "page.CreatePageReq": {
+            "type": "object",
+            "required": [
+                "config",
+                "name",
+                "path"
+            ],
+            "properties": {
+                "config": {
+                    "type": "string"
+                },
+                "extend": {
+                    "type": "string"
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                }
+            }
+        },
+        "page.DeletePageReq": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
                 }
             }
         }

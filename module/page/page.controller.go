@@ -1,11 +1,12 @@
-package config
+package page
 
 import (
 	"github.com/gin-gonic/gin"
 	"houserqu.com/gin-starter/core"
+	"houserqu.com/gin-starter/middleware"
 )
 
-type PageListDto struct {
+type PageListReq struct {
 	Page    int    `form:"page,default=1"`
 	PerPage int    `form:"perPage,default=20"`
 	Name    string `form:"name"`
@@ -14,18 +15,17 @@ type PageListDto struct {
 
 func Controller(r *gin.Engine) {
 	// 创建 group 并绑定中间件
-	api := r.Group("/api/config")
+	api := r.Group("/api/page", middleware.CheckLogin())
 
-	api.GET("page", getPage)
-	api.GET("pages", getPages)
-	api.POST("create-page", createPage)
-	api.POST("delete-page", deletePage)
-	api.POST("update-page", updatePage)
-	api.GET("menus", getMenus)
+	api.GET("detail", getPage)
+	api.GET("list", getPages)
+	api.POST("create", createPage)
+	api.POST("delete", deletePage)
+	api.POST("update", updatePage)
 }
 
-// @Summary 获取页面配置
-// @Tags 配置
+// @Summary 页面详情
+// @Tags 页面
 // @Param path query string true "path"
 // @Router /api/config/page [get]
 func getPage(c *gin.Context) {
@@ -39,12 +39,12 @@ func getPage(c *gin.Context) {
 	core.ResSuccess(c, page)
 }
 
-// @Summary 获取页面配置
-// @Tags 配置
-// @Param path query config.PageListDto true "query"
-// @Router /api/config/pages [get]
+// @Summary 页面列表
+// @Tags 页面
+// @Param path query page.PageListReq true "query"
+// @Router /api/page/list [get]
 func getPages(c *gin.Context) {
-	var pageListDto PageListDto
+	var pageListDto PageListReq
 	if err := c.ShouldBindQuery(&pageListDto); err != nil {
 		core.ResError(c, core.ErrParam, err.Error())
 		return
@@ -64,21 +64,7 @@ func getPages(c *gin.Context) {
 	})
 }
 
-// @Summary 获取菜单
-// @Tags 配置
-// @Router /api/config/menus [get]
-func getMenus(c *gin.Context) {
-	var menus []Menu
-	err := GetMenus(c, &menus)
-	if err != nil {
-		core.ResError(c, core.ErrGetMenus, err.Error())
-		return
-	}
-
-	core.ResSuccess(c, menus)
-}
-
-type CreatePageDto struct {
+type CreatePageReq struct {
 	Name   string `json:"name" binding:"required"`
 	Path   string `json:"path" binding:"required"`
 	Icon   string `json:"icon"`
@@ -87,19 +73,19 @@ type CreatePageDto struct {
 }
 
 // @Summary 创建页面
-// @Tags 配置
-// @Router /api/config/create-page [post]
-// @Param params body config.CreatePageDto true "参数"
+// @Tags 页面
+// @Router /api/page/create [post]
+// @Param params body page.CreatePageReq true "参数"
 // @Success 200 {number} 1
 func createPage(c *gin.Context) {
 	// 参数校验
-	var createPagetDto CreatePageDto
-	if err := c.ShouldBindJSON(&createPagetDto); err != nil {
+	var createPageReq CreatePageReq
+	if err := c.ShouldBindJSON(&createPageReq); err != nil {
 		core.ResError(c, core.ErrParam, err.Error())
 		return
 	}
 
-	id, err := CreatePage(c, createPagetDto)
+	id, err := CreatePage(c, createPageReq)
 	if err != nil {
 		core.ResError(c, core.ErrCreatePage, err.Error())
 		return
@@ -108,24 +94,24 @@ func createPage(c *gin.Context) {
 	core.ResSuccess(c, id)
 }
 
-type DeletePageDto struct {
+type DeletePageReq struct {
 	ID uint `form:"id" binding:"required"`
 }
 
 // @Summary 删除页面
-// @Tags 配置
-// @Router /api/config/delete-page [post]
-// @Param params body config.DeletePageDto true "参数"
+// @Tags 页面
+// @Router /api/page/delete [post]
+// @Param params body page.DeletePageReq true "参数"
 // @Success 200 {number} 1
 func deletePage(c *gin.Context) {
 	// 参数校验
-	var deletePageDto DeletePageDto
-	if err := c.ShouldBindJSON(&deletePageDto); err != nil {
+	var deletePageReq DeletePageReq
+	if err := c.ShouldBindJSON(&deletePageReq); err != nil {
 		core.ResError(c, core.ErrParam, err.Error())
 		return
 	}
 
-	id, err := DeletePage(c, deletePageDto.ID)
+	id, err := DeletePage(c, deletePageReq.ID)
 	if err != nil {
 		core.ResError(c, core.ErrDeletePage, err.Error())
 		return
@@ -134,19 +120,10 @@ func deletePage(c *gin.Context) {
 	core.ResSuccess(c, id)
 }
 
-type UpdatePageDto struct {
-	ID     uint   `form:"id" binding:"required"`
-	Name   string `form:"name"`
-	Path   string `form:"path"`
-	Icon   string `form:"icon"`
-	Config string `form:"config"`
-	Extend string `form:"extend"`
-}
-
 // @Summary 更新页面
-// @Tags 配置
-// @Router /api/config/update-page [post]
-// @Param params body config.UpdatePageDto true "参数"
+// @Tags 页面
+// @Router /api/page/update [post]
+// @Param params body map[string]interface{} true "参数"
 // @Success 200 {number} 1
 func updatePage(c *gin.Context) {
 	// 参数校验
