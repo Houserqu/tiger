@@ -2,6 +2,7 @@ package menu
 
 import (
 	"github.com/gin-gonic/gin"
+	"houserqu.com/gin-starter/constants"
 	"houserqu.com/gin-starter/core"
 	"houserqu.com/gin-starter/middleware"
 )
@@ -17,7 +18,7 @@ func Controller(r *gin.Engine) {
 	// 创建 group 并绑定中间件
 	api := r.Group("/api/menu", middleware.CheckLogin())
 
-	api.GET("list", getMenus)
+	api.GET("list", getMenus, middleware.CheckPerm(constants.PER_ADMIN))
 }
 
 // @Summary 菜单列表

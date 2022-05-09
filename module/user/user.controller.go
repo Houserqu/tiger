@@ -4,6 +4,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"houserqu.com/gin-starter/constants"
 	"houserqu.com/gin-starter/core"
 	"houserqu.com/gin-starter/middleware"
 )
@@ -22,13 +23,13 @@ type ReqModelUpdate struct {
 
 func Controller(r *gin.Engine) {
 	// 创建 group 并绑定中间件
-	api := r.Group("/api/user", middleware.CheckLogin())
+	api := r.Group("/api/user", middleware.CheckLogin(), middleware.CheckPerm(constants.PER_USER_ALL))
 
-	api.GET("/:id", GetUser)                                                     // 查单个
-	api.GET("/list", middleware.CheckPerm("USER_ALL", "USER_LIST"), GetUserList) // 查列表
-	api.POST("/create", CreateUser)                                              // 创建
-	api.POST("/update", UpdateUser)                                              // 更新
-	api.POST("/delete/:id", DeleteUser)                                          // 删除
+	api.GET("/:id", GetUser)                                                             // 查单个
+	api.GET("/list", middleware.CheckPerm(constants.PER_USER_LIST), GetUserList)         // 查列表
+	api.POST("/create", middleware.CheckPerm(constants.PER_USER_CREATE), CreateUser)     // 创建
+	api.POST("/update", middleware.CheckPerm(constants.PER_USER_UPDATE), UpdateUser)     // 更新
+	api.POST("/delete/:id", middleware.CheckPerm(constants.PER_USER_DELETE), DeleteUser) // 删除
 }
 
 func GetUser(c *gin.Context) {
