@@ -22,7 +22,7 @@ type AdminLoginInfo struct {
 // 根据手机号+密码校验用户
 func CheckUserByPhoneAndPassword(c *gin.Context, phone string, password string) (user.User, error) {
 	var user user.User
-	err := core.Mysql.Where(map[string]any{"Phone": phone}).First(&user).Error
+	err := core.Mysql.Where(map[string]string{"Phone": phone}).First(&user).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return user, errors.New("手机号不存在")

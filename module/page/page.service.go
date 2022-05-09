@@ -23,7 +23,7 @@ func GetPageByID(c *gin.Context, page *Page, pageId uint) error {
 }
 
 func GetPageByPath(c *gin.Context, page *Page, path string) error {
-	err := core.Mysql.Where(map[string]any{"Path": path}).First(&page).Error
+	err := core.Mysql.Where(map[string]string{"Path": path}).First(&page).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return errors.New("页面不存在")
@@ -77,7 +77,7 @@ func CreatePage(c *gin.Context, params CreatePageReq) (uint, error) {
 	return page.ID, nil
 }
 
-func UpdatePage(c *gin.Context, params map[string]any) error {
+func UpdatePage(c *gin.Context, params map[string]UpdatePageDto) error {
 
 	err := core.Mysql.Model(&Page{}).Where("id = ?", params["id"]).Updates(params).Error
 	if err != nil {

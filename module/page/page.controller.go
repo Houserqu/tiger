@@ -127,7 +127,7 @@ func deletePage(c *gin.Context) {
 // @Success 200 {number} 1
 func updatePage(c *gin.Context) {
 	// 参数校验
-	var updatePageDto map[string]any
+	var updatePageDto map[string]UpdatePageDto
 	if err := c.ShouldBindJSON(&updatePageDto); err != nil {
 		core.ResError(c, core.ErrParam, err.Error())
 		return
