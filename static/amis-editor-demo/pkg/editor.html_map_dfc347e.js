@@ -416,11 +416,11 @@ amis.require.resourceMap({
   },
   "pkg": {
     "p5": {
-      "url": "/amis-editor-demo/pkg/rest_71fecb7.js",
+      "url": "/amis-editor-demo/pkg/rest_766cd48.js",
       "type": "js"
     },
     "p4": {
-      "url": "/amis-editor-demo/pkg/app_dff09f4.js",
+      "url": "/amis-editor-demo/pkg/app_4a773ad.js",
       "type": "js"
     },
     "p1": {

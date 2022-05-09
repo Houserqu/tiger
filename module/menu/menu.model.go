@@ -14,7 +14,7 @@ type Menu struct {
 	Icon        string         `json:"icon"`
 	Permissions string         `json:"permissions"`
 	Target      string         `json:"target"`
-	DeletedAt   gorm.DeletedAt `json:"deleted_at"`
+	DeletedAt   gorm.DeletedAt `json:"deleted_at" swaggertype:"string"`
 	CreatedAt   time.Time      `json:"created_at"`
 	UpdatedAt   time.Time      `json:"updated_at"`
 }

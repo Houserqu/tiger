@@ -24,6 +24,7 @@ func Controller(r *gin.Engine) {
 // @Summary 菜单列表
 // @Tags 菜单
 // @Router /api/menu/list [get]
+// @Success 200 {object} menu.Menu
 func getMenus(c *gin.Context) {
 	var menus []Menu
 	err := GetMenus(c, &menus)

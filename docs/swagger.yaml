@@ -1,5 +1,5 @@
 definitions:
-  login.LoginDto:
+  login.LoginReq:
     properties:
       password:
         type: string
@@ -8,6 +8,29 @@ definitions:
     required:
     - password
     - phone
+    type: object
+  menu.Menu:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      icon:
+        type: string
+      id:
+        type: integer
+      label:
+        type: string
+      parent_id:
+        type: integer
+      permissions:
+        type: string
+      target:
+        type: string
+      to:
+        type: string
+      updated_at:
+        type: string
     type: object
   page.CreatePageReq:
     properties:
@@ -56,6 +79,19 @@ paths:
       summary: 获取管理员登录信息
       tags:
       - 登录
+  /api/login/loginByPhone:
+    post:
+      parameters:
+      - description: body
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/login.LoginReq'
+      responses: {}
+      summary: 手机号密码登录
+      tags:
+      - 登录
   /api/login/logout:
     get:
       responses:
@@ -66,22 +102,13 @@ paths:
       summary: 注销
       tags:
       - 登录
-  /api/login/phone:
-    post:
-      parameters:
-      - description: 'cansh '
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/login.LoginDto'
-      responses: {}
-      summary: 手机号密码登录
-      tags:
-      - 登录
   /api/menu/list:
     get:
-      responses: {}
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/menu.Menu'
       summary: 菜单列表
       tags:
       - 菜单

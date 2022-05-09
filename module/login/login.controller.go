@@ -24,8 +24,8 @@ func Controller(r *gin.Engine) {
 
 // @Summary 手机号密码登录
 // @Tags 登录
-// @Param params body login.LoginDto true "cansh "
-// @Router /api/login/phone [post]
+// @Param params body login.LoginReq true "body"
+// @Router /api/login/loginByPhone [post]
 func LoginByPhone(c *gin.Context) {
 	// 参数校验
 	var loginReq LoginReq

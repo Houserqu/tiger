@@ -43,6 +43,26 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/api/login/loginByPhone": {
+            "post": {
+                "tags": [
+                    "登录"
+                ],
+                "summary": "手机号密码登录",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/login.LoginReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/api/login/logout": {
             "get": {
                 "tags": [
@@ -59,33 +79,20 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/login/phone": {
-            "post": {
-                "tags": [
-                    "登录"
-                ],
-                "summary": "手机号密码登录",
-                "parameters": [
-                    {
-                        "description": "cansh ",
-                        "name": "params",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/login.LoginDto"
-                        }
-                    }
-                ],
-                "responses": {}
-            }
-        },
         "/api/menu/list": {
             "get": {
                 "tags": [
                     "菜单"
                 ],
                 "summary": "菜单列表",
-                "responses": {}
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/menu.Menu"
+                        }
+                    }
+                }
             }
         },
         "/api/page/create": {
@@ -203,7 +210,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "login.LoginDto": {
+        "login.LoginReq": {
             "type": "object",
             "required": [
                 "password",
@@ -214,6 +221,41 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "phone": {
+                    "type": "string"
+                }
+            }
+        },
+        "menu.Menu": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "parent_id": {
+                    "type": "integer"
+                },
+                "permissions": {
+                    "type": "string"
+                },
+                "target": {
+                    "type": "string"
+                },
+                "to": {
+                    "type": "string"
+                },
+                "updated_at": {
                     "type": "string"
                 }
             }
