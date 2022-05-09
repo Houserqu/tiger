@@ -2,6 +2,7 @@ package page
 
 import (
 	"github.com/gin-gonic/gin"
+	"houserqu.com/gin-starter/constants"
 	"houserqu.com/gin-starter/core"
 	"houserqu.com/gin-starter/middleware"
 )
@@ -32,7 +33,7 @@ func getPage(c *gin.Context) {
 	var page Page
 	err := GetPageByPath(c, &page, c.Query("path"))
 	if err != nil {
-		core.ResError(c, core.ErrGetPage, err.Error())
+		core.ResError(c, constants.ErrGetPage, err.Error())
 		return
 	}
 
@@ -46,7 +47,7 @@ func getPage(c *gin.Context) {
 func getPages(c *gin.Context) {
 	var pageListDto PageListReq
 	if err := c.ShouldBindQuery(&pageListDto); err != nil {
-		core.ResError(c, core.ErrParam, err.Error())
+		core.ResError(c, constants.ErrParam, err.Error())
 		return
 	}
 
@@ -54,7 +55,7 @@ func getPages(c *gin.Context) {
 	var total int64
 	total, err := GetPageList(c, &pages, &pageListDto)
 	if err != nil {
-		core.ResError(c, core.ErrGetPage, err.Error())
+		core.ResError(c, constants.ErrGetPage, err.Error())
 		return
 	}
 
@@ -81,13 +82,13 @@ func createPage(c *gin.Context) {
 	// 参数校验
 	var createPageReq CreatePageReq
 	if err := c.ShouldBindJSON(&createPageReq); err != nil {
-		core.ResError(c, core.ErrParam, err.Error())
+		core.ResError(c, constants.ErrParam, err.Error())
 		return
 	}
 
 	id, err := CreatePage(c, createPageReq)
 	if err != nil {
-		core.ResError(c, core.ErrCreatePage, err.Error())
+		core.ResError(c, constants.ErrCreatePage, err.Error())
 		return
 	}
 
@@ -107,13 +108,13 @@ func deletePage(c *gin.Context) {
 	// 参数校验
 	var deletePageReq DeletePageReq
 	if err := c.ShouldBindJSON(&deletePageReq); err != nil {
-		core.ResError(c, core.ErrParam, err.Error())
+		core.ResError(c, constants.ErrParam, err.Error())
 		return
 	}
 
 	id, err := DeletePage(c, deletePageReq.ID)
 	if err != nil {
-		core.ResError(c, core.ErrDeletePage, err.Error())
+		core.ResError(c, constants.ErrDeletePage, err.Error())
 		return
 	}
 
@@ -127,17 +128,17 @@ func deletePage(c *gin.Context) {
 // @Success 200 {number} 1
 func updatePage(c *gin.Context) {
 	// 参数校验
-	var updatePageDto map[string]UpdatePageDto
-	if err := c.ShouldBindJSON(&updatePageDto); err != nil {
-		core.ResError(c, core.ErrParam, err.Error())
+	var updatePageReq map[string]string
+	if err := c.ShouldBindJSON(&updatePageReq); err != nil {
+		core.ResError(c, constants.ErrParam, err.Error())
 		return
 	}
 
-	err := UpdatePage(c, updatePageDto)
+	err := UpdatePage(c, updatePageReq)
 	if err != nil {
-		core.ResError(c, core.ErrUpdatePage, err.Error())
+		core.ResError(c, constants.ErrUpdatePage, err.Error())
 		return
 	}
 
-	core.ResSuccess(c, updatePageDto["id"])
+	core.ResSuccess(c, updatePageReq["id"])
 }

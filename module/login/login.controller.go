@@ -3,6 +3,7 @@ package login
 import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"houserqu.com/gin-starter/constants"
 	"houserqu.com/gin-starter/core"
 	"houserqu.com/gin-starter/middleware"
 )
@@ -29,14 +30,14 @@ func LoginByPhone(c *gin.Context) {
 	// 参数校验
 	var loginReq LoginReq
 	if err := c.ShouldBindJSON(&loginReq); err != nil {
-		core.ResError(c, core.ErrParam, err.Error())
+		core.ResError(c, constants.ErrParam, err.Error())
 		return
 	}
 
 	// 查询用户
 	user, err := CheckUserByPhoneAndPassword(c, loginReq.Phone, loginReq.Password)
 	if err != nil {
-		core.ResError(c, core.ErrLoginFail, err.Error())
+		core.ResError(c, constants.ErrLoginFail, err.Error())
 		return
 	}
 
@@ -44,7 +45,7 @@ func LoginByPhone(c *gin.Context) {
 	var adminLoginInfo AdminLoginInfo
 	err = GetAdminLoginInfoByUserId(c, &adminLoginInfo, user.ID)
 	if err != nil {
-		core.ResError(c, core.ErrLoginInfoFail, err.Error())
+		core.ResError(c, constants.ErrLoginInfoFail, err.Error())
 		return
 	}
 
@@ -65,7 +66,7 @@ func GetAdminLoginInfo(c *gin.Context) {
 	var adminLoginInfo AdminLoginInfo
 	err := GetAdminLoginInfoByUserId(c, &adminLoginInfo, userId)
 	if err != nil {
-		core.ResError(c, core.ErrLoginInfoFail, err.Error())
+		core.ResError(c, constants.ErrLoginInfoFail, err.Error())
 		return
 	}
 

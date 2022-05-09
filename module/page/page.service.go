@@ -77,7 +77,7 @@ func CreatePage(c *gin.Context, params CreatePageReq) (uint, error) {
 	return page.ID, nil
 }
 
-func UpdatePage(c *gin.Context, params map[string]UpdatePageDto) error {
+func UpdatePage(c *gin.Context, params map[string]string) error {
 
 	err := core.Mysql.Model(&Page{}).Where("id = ?", params["id"]).Updates(params).Error
 	if err != nil {

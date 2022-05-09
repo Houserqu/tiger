@@ -28,7 +28,7 @@ func getMenus(c *gin.Context) {
 	var menus []Menu
 	err := GetMenus(c, &menus)
 	if err != nil {
-		core.ResError(c, core.ErrGetMenus, err.Error())
+		core.ResError(c, constants.ErrGetMenus, err.Error())
 		return
 	}
 
