@@ -31,8 +31,7 @@ func Controller(r *gin.Engine) {
 // @Param path query string true "path"
 // @Router /api/config/page [get]
 func getPage(c *gin.Context) {
-	var page Page
-	err := GetPageByPath(c, &page, c.Query("path"))
+	page, err := GetPageByPath(c, c.Query("path"))
 	if err != nil {
 		core.ResError(c, constants.ErrGetPage, err.Error())
 		return
@@ -91,13 +90,21 @@ func createPage(c *gin.Context) {
 		return
 	}
 
-	id, err := CreatePage(c, createPageReq)
+	page := Page{
+		Name:   createPageReq.Name,
+		Path:   createPageReq.Path,
+		Config: createPageReq.Config,
+		Extend: createPageReq.Extend,
+		Icon:   createPageReq.Icon,
+	}
+
+	err := utils.CRUDCreate(c, &page)
 	if err != nil {
 		core.ResError(c, constants.ErrCreatePage, err.Error())
 		return
 	}
 
-	core.ResSuccess(c, id)
+	core.ResSuccess(c, page)
 }
 
 type DeletePageReq struct {
@@ -117,7 +124,7 @@ func deletePage(c *gin.Context) {
 		return
 	}
 
-	id, err := DeletePage(c, deletePageReq.ID)
+	id, err := utils.CURDDeleteByiD(c, &Page{}, deletePageReq.ID)
 	if err != nil {
 		core.ResError(c, constants.ErrDeletePage, err.Error())
 		return
@@ -129,7 +136,7 @@ func deletePage(c *gin.Context) {
 // @Summary 更新页面
 // @Tags 页面
 // @Router /api/page/update [post]
-// @Param params body map[string]interface{} true "参数"
+// @Param params body page.CreatePageReq true "参数"
 // @Success 200 {number} 1
 func updatePage(c *gin.Context) {
 	// 参数校验
@@ -139,11 +146,11 @@ func updatePage(c *gin.Context) {
 		return
 	}
 
-	err := UpdatePage(c, updatePageReq)
+	id, err := utils.CRUDUpdateByID(c, &Page{}, updatePageReq)
 	if err != nil {
 		core.ResError(c, constants.ErrUpdatePage, err.Error())
 		return
 	}
 
-	core.ResSuccess(c, updatePageReq["id"])
+	core.ResSuccess(c, id)
 }

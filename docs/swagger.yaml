@@ -173,8 +173,7 @@ paths:
         name: params
         required: true
         schema:
-          additionalProperties: true
-          type: object
+          $ref: '#/definitions/page.CreatePageReq'
       responses:
         "200":
           description: OK
