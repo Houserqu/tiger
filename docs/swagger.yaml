@@ -73,7 +73,7 @@ paths:
       summary: 页面详情
       tags:
       - 页面
-  /api/login/adminloginInfo:
+  /api/login/adminLoginInfo:
     get:
       responses: {}
       summary: 获取管理员登录信息

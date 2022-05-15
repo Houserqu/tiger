@@ -59,7 +59,7 @@ func LoginByPhone(c *gin.Context) {
 
 // @Summary 获取管理员登录信息
 // @Tags 登录
-// @Router /api/login/adminloginInfo [get]
+// @Router /api/login/adminLoginInfo [get]
 func GetAdminLoginInfo(c *gin.Context) {
 	userId := c.GetUint("userId")
 
