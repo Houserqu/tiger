@@ -43,10 +43,9 @@ func main() {
 	}
 
 	// 静态文件
-	r.Static("/public", "./public")                            // 管理后台静态文件目录
+	r.Static("/public", "./static/public")                     // 管理后台静态文件目录
 	r.Static("/amis-editor-demo", "./static/amis-editor-demo") //
 	// html 模板文件
-	r.LoadHTMLGlob("./public/*.html")    // 管理后台 html 模板
 	r.LoadHTMLGlob("./static/**/*.html") // 管理后台 html 模板
 
 	// swagger

@@ -23,7 +23,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
       })
     ],
     build: {
-      outDir: '../public',
+      outDir: '../static/public',
     },
     server: {
       host: '0.0.0.0',

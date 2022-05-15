@@ -21,7 +21,7 @@ config.yaml
 __MACOSX/
 logs/
 tmp
-/public
+/static/public
 
 .DS_Store
 
