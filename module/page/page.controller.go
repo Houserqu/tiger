@@ -5,6 +5,7 @@ import (
 	"houserqu.com/gin-starter/constants"
 	"houserqu.com/gin-starter/core"
 	"houserqu.com/gin-starter/middleware"
+	"houserqu.com/gin-starter/utils"
 )
 
 type PageListReq struct {
@@ -45,15 +46,19 @@ func getPage(c *gin.Context) {
 // @Param path query page.PageListReq true "query"
 // @Router /api/page/list [get]
 func getPages(c *gin.Context) {
-	var pageListDto PageListReq
-	if err := c.ShouldBindQuery(&pageListDto); err != nil {
+	var pageListReq PageListReq
+	if err := c.ShouldBindQuery(&pageListReq); err != nil {
 		core.ResError(c, constants.ErrParam, err.Error())
 		return
 	}
 
+	where := map[string]any{
+		"name": pageListReq.Name,
+		"path": pageListReq.Path,
+	}
+
 	var pages []Page
-	var total int64
-	total, err := GetPageList(c, &pages, &pageListDto)
+	total, err := utils.CRUDPageList(c, &Page{}, &pages, where)
 	if err != nil {
 		core.ResError(c, constants.ErrGetPage, err.Error())
 		return
