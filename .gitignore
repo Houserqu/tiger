@@ -22,6 +22,7 @@ __MACOSX/
 logs/
 tmp
 /static/public
+yarn.lock
 
 .DS_Store
 

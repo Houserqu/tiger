@@ -5,6 +5,7 @@ import (
 	"houserqu.com/gin-starter/constants"
 	"houserqu.com/gin-starter/core"
 	"houserqu.com/gin-starter/middleware"
+	"houserqu.com/gin-starter/utils"
 )
 
 type PageListDto struct {
@@ -19,6 +20,7 @@ func Controller(r *gin.Engine) {
 	api := r.Group("/api/menu", middleware.CheckLogin())
 
 	api.GET("list", getMenus, middleware.CheckPerm(constants.PER_ADMIN))
+	api.POST("create", createMenu, middleware.CheckPerm(constants.PER_ADMIN))
 }
 
 // @Summary 菜单列表
@@ -34,4 +36,49 @@ func getMenus(c *gin.Context) {
 	}
 
 	core.ResSuccess(c, menus)
+}
+
+type CreateMenuReq struct {
+	ParentID    uint   `json:"parent_id"`
+	Label       string `json:"label" binding:"required"`
+	To          string `json:"to"`
+	Icon        string `json:"icon"`
+	Permissions string `json:"permissions"`
+	Target      string `json:"target"`
+}
+
+// @Summary 创建菜单
+// @Tags 菜单
+// @Router /api/menu/create [post]
+// @Param params body menu.CreateMenuReq true "参数"
+// @Success 200 {number} 1
+func createMenu(c *gin.Context) {
+	//参数校验
+	var createMenuReq CreateMenuReq
+	if err := c.ShouldBindJSON(&createMenuReq); err != nil {
+		core.ResError(c, constants.ErrParam, err.Error())
+		return
+	}
+
+	//TODO : check if ParentID exist?
+
+	/*
+
+	 */
+
+	menu := Menu{
+		ParentID:    createMenuReq.ParentID,
+		Label:       createMenuReq.Label,
+		To:          createMenuReq.To,
+		Icon:        createMenuReq.Icon,
+		Permissions: createMenuReq.Permissions,
+		Target:      createMenuReq.Target,
+	}
+
+	err := utils.CRUDCreate(c, &menu)
+	if err != nil {
+		core.ResError(c, constants.ErrCreatePage, err.Error())
+		return
+	}
+	core.ResSuccess(c, menu)
 }

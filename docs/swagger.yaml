@@ -9,6 +9,25 @@ definitions:
     - password
     - phone
     type: object
+  menu.CreateMenuReq:
+    properties:
+      icon:
+        type: string
+      label:
+        type: string
+      parent_id:
+        type: integer
+      permissions:
+        type: string
+      target:
+        type: string
+      to:
+        type: string
+    required:
+    - label
+    - parent_id
+    - to
+    type: object
   menu.Menu:
     properties:
       created_at:
@@ -102,6 +121,23 @@ paths:
       summary: 注销
       tags:
       - 登录
+  /api/menu/create:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/menu.CreateMenuReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: number
+      summary: 创建菜单
+      tags:
+      - 菜单
   /api/menu/list:
     get:
       responses:
