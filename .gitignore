@@ -16,7 +16,7 @@
 
 config.yaml
 /.idea
-/.vscode
+# /.vscode
 .DS_Store
 __MACOSX/
 logs/
@@ -39,7 +39,7 @@ pnpm-debug.log*
 
 # Editor directories and files
 .idea
-.vscode
+# .vscode
 *.suo
 *.ntvs*
 *.njsproj
