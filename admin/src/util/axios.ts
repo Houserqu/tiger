@@ -1,6 +1,7 @@
 
 import { toast } from 'amis';
 import Axios from 'axios'
+import history from '../history';
 
 const axios = Axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL
@@ -23,6 +24,11 @@ axios.interceptors.response.use((response) => {
 
   // 业务逻辑错误
   if (data.errno !== 0) {
+    if(data.errno === 402) {
+      history.replace('/admin/login')
+      return;
+    }
+
     if (errMsg) {
       toast.error(typeof errMsg === 'string' ? errMsg : data.msg || '系统繁忙', {
         title: '操作失败'
