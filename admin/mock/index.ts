@@ -20,7 +20,7 @@ const mock: MockMethod[] = [
     response: response(loginInfo)
   },
   {
-    url: '/api/user/login',
+    url: '/api/login/loginByPhone',
     method: 'post',
     response: response(loginInfo),
   },

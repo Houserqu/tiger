@@ -5,7 +5,7 @@ export const LoginUserInfoState = atom({
   default: null
 })
 
-export const LoginMenuState = atom({
+export const LoginMenuState = atom<Menu[]>({
   key: 'LoginMenuState',
   default: []
 })
