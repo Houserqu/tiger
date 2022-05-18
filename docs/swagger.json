@@ -69,6 +69,33 @@
                 }
             }
         },
+        "/api/menu/create": {
+            "post": {
+                "tags": [
+                    "菜单"
+                ],
+                "summary": "创建菜单",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/menu.CreateMenuReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
         "/api/menu/list": {
             "get": {
                 "tags": [
@@ -210,6 +237,34 @@
                     "type": "string"
                 },
                 "phone": {
+                    "type": "string"
+                }
+            }
+        },
+        "menu.CreateMenuReq": {
+            "type": "object",
+            "required": [
+                "label",
+                "parent_id",
+                "to"
+            ],
+            "properties": {
+                "icon": {
+                    "type": "string"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "parent_id": {
+                    "type": "integer"
+                },
+                "permissions": {
+                    "type": "string"
+                },
+                "target": {
+                    "type": "string"
+                },
+                "to": {
                     "type": "string"
                 }
             }
