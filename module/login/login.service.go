@@ -1,9 +1,8 @@
 package login
 
 import (
-	"errors"
-
 	"github.com/gin-gonic/gin"
+	"github.com/pkg/errors"
 	"gorm.io/gorm"
 	"houserqu.com/gin-starter/core"
 	"houserqu.com/gin-starter/module/menu"
@@ -28,9 +27,9 @@ func CheckUserByPhoneAndPassword(c *gin.Context, phone string, password string) 
 			return user, errors.New("手机号不存在")
 		}
 
-		// 不在预期内的异常记录日志，不能直接暴露给
+		// 不在预期内的异常记录日志，不能直接暴露给前端
 		core.Log(c).Error(err)
-		return user, errors.New("系统异常")
+		return user, errors.New("DB 错误")
 	}
 
 	if user.Password != password {
@@ -50,19 +49,18 @@ func GetAdminLoginInfoByUserId(c *gin.Context, adminLoginInfo *AdminLoginInfo, u
 			return errors.New("手机号不存在")
 		}
 
+		// TODO: 输出 sql
+		core.Log(c).Error(err)
 		return errors.New("查询用户信息失败")
 	}
 
 	adminLoginInfo.UserInfo.ID = user.ID
 	adminLoginInfo.UserInfo.Phone = user.Phone
 
-	// 查权限信息
+	// TODO: 查权限信息
 
 	// 查菜单信息
 	err = menu.GetMenusByUserId(c, &adminLoginInfo.Menus, userId)
-	if err != nil {
-		return err
-	}
 
-	return nil
+	return err
 }

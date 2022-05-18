@@ -34,7 +34,7 @@ const docTemplate = `{
                 "responses": {}
             }
         },
-        "/api/login/adminloginInfo": {
+        "/api/login/adminLoginInfo": {
             "get": {
                 "tags": [
                     "登录"
