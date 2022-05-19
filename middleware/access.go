@@ -11,7 +11,13 @@ import (
 
 func Access() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		reqId := uuid.NewV4()
+		var reqId string
+		if c.GetHeader("x-request-id") != "" {
+			reqId = c.GetHeader("x-request-id")
+		} else {
+			reqId = uuid.NewV4().String()
+		}
+
 		c.Set("reqId", reqId)
 		startTime := time.Now() // 开始时间
 

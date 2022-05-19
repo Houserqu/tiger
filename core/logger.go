@@ -3,6 +3,7 @@ package core
 import (
 	"io/ioutil"
 	"log"
+	"os"
 	"path"
 	"path/filepath"
 	"time"
@@ -21,6 +22,11 @@ func InitLogger() {
 	Logger.SetReportCaller(true)       // 日志记录文件命名
 	Logger.SetLevel(logrus.DebugLevel) // 日志输出级别
 	Logger.Out = ioutil.Discard        // 禁止 logrus 的输出
+
+	// 如果是开发模式，同时输出到控制台上
+	if viper.GetBool("dev") {
+		Logger.SetOutput(os.Stdout)
+	}
 
 	// 配置文件输入 hook
 	logFolderPath, err := filepath.Abs(viper.GetString("log.path"))
