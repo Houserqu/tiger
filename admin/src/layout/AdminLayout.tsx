@@ -16,7 +16,11 @@ function genMenuTree(
     const children = genMenuTree(v.id, data);
     const menu: any = {
       label: v.label,
-      key: v.id
+      key: v.id,
+    }
+
+    if (v.icon) {
+      menu.icon = <i className={v.icon} />
     }
 
     if (children.length > 0) {
