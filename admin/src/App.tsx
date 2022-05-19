@@ -1,17 +1,18 @@
 import { RecoilRoot } from 'recoil';
-import { BrowserRouter } from 'react-router-dom';
+import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import Global from './component/Global';
 import MyRouter from './routes';
+import history from './history'
 
 function App() {
   return (
     <div className="App">
       <RecoilRoot>
-        <BrowserRouter basename='/admin'>
+        <HistoryRouter history={history} basename='/admin'>
           <Global>
             <MyRouter />
           </Global>
-        </BrowserRouter>
+        </HistoryRouter>
       </RecoilRoot>
     </div>
   )

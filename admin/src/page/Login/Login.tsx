@@ -11,19 +11,19 @@ export default function Index() {
         "body": {
           "type": "form",
           "title": "登录",
-          redirect: '/admin',
+          redirect: '/',
           "api": {
             "method": "post",
-            "url": "/api/user/login",
+            "url": "/api/login/loginByPhone",
             "data": {
               "&": "$$"
             }
           },
           "body": [
             {
-              "name": "name",
+              "name": "phone",
               "type": "input-text",
-              "label": "账号"
+              "label": "手机号"
             },
             {
               "name": "password",
