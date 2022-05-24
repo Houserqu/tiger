@@ -1,6 +1,6 @@
 package constants
 
-import "houserqu.com/gin-starter/core"
+import "houserqu.com/tiger/core"
 
 var (
 	// 通用错误 < 1000

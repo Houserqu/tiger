@@ -8,14 +8,14 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/spf13/viper"
-	"houserqu.com/gin-starter/core"
-	_ "houserqu.com/gin-starter/docs"
-	"houserqu.com/gin-starter/middleware"
-	"houserqu.com/gin-starter/module/login"
-	"houserqu.com/gin-starter/module/menu"
-	"houserqu.com/gin-starter/module/page"
-	"houserqu.com/gin-starter/module/user"
-	"houserqu.com/gin-starter/module/view"
+	"houserqu.com/tiger/core"
+	_ "houserqu.com/tiger/docs"
+	"houserqu.com/tiger/middleware"
+	"houserqu.com/tiger/module/login"
+	"houserqu.com/tiger/module/menu"
+	"houserqu.com/tiger/module/page"
+	"houserqu.com/tiger/module/user"
+	"houserqu.com/tiger/module/view"
 )
 
 var swagHandler gin.HandlerFunc

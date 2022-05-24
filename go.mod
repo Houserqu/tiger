@@ -1,4 +1,4 @@
-module houserqu.com/gin-starter
+module houserqu.com/tiger
 
 go 1.18
 

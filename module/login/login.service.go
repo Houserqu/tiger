@@ -4,9 +4,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
-	"houserqu.com/gin-starter/core"
-	"houserqu.com/gin-starter/module/menu"
-	"houserqu.com/gin-starter/module/user"
+	"houserqu.com/tiger/core"
+	"houserqu.com/tiger/module/menu"
+	"houserqu.com/tiger/module/user"
 )
 
 type UserInfo struct {

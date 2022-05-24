@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
-	"houserqu.com/gin-starter/core"
+	"houserqu.com/tiger/core"
 )
 
 // 获取所有菜单

@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-	"houserqu.com/gin-starter/core"
+	"houserqu.com/tiger/core"
 )
 
 func GetPageByPath(c *gin.Context, path string) (page Page, err error) {

@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"
 	"github.com/sirupsen/logrus"
-	"houserqu.com/gin-starter/core"
+	"houserqu.com/tiger/core"
 )
 
 func Access() gin.HandlerFunc {

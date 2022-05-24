@@ -4,9 +4,9 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"houserqu.com/gin-starter/constants"
-	"houserqu.com/gin-starter/core"
-	"houserqu.com/gin-starter/middleware"
+	"houserqu.com/tiger/constants"
+	"houserqu.com/tiger/core"
+	"houserqu.com/tiger/middleware"
 )
 
 type ReqModelCreate struct {

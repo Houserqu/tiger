@@ -3,8 +3,8 @@ package middleware
 import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"houserqu.com/gin-starter/constants"
-	"houserqu.com/gin-starter/core"
+	"houserqu.com/tiger/constants"
+	"houserqu.com/tiger/core"
 )
 
 func CheckLogin() gin.HandlerFunc {

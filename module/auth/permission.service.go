@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"houserqu.com/gin-starter/core"
+	"houserqu.com/tiger/core"
 )
 
 func GetUserPermissions(userId uint) (allowPermIds []string, err error) {

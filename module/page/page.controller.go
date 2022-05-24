@@ -2,10 +2,10 @@ package page
 
 import (
 	"github.com/gin-gonic/gin"
-	"houserqu.com/gin-starter/constants"
-	"houserqu.com/gin-starter/core"
-	"houserqu.com/gin-starter/middleware"
-	"houserqu.com/gin-starter/utils"
+	"houserqu.com/tiger/constants"
+	"houserqu.com/tiger/core"
+	"houserqu.com/tiger/middleware"
+	"houserqu.com/tiger/utils"
 )
 
 type PageListReq struct {

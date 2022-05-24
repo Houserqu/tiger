@@ -70,7 +70,7 @@ config.yaml 配置文件不应该包含在版本库中
 使用 [logrus](https://github.com/sirupsen/logrus) 日志工具，支持记录请求ID，用于查看日志链路。
 
 ```golang
-import 	"houserqu.com/gin-starter/core"
+import 	"houserqu.com/tiger/core"
 
 internal.Log(c).Info("123") // 由于无法获取协程上下文，所以需要显式的传递 gin.Context，才能记录 request id
 ```
@@ -95,12 +95,12 @@ go get -u github.com/go-sql-driver/mysql
 
 1. 构建镜像
 ```bash
-docker build -t gin-starter:latest .
+docker build -t tiger:latest .
 ```
 
 2. 启动容器
 ```bash
-docker run -d --env-file prod.env -p 8090:8088 -v /Users/houserqu/gin-starter/logs:/app/logs gin-starter:latest
+docker run -d --env-file prod.env -p 8090:8088 -v /Users/houserqu/tiger/logs:/app/logs tiger:latest
 ```
 
 -p: 指定映射端口，容器内服务端口可以通过 config.yaml 文件配置  

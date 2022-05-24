@@ -4,7 +4,7 @@ import (
 	"errors"
 
 	"gorm.io/gorm"
-	"houserqu.com/gin-starter/core"
+	"houserqu.com/tiger/core"
 )
 
 func GetUserByID(id uint) (user User, err error) {

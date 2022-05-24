@@ -2,8 +2,8 @@ package example
 
 import (
 	"github.com/gin-gonic/gin"
-	"houserqu.com/gin-starter/constants"
-	"houserqu.com/gin-starter/core"
+	"houserqu.com/tiger/constants"
+	"houserqu.com/tiger/core"
 )
 
 type ReqModelCreate struct {

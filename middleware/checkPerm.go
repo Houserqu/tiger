@@ -2,9 +2,9 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"houserqu.com/gin-starter/constants"
-	"houserqu.com/gin-starter/core"
-	"houserqu.com/gin-starter/module/auth"
+	"houserqu.com/tiger/constants"
+	"houserqu.com/tiger/core"
+	"houserqu.com/tiger/module/auth"
 )
 
 // 校验当前登录用户是否有权限

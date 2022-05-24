@@ -7,7 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-	"houserqu.com/gin-starter/core"
+	"houserqu.com/tiger/core"
 )
 
 // 根据 model query 实例查询分页
