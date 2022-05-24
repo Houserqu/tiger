@@ -173,12 +173,12 @@ function isCurrentUrl(to: string, ctx?: any) {
     key: ''
   });
 
-  if (!~link.indexOf("http") && ~link.indexOf(":")) {
-    return match(link, {
-      decode: decodeURIComponent,
-      strict: typeof ctx?.strict !== "undefined" ? ctx.strict : true,
-    })(pathname);
-  }
+  // if (!~link.indexOf("http") && ~link.indexOf(":")) {
+    // return match(link, {
+    //   decode: decodeURIComponent,
+    //   strict: typeof ctx?.strict !== "undefined" ? ctx.strict : true,
+    // })(pathname);
+  // }
 
   return decodeURI(pathname) === link;
 }
