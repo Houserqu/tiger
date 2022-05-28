@@ -106,6 +106,33 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/menu/delete": {
+            "post": {
+                "tags": [
+                    "菜单"
+                ],
+                "summary": "删除菜单",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/menu.DeleteMenuReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
         "/api/menu/list": {
             "get": {
                 "tags": [
@@ -117,6 +144,33 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/menu.Menu"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/menu/update": {
+            "post": {
+                "tags": [
+                    "菜单"
+                ],
+                "summary": "更新菜单",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/menu.UpdateMenuReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "number"
                         }
                     }
                 }
@@ -220,7 +274,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/page.CreatePageReq"
+                            "$ref": "#/definitions/page.UpdatePageReq"
                         }
                     }
                 ],
@@ -254,9 +308,7 @@ const docTemplate = `{
         "menu.CreateMenuReq": {
             "type": "object",
             "required": [
-                "label",
-                "parent_id",
-                "to"
+                "label"
             ],
             "properties": {
                 "icon": {
@@ -276,6 +328,17 @@ const docTemplate = `{
                 },
                 "to": {
                     "type": "string"
+                }
+            }
+        },
+        "menu.DeleteMenuReq": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
                 }
             }
         },
@@ -314,6 +377,36 @@ const docTemplate = `{
                 }
             }
         },
+        "menu.UpdateMenuReq": {
+            "type": "object",
+            "required": [
+                "id",
+                "label"
+            ],
+            "properties": {
+                "icon": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "parent_id": {
+                    "type": "integer"
+                },
+                "permissions": {
+                    "type": "string"
+                },
+                "target": {
+                    "type": "string"
+                },
+                "to": {
+                    "type": "string"
+                }
+            }
+        },
         "page.CreatePageReq": {
             "type": "object",
             "required": [
@@ -347,6 +440,35 @@ const docTemplate = `{
             "properties": {
                 "id": {
                     "type": "integer"
+                }
+            }
+        },
+        "page.UpdatePageReq": {
+            "type": "object",
+            "required": [
+                "config",
+                "id",
+                "name",
+                "path"
+            ],
+            "properties": {
+                "config": {
+                    "type": "string"
+                },
+                "extend": {
+                    "type": "string"
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
                 }
             }
         }

@@ -8,19 +8,14 @@ import (
 	"houserqu.com/tiger/utils"
 )
 
-type PageListDto struct {
-	Page    int    `form:"page,default=1"`
-	PerPage int    `form:"perPage,default=20"`
-	Name    string `form:"name"`
-	Path    string `form:"path"`
-}
-
 func Controller(r *gin.Engine) {
 	// 创建 group 并绑定中间件
 	api := r.Group("/api/menu", middleware.CheckLogin())
 
 	api.GET("list", getMenus, middleware.CheckPerm(constants.PER_ADMIN))
 	api.POST("create", createMenu, middleware.CheckPerm(constants.PER_ADMIN))
+	api.POST("delete", deleteMenu, middleware.CheckPerm(constants.PER_ADMIN))
+	api.POST("update", updateMenu, middleware.CheckPerm(constants.PER_ADMIN))
 }
 
 // @Summary 菜单列表
@@ -77,8 +72,66 @@ func createMenu(c *gin.Context) {
 
 	err := utils.CRUDCreate(c, &menu)
 	if err != nil {
-		core.ResError(c, constants.ErrCreatePage, err.Error())
+		core.ResError(c, constants.ErrCreateMenu, err.Error())
 		return
 	}
 	core.ResSuccess(c, menu)
+}
+
+type DeleteMenuReq struct {
+	ID uint `form:"id" binding:"required"`
+}
+
+// @Summary 删除菜单
+// @Tags 菜单
+// @Router /api/menu/delete [post]
+// @Param params body menu.DeleteMenuReq true "参数"
+// @Success 200 {number} 1
+func deleteMenu(c *gin.Context) {
+	//参数校验
+	var deleteMenuReq DeleteMenuReq
+	if err := c.ShouldBindJSON(&deleteMenuReq); err != nil {
+		core.ResError(c, constants.ErrParam, err.Error())
+		return
+	}
+
+	id, err := utils.CURDDeleteByiD(c, &Menu{}, deleteMenuReq.ID)
+	if err != nil {
+		core.ResError(c, constants.ErrDeleteMenu, err.Error())
+		return
+	}
+
+	core.ResSuccess(c, id)
+}
+
+type UpdateMenuReq struct {
+	ID          uint   `json:"id" binding:"required"`
+	ParentID    uint   `json:"parent_id"`
+	Label       string `json:"label" binding:"required"`
+	To          string `json:"to"`
+	Icon        string `json:"icon"`
+	Permissions string `json:"permissions"`
+	Target      string `json:"target"`
+}
+
+// @Summary 更新菜单
+// @Tags 菜单
+// @Router /api/menu/update [post]
+// @Param params body menu.UpdateMenuReq true "参数"
+// @Success 200 {number} 1
+func updateMenu(c *gin.Context) {
+	//参数校验
+	var updateMenuReq map[string]any
+	if err := c.ShouldBindJSON(&updateMenuReq); err != nil {
+		core.ResError(c, constants.ErrParam, err.Error())
+		return
+	}
+
+	id, err := utils.CRUDUpdateByID(c, &Menu{}, updateMenuReq)
+	if err != nil {
+		core.ResError(c, constants.ErrUpdateMenu, err.Error())
+		return
+	}
+
+	core.ResSuccess(c, id)
 }

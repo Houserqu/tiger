@@ -18,8 +18,13 @@ var (
 	ErrLoginFail     = core.ErrorCode{Code: 2000, Msg: "登录失败"}
 	ErrLoginInfoFail = core.ErrorCode{Code: 2001, Msg: "获取登录信息失败"}
 
-	// 配置相关
+	// 配置菜单相关
 	ErrGetMenus   = core.ErrorCode{Code: 2002, Msg: "获取菜单列表失败"}
+	ErrDeleteMenu = core.ErrorCode{Code: 2008, Msg: "删除菜单失败"}
+	ErrCreateMenu = core.ErrorCode{Code: 2009, Msg: "创建菜单失败"}
+	ErrUpdateMenu = core.ErrorCode{Code: 2010, Msg: "更新菜单失败"}
+
+	//配置页面相关
 	ErrGetPage    = core.ErrorCode{Code: 2003, Msg: "获取页面配置失败"}
 	ErrGetPages   = core.ErrorCode{Code: 2004, Msg: "获取页面列表失败"}
 	ErrCreatePage = core.ErrorCode{Code: 2005, Msg: "创建页面失败"}

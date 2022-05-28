@@ -25,8 +25,13 @@ definitions:
         type: string
     required:
     - label
-    - parent_id
-    - to
+    type: object
+  menu.DeleteMenuReq:
+    properties:
+      id:
+        type: integer
+    required:
+    - id
     type: object
   menu.Menu:
     properties:
@@ -51,6 +56,26 @@ definitions:
       updated_at:
         type: string
     type: object
+  menu.UpdateMenuReq:
+    properties:
+      icon:
+        type: string
+      id:
+        type: integer
+      label:
+        type: string
+      parent_id:
+        type: integer
+      permissions:
+        type: string
+      target:
+        type: string
+      to:
+        type: string
+    required:
+    - id
+    - label
+    type: object
   page.CreatePageReq:
     properties:
       config:
@@ -74,6 +99,26 @@ definitions:
         type: integer
     required:
     - id
+    type: object
+  page.UpdatePageReq:
+    properties:
+      config:
+        type: string
+      extend:
+        type: string
+      icon:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      path:
+        type: string
+    required:
+    - config
+    - id
+    - name
+    - path
     type: object
 info:
   contact: {}
@@ -138,6 +183,23 @@ paths:
       summary: 创建菜单
       tags:
       - 菜单
+  /api/menu/delete:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/menu.DeleteMenuReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: number
+      summary: 删除菜单
+      tags:
+      - 菜单
   /api/menu/list:
     get:
       responses:
@@ -146,6 +208,23 @@ paths:
           schema:
             $ref: '#/definitions/menu.Menu'
       summary: 菜单列表
+      tags:
+      - 菜单
+  /api/menu/update:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/menu.UpdateMenuReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: number
+      summary: 更新菜单
       tags:
       - 菜单
   /api/page/create:
@@ -209,7 +288,7 @@ paths:
         name: params
         required: true
         schema:
-          $ref: '#/definitions/page.CreatePageReq'
+          $ref: '#/definitions/page.UpdatePageReq'
       responses:
         "200":
           description: OK
