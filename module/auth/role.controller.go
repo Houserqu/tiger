@@ -26,8 +26,8 @@ type GetRoleReq struct {
 // @Summary 根据id获取角色
 // @Tags 角色
 // @Router /api/role/getRoleById [post]
-// @Param params body role.GetRoleReq true "参数"
-// @Success 200 {object} role.Role
+// @Param params body auth.GetRoleReq true "参数"
+// @Success 200 {object} model.Role
 func getRoleById(c *gin.Context) {
 	//参数校验
 	var getRoleReq GetRoleReq
@@ -48,7 +48,7 @@ func getRoleById(c *gin.Context) {
 // @Summary 角色列表
 // @Tags 角色
 // @Router /api/role/list [get]
-// @Success 200 {object} role.Role
+// @Success 200 {object} model.Role
 func getRoleList(c *gin.Context) {
 	var roles []model.Role
 	err := GetRoles(c, &roles)
@@ -68,7 +68,7 @@ type CreateRoleReq struct {
 // @Summary 创建角色
 // @Tags 角色
 // @Router /api/role/create [post]
-// @Param params body role.CreateRoleReq true "参数"
+// @Param params body auth.CreateRoleReq true "参数"
 // @Success 200 {number} 1
 func createRole(c *gin.Context) {
 	//参数校验
@@ -98,7 +98,7 @@ type DeleteRoleReq struct {
 // @Summary 删除角色
 // @Tags 角色
 // @Router /api/role/delete [post]
-// @Param params body role.DeleteRoleReq true "参数"
+// @Param params body auth.DeleteRoleReq true "参数"
 // @Success 200 {number} 1
 func deleteMenu(c *gin.Context) {
 	//参数校验
@@ -125,7 +125,7 @@ type UpdateRoleReq struct {
 // @Summary 更新角色
 // @Tags 角色
 // @Router /api/role/update [post]
-// @Param params body role.UpdateRoleReq true "参数"
+// @Param params body auth.UpdateRoleReq true "参数"
 // @Success 200 {number} 1
 func updateRole(c *gin.Context) {
 	var updateRoleReq map[string]any

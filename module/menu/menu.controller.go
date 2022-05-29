@@ -22,7 +22,7 @@ func Controller(r *gin.Engine) {
 // @Summary 菜单列表
 // @Tags 菜单
 // @Router /api/menu/list [get]
-// @Success 200 {object} menu.Menu
+// @Success 200 {object} model.Menu
 func getMenus(c *gin.Context) {
 	var menus []model.Menu
 	err := GetMenus(c, &menus)

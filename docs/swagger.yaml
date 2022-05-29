@@ -1,4 +1,35 @@
 definitions:
+  auth.CreateRoleReq:
+    properties:
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  auth.DeleteRoleReq:
+    properties:
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  auth.GetRoleReq:
+    properties:
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  auth.UpdateRoleReq:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    required:
+    - id
+    - name
+    type: object
   login.LoginReq:
     properties:
       password:
@@ -33,7 +64,27 @@ definitions:
     required:
     - id
     type: object
-  menu.Menu:
+  menu.UpdateMenuReq:
+    properties:
+      icon:
+        type: string
+      id:
+        type: integer
+      label:
+        type: string
+      parent_id:
+        type: integer
+      permissions:
+        type: string
+      target:
+        type: string
+      to:
+        type: string
+    required:
+    - id
+    - label
+    type: object
+  model.Menu:
     properties:
       created_at:
         type: string
@@ -56,25 +107,18 @@ definitions:
       updated_at:
         type: string
     type: object
-  menu.UpdateMenuReq:
+  model.Role:
     properties:
-      icon:
+      created_at:
+        type: string
+      deleted_at:
         type: string
       id:
         type: integer
-      label:
+      name:
         type: string
-      parent_id:
-        type: integer
-      permissions:
+      updated_at:
         type: string
-      target:
-        type: string
-      to:
-        type: string
-    required:
-    - id
-    - label
     type: object
   page.CreatePageReq:
     properties:
@@ -119,50 +163,6 @@ definitions:
     - id
     - name
     - path
-    type: object
-  role.CreateRoleReq:
-    properties:
-      name:
-        type: string
-    required:
-    - name
-    type: object
-  role.DeleteRoleReq:
-    properties:
-      id:
-        type: integer
-    required:
-    - id
-    type: object
-  role.GetRoleReq:
-    properties:
-      id:
-        type: integer
-    required:
-    - id
-    type: object
-  role.Role:
-    properties:
-      created_at:
-        type: string
-      deleted_at:
-        type: string
-      id:
-        type: integer
-      name:
-        type: string
-      updated_at:
-        type: string
-    type: object
-  role.UpdateRoleReq:
-    properties:
-      id:
-        type: integer
-      name:
-        type: string
-    required:
-    - id
-    - name
     type: object
 info:
   contact: {}
@@ -250,7 +250,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/menu.Menu'
+            $ref: '#/definitions/model.Menu'
       summary: 菜单列表
       tags:
       - 菜单
@@ -349,7 +349,7 @@ paths:
         name: params
         required: true
         schema:
-          $ref: '#/definitions/role.CreateRoleReq'
+          $ref: '#/definitions/auth.CreateRoleReq'
       responses:
         "200":
           description: OK
@@ -366,7 +366,7 @@ paths:
         name: params
         required: true
         schema:
-          $ref: '#/definitions/role.DeleteRoleReq'
+          $ref: '#/definitions/auth.DeleteRoleReq'
       responses:
         "200":
           description: OK
@@ -383,12 +383,12 @@ paths:
         name: params
         required: true
         schema:
-          $ref: '#/definitions/role.GetRoleReq'
+          $ref: '#/definitions/auth.GetRoleReq'
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/role.Role'
+            $ref: '#/definitions/model.Role'
       summary: 根据id获取角色
       tags:
       - 角色
@@ -398,7 +398,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/role.Role'
+            $ref: '#/definitions/model.Role'
       summary: 角色列表
       tags:
       - 角色
@@ -410,7 +410,7 @@ paths:
         name: params
         required: true
         schema:
-          $ref: '#/definitions/role.UpdateRoleReq'
+          $ref: '#/definitions/auth.UpdateRoleReq'
       responses:
         "200":
           description: OK

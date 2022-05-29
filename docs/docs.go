@@ -143,7 +143,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/menu.Menu"
+                            "$ref": "#/definitions/model.Menu"
                         }
                     }
                 }
@@ -301,7 +301,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/role.CreateRoleReq"
+                            "$ref": "#/definitions/auth.CreateRoleReq"
                         }
                     }
                 ],
@@ -328,7 +328,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/role.DeleteRoleReq"
+                            "$ref": "#/definitions/auth.DeleteRoleReq"
                         }
                     }
                 ],
@@ -355,7 +355,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/role.GetRoleReq"
+                            "$ref": "#/definitions/auth.GetRoleReq"
                         }
                     }
                 ],
@@ -363,7 +363,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/role.Role"
+                            "$ref": "#/definitions/model.Role"
                         }
                     }
                 }
@@ -379,7 +379,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/role.Role"
+                            "$ref": "#/definitions/model.Role"
                         }
                     }
                 }
@@ -398,7 +398,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/role.UpdateRoleReq"
+                            "$ref": "#/definitions/auth.UpdateRoleReq"
                         }
                     }
                 ],
@@ -414,6 +414,54 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "auth.CreateRoleReq": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "auth.DeleteRoleReq": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "auth.GetRoleReq": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "auth.UpdateRoleReq": {
+            "type": "object",
+            "required": [
+                "id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
         "login.LoginReq": {
             "type": "object",
             "required": [
@@ -466,7 +514,37 @@ const docTemplate = `{
                 }
             }
         },
-        "menu.Menu": {
+        "menu.UpdateMenuReq": {
+            "type": "object",
+            "required": [
+                "id",
+                "label"
+            ],
+            "properties": {
+                "icon": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "parent_id": {
+                    "type": "integer"
+                },
+                "permissions": {
+                    "type": "string"
+                },
+                "target": {
+                    "type": "string"
+                },
+                "to": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Menu": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -501,32 +579,22 @@ const docTemplate = `{
                 }
             }
         },
-        "menu.UpdateMenuReq": {
+        "model.Role": {
             "type": "object",
-            "required": [
-                "id",
-                "label"
-            ],
             "properties": {
-                "icon": {
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
                     "type": "string"
                 },
                 "id": {
                     "type": "integer"
                 },
-                "label": {
+                "name": {
                     "type": "string"
                 },
-                "parent_id": {
-                    "type": "integer"
-                },
-                "permissions": {
-                    "type": "string"
-                },
-                "target": {
-                    "type": "string"
-                },
-                "to": {
+                "updated_at": {
                     "type": "string"
                 }
             }
@@ -592,74 +660,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "path": {
-                    "type": "string"
-                }
-            }
-        },
-        "role.CreateRoleReq": {
-            "type": "object",
-            "required": [
-                "name"
-            ],
-            "properties": {
-                "name": {
-                    "type": "string"
-                }
-            }
-        },
-        "role.DeleteRoleReq": {
-            "type": "object",
-            "required": [
-                "id"
-            ],
-            "properties": {
-                "id": {
-                    "type": "integer"
-                }
-            }
-        },
-        "role.GetRoleReq": {
-            "type": "object",
-            "required": [
-                "id"
-            ],
-            "properties": {
-                "id": {
-                    "type": "integer"
-                }
-            }
-        },
-        "role.Role": {
-            "type": "object",
-            "properties": {
-                "created_at": {
-                    "type": "string"
-                },
-                "deleted_at": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "updated_at": {
-                    "type": "string"
-                }
-            }
-        },
-        "role.UpdateRoleReq": {
-            "type": "object",
-            "required": [
-                "id",
-                "name"
-            ],
-            "properties": {
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
                     "type": "string"
                 }
             }
