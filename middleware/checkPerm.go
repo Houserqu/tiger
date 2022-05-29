@@ -35,6 +35,5 @@ func CheckPerm(needPermissions ...string) gin.HandlerFunc {
 
 		core.ResError(c, constants.ErrNoPermission, "")
 		c.Abort()
-		return
 	}
 }

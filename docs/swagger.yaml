@@ -120,6 +120,43 @@ definitions:
     - name
     - path
     type: object
+  role.CreateRoleReq:
+    properties:
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  role.DeleteRoleReq:
+    properties:
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  role.Role:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  role.UpdateRoleReq:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    required:
+    - id
+    - name
+    type: object
 info:
   contact: {}
   title: API 文档
@@ -297,4 +334,65 @@ paths:
       summary: 更新页面
       tags:
       - 页面
+  /api/role/create:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/role.CreateRoleReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: number
+      summary: 创建角色
+      tags:
+      - 角色
+  /api/role/delete:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/role.DeleteRoleReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: number
+      summary: 删除角色
+      tags:
+      - 角色
+  /api/role/list:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/role.Role'
+      summary: 角色列表
+      tags:
+      - 角色
+  /api/role/update:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/role.UpdateRoleReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: number
+      summary: 更新角色
+      tags:
+      - 角色
 swagger: "2.0"

@@ -7,7 +7,7 @@ import (
 )
 
 type Permission struct {
-	ID        string         `json:"id";gorm:"primaryKey"`
+	ID        string         `json:"id" gorm:"primaryKey"`
 	Desc      string         `json:"desc"`
 	Type      string         `json:"type"`
 	DeletedAt gorm.DeletedAt `json:"deleted_at"`
