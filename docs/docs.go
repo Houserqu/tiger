@@ -342,6 +342,33 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/role/getRoleById": {
+            "post": {
+                "tags": [
+                    "角色"
+                ],
+                "summary": "根据id获取角色",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/role.GetRoleReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/role.Role"
+                        }
+                    }
+                }
+            }
+        },
         "/api/role/list": {
             "get": {
                 "tags": [
@@ -581,6 +608,17 @@ const docTemplate = `{
             }
         },
         "role.DeleteRoleReq": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "role.GetRoleReq": {
             "type": "object",
             "required": [
                 "id"

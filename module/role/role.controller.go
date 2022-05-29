@@ -5,7 +5,6 @@ import (
 	"houserqu.com/tiger/constants"
 	"houserqu.com/tiger/core"
 	"houserqu.com/tiger/middleware"
-	"houserqu.com/tiger/utils"
 )
 
 func Controller(r *gin.Engine) {
@@ -16,6 +15,33 @@ func Controller(r *gin.Engine) {
 	api.POST("create", createRole, middleware.CheckPerm(constants.PER_ADMIN))
 	api.POST("delete", deleteMenu, middleware.CheckPerm(constants.PER_ADMIN))
 	api.POST("update", updateRole, middleware.CheckPerm(constants.PER_ADMIN))
+	api.POST("getRoleById", getRoleById, middleware.CheckPerm(constants.PER_ADMIN))
+}
+
+type GetRoleReq struct {
+	ID uint `form:"id" binding:"required"`
+}
+
+// @Summary 根据id获取角色
+// @Tags 角色
+// @Router /api/role/getRoleById [post]
+// @Param params body role.GetRoleReq true "参数"
+// @Success 200 {object} role.Role
+func getRoleById(c *gin.Context) {
+	//参数校验
+	var getRoleReq GetRoleReq
+	if err := c.ShouldBindJSON(&getRoleReq); err != nil {
+		core.ResError(c, constants.ErrParam, err.Error())
+		return
+	}
+
+	role, err := GetRoleById(c, getRoleReq.ID)
+	if err != nil {
+		core.ResError(c, constants.ErrGetRole, err.Error())
+		return
+	}
+
+	core.ResSuccess(c, role)
 }
 
 // @Summary 角色列表
@@ -55,7 +81,7 @@ func createRole(c *gin.Context) {
 		Name: createRoleReq.Name,
 	}
 
-	err := utils.CRUDCreate(c, &role)
+	err := CreateRole(c, &role)
 	if err != nil {
 		core.ResError(c, constants.ErrCreateRole, err.Error())
 		return
@@ -81,7 +107,7 @@ func deleteMenu(c *gin.Context) {
 		return
 	}
 
-	id, err := utils.CURDDeleteByiD(c, &Role{}, deleteRoleReq.ID)
+	id, err := DeleteRoleById(c, &deleteRoleReq)
 	if err != nil {
 		core.ResError(c, constants.ErrDeleteRole, err.Error())
 		return
@@ -107,7 +133,7 @@ func updateRole(c *gin.Context) {
 		return
 	}
 
-	id, err := utils.CRUDUpdateByID(c, &Role{}, updateRoleReq)
+	id, err := UpdateRoleById(c, updateRoleReq)
 	if err != nil {
 		core.ResError(c, constants.ErrUpdateRole, err.Error())
 		return

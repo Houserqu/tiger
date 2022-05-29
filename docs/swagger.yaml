@@ -134,6 +134,13 @@ definitions:
     required:
     - id
     type: object
+  role.GetRoleReq:
+    properties:
+      id:
+        type: integer
+    required:
+    - id
+    type: object
   role.Role:
     properties:
       created_at:
@@ -366,6 +373,23 @@ paths:
           schema:
             type: number
       summary: 删除角色
+      tags:
+      - 角色
+  /api/role/getRoleById:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/role.GetRoleReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/role.Role'
+      summary: 根据id获取角色
       tags:
       - 角色
   /api/role/list:

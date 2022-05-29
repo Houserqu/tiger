@@ -36,4 +36,5 @@ var (
 	ErrCreateRole = core.ErrorCode{Code: 2302, Msg: "创建角色失败"}
 	ErrDeleteRole = core.ErrorCode{Code: 2303, Msg: "删除角色失败"}
 	ErrUpdateRole = core.ErrorCode{Code: 2304, Msg: "更新角色失败"}
+	ErrGetRole    = core.ErrorCode{Code: 2305, Msg: "获取角色失败(无此角色)"}
 )
