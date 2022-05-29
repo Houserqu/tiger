@@ -11,10 +11,10 @@ import (
 	"houserqu.com/tiger/core"
 	_ "houserqu.com/tiger/docs"
 	"houserqu.com/tiger/middleware"
+	"houserqu.com/tiger/module/auth"
 	"houserqu.com/tiger/module/login"
 	"houserqu.com/tiger/module/menu"
 	"houserqu.com/tiger/module/page"
-	"houserqu.com/tiger/module/role"
 	"houserqu.com/tiger/module/user"
 	"houserqu.com/tiger/module/view"
 )
@@ -60,7 +60,7 @@ func main() {
 	menu.Controller(r)  // 菜单
 	user.Controller(r)  // 用户
 	login.Controller(r) // 登录注册
-	role.Controller(r)  //角色
+	auth.Controller(r)  //权限
 
 	// 监听端口
 	err := r.Run(viper.GetString("server.addr"))

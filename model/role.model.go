@@ -1,4 +1,4 @@
-package role
+package model
 
 import time "time"
 

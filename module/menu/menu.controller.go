@@ -5,6 +5,7 @@ import (
 	"houserqu.com/tiger/constants"
 	"houserqu.com/tiger/core"
 	"houserqu.com/tiger/middleware"
+	"houserqu.com/tiger/model"
 	"houserqu.com/tiger/utils"
 )
 
@@ -23,7 +24,7 @@ func Controller(r *gin.Engine) {
 // @Router /api/menu/list [get]
 // @Success 200 {object} menu.Menu
 func getMenus(c *gin.Context) {
-	var menus []Menu
+	var menus []model.Menu
 	err := GetMenus(c, &menus)
 	if err != nil {
 		core.ResError(c, constants.ErrGetMenus, err.Error())
@@ -61,7 +62,7 @@ func createMenu(c *gin.Context) {
 
 	 */
 
-	menu := Menu{
+	menu := model.Menu{
 		ParentID:    createMenuReq.ParentID,
 		Label:       createMenuReq.Label,
 		To:          createMenuReq.To,
@@ -95,7 +96,7 @@ func deleteMenu(c *gin.Context) {
 		return
 	}
 
-	id, err := utils.CURDDeleteByiD(c, &Menu{}, deleteMenuReq.ID)
+	id, err := utils.CURDDeleteByiD(c, &model.Menu{}, deleteMenuReq.ID)
 	if err != nil {
 		core.ResError(c, constants.ErrDeleteMenu, err.Error())
 		return
@@ -127,7 +128,7 @@ func updateMenu(c *gin.Context) {
 		return
 	}
 
-	id, err := utils.CRUDUpdateByID(c, &Menu{}, updateMenuReq)
+	id, err := utils.CRUDUpdateByID(c, &model.Menu{}, updateMenuReq)
 	if err != nil {
 		core.ResError(c, constants.ErrUpdateMenu, err.Error())
 		return

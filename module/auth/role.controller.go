@@ -1,10 +1,11 @@
-package role
+package auth
 
 import (
 	"github.com/gin-gonic/gin"
 	"houserqu.com/tiger/constants"
 	"houserqu.com/tiger/core"
 	"houserqu.com/tiger/middleware"
+	"houserqu.com/tiger/model"
 )
 
 func Controller(r *gin.Engine) {
@@ -49,7 +50,7 @@ func getRoleById(c *gin.Context) {
 // @Router /api/role/list [get]
 // @Success 200 {object} role.Role
 func getRoleList(c *gin.Context) {
-	var roles []Role
+	var roles []model.Role
 	err := GetRoles(c, &roles)
 
 	if err != nil {
@@ -77,7 +78,7 @@ func createRole(c *gin.Context) {
 		return
 	}
 
-	role := Role{
+	role := model.Role{
 		Name: createRoleReq.Name,
 	}
 

@@ -6,9 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"houserqu.com/tiger/core"
+	"houserqu.com/tiger/model"
 )
 
-func GetPageByPath(c *gin.Context, path string) (page Page, err error) {
+func GetPageByPath(c *gin.Context, path string) (page model.Page, err error) {
 	err = core.Mysql.Where(map[string]string{"Path": path}).First(&page).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {

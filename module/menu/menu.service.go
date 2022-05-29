@@ -6,10 +6,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
 	"houserqu.com/tiger/core"
+	"houserqu.com/tiger/model"
 )
 
 // 获取所有菜单
-func GetMenus(c *gin.Context, menus *[]Menu) error {
+func GetMenus(c *gin.Context, menus *[]model.Menu) error {
 	err := core.Mysql.Find(&menus).Error
 	if err != nil {
 		core.Log(c).Error(err.Error())
@@ -20,7 +21,7 @@ func GetMenus(c *gin.Context, menus *[]Menu) error {
 }
 
 // 根据权限获取用户的菜单配置
-func GetMenusByUserId(c *gin.Context, menus *[]Menu, userId uint) error {
+func GetMenusByUserId(c *gin.Context, menus *[]model.Menu, userId uint) error {
 	err := core.Mysql.Find(&menus).Error
 	if err != nil {
 		core.Log(c).Error(fmt.Sprintf("%s; userId = %d", err, userId))

@@ -7,6 +7,7 @@ import (
 	"houserqu.com/tiger/constants"
 	"houserqu.com/tiger/core"
 	"houserqu.com/tiger/middleware"
+	"houserqu.com/tiger/model"
 )
 
 type ReqModelCreate struct {
@@ -51,7 +52,7 @@ func GetUser(c *gin.Context) {
 }
 
 func GetUserList(c *gin.Context) {
-	var where User
+	var where model.User
 	if err := c.ShouldBindQuery(&where); err != nil {
 		core.ResError(c, constants.ErrParam, err.Error())
 		return
@@ -59,6 +60,9 @@ func GetUserList(c *gin.Context) {
 
 	// 分页参数
 	page, err := strconv.Atoi(c.DefaultQuery("page", "1"))
+	if err != nil {
+		core.ResError(c, constants.ErrParam, err.Error())
+	}
 	size, err := strconv.Atoi(c.DefaultQuery("size", "20"))
 	if err != nil {
 		core.ResError(c, constants.ErrParam, err.Error())
@@ -82,7 +86,7 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
-	result := &User{Phone: "123456", Password: "123456"}
+	result := &model.User{Phone: "123456", Password: "123456"}
 	err := CreateModel(result)
 	if err != nil {
 		core.ResError(c, constants.ErrCreateFail, "")

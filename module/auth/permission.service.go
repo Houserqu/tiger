@@ -2,11 +2,13 @@ package auth
 
 import (
 	"houserqu.com/tiger/core"
+	"houserqu.com/tiger/model"
 )
 
+//已经迁移到middleware.checkPerm中，感觉可以删掉
 func GetUserPermissions(userId uint) (allowPermIds []string, err error) {
 	// 查用户角色
-	var relRoles []RelUserRole
+	var relRoles []model.RelUserRole
 	err = core.Mysql.Where("user_id = ?", userId).Find(&relRoles).Error
 	if err != nil {
 		return
@@ -22,7 +24,7 @@ func GetUserPermissions(userId uint) (allowPermIds []string, err error) {
 	}
 
 	// 查角色权限ID
-	var relRolePermissions []relRolePermission
+	var relRolePermissions []model.RelRolePermission
 	err = core.Mysql.Where("role_id IN ?", roleIds).Find(&relRolePermissions).Error
 	if err != nil {
 		return
@@ -34,7 +36,7 @@ func GetUserPermissions(userId uint) (allowPermIds []string, err error) {
 	}
 
 	// 查权限列表
-	var permissions []Permission
+	var permissions []model.Permission
 	err = core.Mysql.Where("id IN ?", permissionIds).Find(&permissions).Error
 	if err != nil {
 		return

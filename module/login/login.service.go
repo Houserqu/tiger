@@ -5,8 +5,8 @@ import (
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
 	"houserqu.com/tiger/core"
+	"houserqu.com/tiger/model"
 	"houserqu.com/tiger/module/menu"
-	"houserqu.com/tiger/module/user"
 )
 
 type UserInfo struct {
@@ -14,13 +14,13 @@ type UserInfo struct {
 	Phone string `json:"phone"`
 }
 type AdminLoginInfo struct {
-	UserInfo UserInfo    `json:"userInfo"`
-	Menus    []menu.Menu `json:"menus"`
+	UserInfo UserInfo     `json:"userInfo"`
+	Menus    []model.Menu `json:"menus"`
 }
 
 // 根据手机号+密码校验用户
-func CheckUserByPhoneAndPassword(c *gin.Context, phone string, password string) (user.User, error) {
-	var user user.User
+func CheckUserByPhoneAndPassword(c *gin.Context, phone string, password string) (model.User, error) {
+	var user model.User
 	err := core.Mysql.Where(map[string]string{"Phone": phone}).First(&user).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -42,7 +42,7 @@ func CheckUserByPhoneAndPassword(c *gin.Context, phone string, password string) 
 // 获取管理台用户登录信息
 func GetAdminLoginInfoByUserId(c *gin.Context, adminLoginInfo *AdminLoginInfo, userId uint) error {
 	// 查用户基本信息
-	var user user.User
+	var user model.User
 	err := core.Mysql.First(&user, userId).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {

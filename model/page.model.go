@@ -1,4 +1,4 @@
-package page
+package model
 
 import (
 	time "time"
@@ -7,7 +7,7 @@ import (
 )
 
 type Page struct {
-	ID        uint           `json:"id";gorm:"primaryKey"`
+	ID        uint           `json:"id" gorm:"primaryKey"`
 	Name      string         `json:"name"`
 	Path      string         `json:"path"`
 	Icon      string         `json:"icon"`

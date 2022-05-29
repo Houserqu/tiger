@@ -1,4 +1,4 @@
-package user
+package model
 
 import (
 	time "time"
@@ -7,7 +7,7 @@ import (
 )
 
 type User struct {
-	ID        uint           `json:"id";gorm:"primaryKey"`
+	ID        uint           `json:"id" gorm:"primaryKey"`
 	Phone     string         `json:"phone"`
 	Password  string         `json:"password"`
 	DeletedAt gorm.DeletedAt `json:"deleted_at"`

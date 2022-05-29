@@ -1,7 +1,7 @@
-package auth
+package model
 
 type RelUserRole struct {
-	ID     uint `json:"id";gorm:"primaryKey"`
+	ID     uint `json:"id" gorm:"primaryKey"`
 	UserID uint `json:"user_id"`
 	RoleID uint `json:"role_id"`
 }

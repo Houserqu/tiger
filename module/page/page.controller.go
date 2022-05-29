@@ -5,6 +5,7 @@ import (
 	"houserqu.com/tiger/constants"
 	"houserqu.com/tiger/core"
 	"houserqu.com/tiger/middleware"
+	"houserqu.com/tiger/model"
 	"houserqu.com/tiger/utils"
 )
 
@@ -56,8 +57,8 @@ func getPages(c *gin.Context) {
 		"path": pageListReq.Path,
 	}
 
-	var pages []Page
-	total, err := utils.CRUDPageList(c, &Page{}, &pages, where)
+	var pages []model.Page
+	total, err := utils.CRUDPageList(c, &model.Page{}, &pages, where)
 	if err != nil {
 		core.ResError(c, constants.ErrGetPage, err.Error())
 		return
@@ -90,7 +91,7 @@ func createPage(c *gin.Context) {
 		return
 	}
 
-	page := Page{
+	page := model.Page{
 		Name:   createPageReq.Name,
 		Path:   createPageReq.Path,
 		Config: createPageReq.Config,
@@ -124,7 +125,7 @@ func deletePage(c *gin.Context) {
 		return
 	}
 
-	id, err := utils.CURDDeleteByiD(c, &Page{}, deletePageReq.ID)
+	id, err := utils.CURDDeleteByiD(c, &model.Page{}, deletePageReq.ID)
 	if err != nil {
 		core.ResError(c, constants.ErrDeletePage, err.Error())
 		return
@@ -155,7 +156,7 @@ func updatePage(c *gin.Context) {
 		return
 	}
 
-	id, err := utils.CRUDUpdateByID(c, &Page{}, updatePageReq)
+	id, err := utils.CRUDUpdateByID(c, &model.Page{}, updatePageReq)
 	if err != nil {
 		core.ResError(c, constants.ErrUpdatePage, err.Error())
 		return
