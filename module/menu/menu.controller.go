@@ -3,6 +3,7 @@ package menu
 import (
 	"github.com/gin-gonic/gin"
 	"houserqu.com/tiger/constants"
+	"houserqu.com/tiger/constants/PERMISSION"
 	"houserqu.com/tiger/core"
 	"houserqu.com/tiger/middleware"
 	"houserqu.com/tiger/model"
@@ -11,12 +12,12 @@ import (
 
 func Controller(r *gin.Engine) {
 	// 创建 group 并绑定中间件
-	api := r.Group("/api/menu", middleware.CheckLogin())
+	api := r.Group("/api/menu", middleware.CheckLogin(), middleware.CheckPerm(PERMISSION.MENU_ALL))
 
-	api.GET("list", getMenus, middleware.CheckPerm(constants.PER_ADMIN))
-	api.POST("create", createMenu, middleware.CheckPerm(constants.PER_ADMIN))
-	api.POST("delete", deleteMenu, middleware.CheckPerm(constants.PER_ADMIN))
-	api.POST("update", updateMenu, middleware.CheckPerm(constants.PER_ADMIN))
+	api.GET("list", getMenus)
+	api.POST("create", createMenu)
+	api.POST("delete", deleteMenu)
+	api.POST("update", updateMenu)
 }
 
 // @Summary 菜单列表
