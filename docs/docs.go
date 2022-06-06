@@ -288,6 +288,22 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/perm/list": {
+            "get": {
+                "tags": [
+                    "权限"
+                ],
+                "summary": "权限列表",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Permission"
+                        }
+                    }
+                }
+            }
+        },
         "/api/role/create": {
             "post": {
                 "tags": [
@@ -572,6 +588,29 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "to": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Permission": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "desc": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "type": {
                     "type": "string"
                 },
                 "updated_at": {

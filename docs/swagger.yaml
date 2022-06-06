@@ -107,6 +107,21 @@ definitions:
       updated_at:
         type: string
     type: object
+  model.Permission:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      desc:
+        type: string
+      id:
+        type: string
+      type:
+        type: string
+      updated_at:
+        type: string
+    type: object
   model.Role:
     properties:
       created_at:
@@ -341,6 +356,16 @@ paths:
       summary: 更新页面
       tags:
       - 页面
+  /api/perm/list:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Permission'
+      summary: 权限列表
+      tags:
+      - 权限
   /api/role/create:
     post:
       parameters:
