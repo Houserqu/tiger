@@ -23,6 +23,6 @@ func CreatePerm(c *gin.Context, perm *model.Permission) (err error) {
 	return utils.CRUDCreate(c, perm)
 }
 
-func UpdatePermById(c *gin.Context, updatePermReq map[string]any) (uint, error) {
-	return utils.CRUDUpdateByID(c, &model.Permission{}, updatePermReq)
+func UpdatePermById(c *gin.Context, updatePermReq map[string]any) (string, error) {
+	return utils.CRUDUpdateByStringID(c, &model.Permission{}, updatePermReq)
 }

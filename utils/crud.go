@@ -71,7 +71,7 @@ func CRUDReadByID[M any](c *gin.Context, model *M, id uint) error {
 		}
 
 		core.Log(c).Error(err)
-		err = errors.New("系统异常")
+		return errors.New("系统异常")
 	}
 
 	return nil
@@ -105,6 +105,28 @@ func CRUDUpdateByID[M any](c *gin.Context, model *M, params map[string]any) (uin
 	// 因为id不一定是float类型，在此处添加一个断言判断id类型
 
 	id := uint(params["id"].(float64))
+
+	delete(params, "id")
+
+	res := core.Mysql.Model(model).Where("id = ?", id).Updates(params)
+	if res.Error != nil {
+		core.Log(c).Error(res.Error)
+		return id, errors.New("系统错误")
+	}
+
+	if res.RowsAffected == 0 {
+		return id, errors.New("未更新")
+	}
+
+	return id, nil
+}
+
+// 根据 string id 更新记录
+func CRUDUpdateByStringID[M any](c *gin.Context, model *M, params map[string]any) (string, error) {
+	// TODO
+	// 因为id不一定是float类型，在此处添加一个断言判断id类型
+
+	id := string(params["id"].(string))
 
 	delete(params, "id")
 
