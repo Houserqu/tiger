@@ -1,4 +1,17 @@
 definitions:
+  auth.CreatePermReq:
+    properties:
+      desc:
+        type: string
+      id:
+        type: string
+      type:
+        type: string
+    required:
+    - desc
+    - id
+    - type
+    type: object
   auth.CreateRoleReq:
     properties:
       name:
@@ -17,6 +30,17 @@ definitions:
     properties:
       id:
         type: integer
+    required:
+    - id
+    type: object
+  auth.UpdatePermReq:
+    properties:
+      desc:
+        type: string
+      id:
+        type: string
+      type:
+        type: string
     required:
     - id
     type: object
@@ -356,6 +380,23 @@ paths:
       summary: 更新页面
       tags:
       - 页面
+  /api/perm/create:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/auth.CreatePermReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: number
+      summary: 添加权限
+      tags:
+      - 权限
   /api/perm/list:
     get:
       responses:
@@ -364,6 +405,23 @@ paths:
           schema:
             $ref: '#/definitions/model.Permission'
       summary: 权限列表
+      tags:
+      - 权限
+  /api/perm/update:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/auth.UpdatePermReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: number
+      summary: 更新权限
       tags:
       - 权限
   /api/role/create:

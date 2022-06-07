@@ -56,11 +56,12 @@ func main() {
 
 	// 注册每个模块中定义的路由
 	view.Controller(r)
-	page.Controller(r)  // 页面
-	menu.Controller(r)  // 菜单
-	user.Controller(r)  // 用户
-	login.Controller(r) // 登录注册
-	auth.Controller(r)  //权限
+	page.Controller(r)          // 页面
+	menu.Controller(r)          // 菜单
+	user.Controller(r)          // 用户
+	login.Controller(r)         // 登录注册
+	auth.Controller(r)          // 权限
+	auth.ControllerPermisson(r) // 权限
 
 	// 监听端口
 	err := r.Run(viper.GetString("server.addr"))

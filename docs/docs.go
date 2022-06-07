@@ -288,6 +288,33 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/perm/create": {
+            "post": {
+                "tags": [
+                    "权限"
+                ],
+                "summary": "添加权限",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/auth.CreatePermReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
         "/api/perm/list": {
             "get": {
                 "tags": [
@@ -299,6 +326,33 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/model.Permission"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/perm/update": {
+            "post": {
+                "tags": [
+                    "权限"
+                ],
+                "summary": "更新权限",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/auth.UpdatePermReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "number"
                         }
                     }
                 }
@@ -430,6 +484,25 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "auth.CreatePermReq": {
+            "type": "object",
+            "required": [
+                "desc",
+                "id",
+                "type"
+            ],
+            "properties": {
+                "desc": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
         "auth.CreateRoleReq": {
             "type": "object",
             "required": [
@@ -460,6 +533,23 @@ const docTemplate = `{
             "properties": {
                 "id": {
                     "type": "integer"
+                }
+            }
+        },
+        "auth.UpdatePermReq": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "desc": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
                 }
             }
         },
