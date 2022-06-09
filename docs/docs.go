@@ -358,6 +358,33 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/role/addPerm": {
+            "post": {
+                "tags": [
+                    "角色"
+                ],
+                "summary": "为角色添加权限",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/auth.AddPermReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
         "/api/role/create": {
             "post": {
                 "tags": [
@@ -484,6 +511,21 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "auth.AddPermReq": {
+            "type": "object",
+            "required": [
+                "permission_id",
+                "role_id"
+            ],
+            "properties": {
+                "permission_id": {
+                    "type": "string"
+                },
+                "role_id": {
+                    "type": "string"
+                }
+            }
+        },
         "auth.CreatePermReq": {
             "type": "object",
             "required": [

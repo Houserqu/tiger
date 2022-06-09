@@ -38,3 +38,7 @@ func DeleteRoleById(c *gin.Context, deleteRoleReq *DeleteRoleReq) (uint, error) 
 func UpdateRoleById(c *gin.Context, updateRoleReq map[string]any) (uint, error) {
 	return utils.CRUDUpdateByID(c, &model.Role{}, updateRoleReq)
 }
+
+func AddPerm(c *gin.Context, relRolePermission *model.RelRolePermission) error {
+	return utils.CRUDCreate(c, relRolePermission)
+}

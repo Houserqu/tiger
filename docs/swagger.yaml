@@ -1,4 +1,14 @@
 definitions:
+  auth.AddPermReq:
+    properties:
+      permission_id:
+        type: string
+      role_id:
+        type: string
+    required:
+    - permission_id
+    - role_id
+    type: object
   auth.CreatePermReq:
     properties:
       desc:
@@ -424,6 +434,23 @@ paths:
       summary: 更新权限
       tags:
       - 权限
+  /api/role/addPerm:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/auth.AddPermReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: number
+      summary: 为角色添加权限
+      tags:
+      - 角色
   /api/role/create:
     post:
       parameters:

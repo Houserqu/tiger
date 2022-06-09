@@ -13,11 +13,15 @@ func Controller(r *gin.Engine) {
 	//创建 group 并绑定中间件
 	api := r.Group("/api/role", middleware.CheckLogin(), middleware.CheckPerm(PERMISSION.AUTH_ALL))
 
+	//角色操作相关接口
 	api.GET("list", getRoleList)
 	api.POST("create", createRole)
-	api.POST("delete", deleteMenu)
+	api.POST("delete", deleteRole)
 	api.POST("update", updateRole)
 	api.POST("getRoleById", getRoleById)
+
+	//为角色添加权限
+	api.POST("addPerm", addPerm)
 }
 
 type GetRoleReq struct {
@@ -101,7 +105,7 @@ type DeleteRoleReq struct {
 // @Router /api/role/delete [post]
 // @Param params body auth.DeleteRoleReq true "参数"
 // @Success 200 {number} 1
-func deleteMenu(c *gin.Context) {
+func deleteRole(c *gin.Context) {
 	//参数校验
 	var deleteRoleReq DeleteRoleReq
 	if err := c.ShouldBindJSON(&deleteRoleReq); err != nil {
@@ -142,5 +146,40 @@ func updateRole(c *gin.Context) {
 	}
 
 	core.ResSuccess(c, id)
+}
 
+type AddPermReq struct {
+	RoleID       string `json:"role_id" binding:"required"`
+	PermissionID string `json:"permission_id" binding:"required"`
+}
+
+// @Summary 为角色添加权限
+// @Tags 角色
+// @Router /api/role/addPerm [post]
+// @Param params body auth.AddPermReq true "参数"
+// @Success 200 {number} 1
+func addPerm(c *gin.Context) {
+	var addPermReq AddPermReq
+	if err := c.ShouldBindJSON(&addPermReq); err != nil {
+		core.ResError(c, constants.ErrParam, err.Error())
+		return
+	}
+
+	relRolePermission := model.RelRolePermission{
+		RoleID:       addPermReq.RoleID,
+		PermissionID: addPermReq.PermissionID,
+	}
+
+	//TODO 判断该角色是否已有此权限
+	/**
+	*
+	**/
+
+	err := AddPerm(c, &relRolePermission)
+	if err != nil {
+		core.ResError(c, constants.ErrAddPerm, err.Error())
+		return
+	}
+
+	core.ResSuccess(c, relRolePermission)
 }
