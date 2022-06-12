@@ -32,12 +32,13 @@ var (
 	ErrUpdatePage = core.ErrorCode{Code: 2205, Msg: "更新页面失败"}
 
 	//配置角色相关
-	ErrGetRoles   = core.ErrorCode{Code: 2301, Msg: "获取角色列表失败"}
-	ErrCreateRole = core.ErrorCode{Code: 2302, Msg: "创建角色失败"}
-	ErrDeleteRole = core.ErrorCode{Code: 2303, Msg: "删除角色失败"}
-	ErrUpdateRole = core.ErrorCode{Code: 2304, Msg: "更新角色失败"}
-	ErrGetRole    = core.ErrorCode{Code: 2305, Msg: "获取角色失败(无此角色)"}
-	ErrAddPerm    = core.ErrorCode{Code: 2306, Msg: "添加角色权限失败"}
+	ErrGetRoles     = core.ErrorCode{Code: 2301, Msg: "获取角色列表失败"}
+	ErrCreateRole   = core.ErrorCode{Code: 2302, Msg: "创建角色失败"}
+	ErrDeleteRole   = core.ErrorCode{Code: 2303, Msg: "删除角色失败"}
+	ErrUpdateRole   = core.ErrorCode{Code: 2304, Msg: "更新角色失败"}
+	ErrGetRole      = core.ErrorCode{Code: 2305, Msg: "获取角色失败(无此角色)"}
+	ErrAddPerm      = core.ErrorCode{Code: 2306, Msg: "添加角色权限失败"}
+	ErrGetRolePerms = core.ErrorCode{Code: 2307, Msg: "获取角色权限列表失败"}
 
 	//配置权限相关
 	ErrGetPerms   = core.ErrorCode{Code: 2401, Msg: "获取权限列表失败"}

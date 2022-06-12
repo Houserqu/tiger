@@ -456,6 +456,33 @@
                 }
             }
         },
+        "/api/role/getRolePerms": {
+            "post": {
+                "tags": [
+                    "角色"
+                ],
+                "summary": "根据角色id获取角色权限",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/auth.GetRolePermsReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Permission"
+                        }
+                    }
+                }
+            }
+        },
         "/api/role/list": {
             "get": {
                 "tags": [
@@ -504,12 +531,15 @@
         "auth.AddPermReq": {
             "type": "object",
             "required": [
-                "permission_id",
+                "permission_ids",
                 "role_id"
             ],
             "properties": {
-                "permission_id": {
-                    "type": "string"
+                "permission_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "role_id": {
                     "type": "string"
@@ -554,6 +584,17 @@
             "properties": {
                 "id": {
                     "type": "integer"
+                }
+            }
+        },
+        "auth.GetRolePermsReq": {
+            "type": "object",
+            "required": [
+                "role_id"
+            ],
+            "properties": {
+                "role_id": {
+                    "type": "string"
                 }
             }
         },

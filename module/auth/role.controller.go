@@ -20,9 +20,11 @@ func Controller(r *gin.Engine) {
 	api.POST("update", updateRole)
 	api.POST("getRoleById", getRoleById) // TODO: 改成 api.GET("detail", getRoleById) , 保持这个规范
 
-	//为角色添加权限
+	//为角色权限操作
 	api.POST("addPerm", addPerm)
 	// TODO: 删除权限接口，也需要支持删除多个权限
+
+	api.POST("getRolePerms", getRolePerms)
 }
 
 type GetRoleReq struct {
@@ -150,11 +152,10 @@ func updateRole(c *gin.Context) {
 }
 
 type AddPermReq struct {
-	RoleID       string `json:"role_id" binding:"required"`
-	PermissionID string `json:"permission_id" binding:"required"`
+	RoleID        string   `json:"role_id" binding:"required"`
+	PermissionIDs []string `json:"permission_ids" binding:"required"`
 }
 
-// TODO: 添加权限借口需要支持一次添加多个权限，所以 PermissionID 应该是 PermissionIDs，id 数组
 // @Summary 为角色添加权限
 // @Tags 角色
 // @Router /api/role/addPerm [post]
@@ -167,22 +168,37 @@ func addPerm(c *gin.Context) {
 		return
 	}
 
-	relRolePermission := model.RelRolePermission{
-		RoleID:       addPermReq.RoleID,
-		PermissionID: addPermReq.PermissionID,
-	}
-
-	// TODO 判断该角色是否已有此权限
-	// TODO: 可以不用判断，直接用 upsert 参考 https://gorm.io/zh_CN/docs/create.html#Upsert-%E5%8F%8A%E5%86%B2%E7%AA%81
-	/**
-	*
-	**/
-
-	err := AddPerm(c, &relRolePermission)
+	relRolePermissions, err := AddPerm(c, &addPermReq)
 	if err != nil {
 		core.ResError(c, constants.ErrAddPerm, err.Error())
 		return
 	}
 
-	core.ResSuccess(c, relRolePermission)
+	core.ResSuccess(c, relRolePermissions)
+}
+
+type GetRolePermsReq struct {
+	RoleID string `json:"role_id" binding:"required"`
+}
+
+// @Summary 根据角色id获取角色权限
+// @Tags 角色
+// @Router /api/role/getRolePerms [post]
+// @Param params body auth.GetRolePermsReq true "参数"
+// @Success 200 {object} model.Permission
+func getRolePerms(c *gin.Context) {
+	var rolePerms []model.Permission
+	var getRolePermsReq GetRolePermsReq
+	if err := c.ShouldBindJSON(&getRolePermsReq); err != nil {
+		core.ResError(c, constants.ErrParam, err.Error())
+		return
+	}
+
+	err := GetRolePerms(c, &getRolePermsReq, &rolePerms)
+	if err != nil {
+		core.ResError(c, constants.ErrGetRolePerms, err.Error())
+		return
+	}
+
+	core.ResSuccess(c, rolePerms)
 }

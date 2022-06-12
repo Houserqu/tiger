@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm/clause"
 	"houserqu.com/tiger/core"
 	"houserqu.com/tiger/model"
 	"houserqu.com/tiger/utils"
@@ -42,7 +43,47 @@ func UpdateRoleById(c *gin.Context, updateRoleReq map[string]any) (uint, error) 
 	return utils.CRUDUpdateByID(c, &model.Role{}, updateRoleReq)
 }
 
-// TODO: 多余的，直接在 controller 里调 CURD 方法
-func AddPerm(c *gin.Context, relRolePermission *model.RelRolePermission) error {
-	return utils.CRUDCreate(c, relRolePermission)
+//给角色添加权限
+func AddPerm(c *gin.Context, addPermReq *AddPermReq) (relRolePermissions []model.RelRolePermission, err error) {
+
+	for _, v := range addPermReq.PermissionIDs {
+		relRolePermission := model.RelRolePermission{
+			RoleID:       addPermReq.RoleID,
+			PermissionID: v,
+		}
+
+		relRolePermissions = append(relRolePermissions, relRolePermission)
+	}
+
+	for _, relRolePermission := range relRolePermissions {
+		//在遇见冲突时，不做任何操作
+		err = core.Mysql.Clauses(clause.OnConflict{DoNothing: true}).Create(&relRolePermission).Error
+		if err != nil {
+			return nil, err
+		}
+	}
+	return relRolePermissions, nil
+}
+
+func GetRolePerms(c *gin.Context, getRolePermsReq *GetRolePermsReq, permissions *[]model.Permission) (err error) {
+	//查角色权限ID
+	var relRolePermission []model.RelRolePermission
+	err = core.Mysql.Where("role_id = ?", getRolePermsReq.RoleID).Find(&relRolePermission).Error
+	if err != nil {
+		return
+	}
+
+	//获取permissionId
+	var permissionIds []string
+	for _, v := range relRolePermission {
+		permissionIds = append(permissionIds, v.PermissionID)
+	}
+
+	//查权限列表
+	err = core.Mysql.Where("id IN ?", permissionIds).Find(permissions).Error
+	if err != nil {
+		return
+	}
+
+	return err
 }

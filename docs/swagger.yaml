@@ -1,12 +1,14 @@
 definitions:
   auth.AddPermReq:
     properties:
-      permission_id:
-        type: string
+      permission_ids:
+        items:
+          type: string
+        type: array
       role_id:
         type: string
     required:
-    - permission_id
+    - permission_ids
     - role_id
     type: object
   auth.CreatePermReq:
@@ -35,6 +37,13 @@ definitions:
         type: integer
     required:
     - id
+    type: object
+  auth.GetRolePermsReq:
+    properties:
+      role_id:
+        type: string
+    required:
+    - role_id
     type: object
   auth.GetRoleReq:
     properties:
@@ -500,6 +509,23 @@ paths:
           schema:
             $ref: '#/definitions/model.Role'
       summary: 根据id获取角色
+      tags:
+      - 角色
+  /api/role/getRolePerms:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/auth.GetRolePermsReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Permission'
+      summary: 根据角色id获取角色权限
       tags:
       - 角色
   /api/role/list:
