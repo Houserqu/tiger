@@ -533,6 +533,33 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/user/delUserRoles": {
+            "post": {
+                "tags": [
+                    "用户"
+                ],
+                "summary": "为用户移除角色",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.DelUserRolesReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -860,6 +887,24 @@ const docTemplate = `{
             }
         },
         "user.AddUserRolesReq": {
+            "type": "object",
+            "required": [
+                "role_id",
+                "user_id"
+            ],
+            "properties": {
+                "role_id": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "user.DelUserRolesReq": {
             "type": "object",
             "required": [
                 "role_id",

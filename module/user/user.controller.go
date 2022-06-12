@@ -33,7 +33,8 @@ func Controller(r *gin.Engine) {
 	api.POST("/update", middleware.CheckPerm(PERMISSION.USER_UPDATE), UpdateUser)     // 更新
 	api.POST("/delete/:id", middleware.CheckPerm(PERMISSION.USER_DELETE), DeleteUser) // 删除
 
-	api.POST("/addUserRoles", middleware.CheckPerm(PERMISSION.USER_ADD_ROLES), addUserRoles) //添加角色
+	api.POST("/addUserRoles", middleware.CheckPerm(PERMISSION.USER_ADD_ROLES), addUserRoles) //添加用户角色
+	api.POST("/delUserRoles", middleware.CheckPerm(PERMISSION.USER_DEL_ROLES), delUserRoles) //删除用户角色
 }
 
 func GetUser(c *gin.Context) {
@@ -132,8 +133,8 @@ func DeleteUser(c *gin.Context) {
 }
 
 type AddUserRolesReq struct {
-	UserID uint   `json:"user_id" binding:"required"`
-	RoleID []uint `json:"role_id" binding:"required"`
+	UserID  uint   `json:"user_id" binding:"required"`
+	RoleIDs []uint `json:"role_id" binding:"required"`
 }
 
 // @Summary 添加用户角色
@@ -155,4 +156,30 @@ func addUserRoles(c *gin.Context) {
 	}
 
 	core.ResSuccess(c, relUserRoles)
+}
+
+type DelUserRolesReq struct {
+	UserID  uint   `json:"user_id" binding:"required"`
+	RoleIDs []uint `json:"role_id" binding:"required"`
+}
+
+// @Summary 为用户移除角色
+// @Tags 用户
+// @Router /api/user/delUserRoles [post]
+// @Param params body user.DelUserRolesReq true "参数"
+// @Success 200 {number} 1
+func delUserRoles(c *gin.Context) {
+	var delUserRolesReq DelUserRolesReq
+	if err := c.ShouldBindJSON(&delUserRolesReq); err != nil {
+		core.ResError(c, constants.ErrParam, err.Error())
+		return
+	}
+
+	err := DelUserRoles(c, &delUserRolesReq)
+	if err != nil {
+		core.ResError(c, constants.ErrDelUserRoles, err.Error())
+		return
+	}
+
+	core.ResSuccess(c, delUserRolesReq.RoleIDs)
 }

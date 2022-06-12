@@ -14,6 +14,7 @@ var (
 	ErrCreateFail   = core.ErrorCode{Code: 1001, Msg: "创建失败"}
 	ErrUpdateFail   = core.ErrorCode{Code: 1002, Msg: "更新失败"}
 	ErrAddUserRoles = core.ErrorCode{Code: 1003, Msg: "添加用户角色失败"}
+	ErrDelUserRoles = core.ErrorCode{Code: 1004, Msg: "删除用户角色失败"}
 
 	// 登录注册相关
 	ErrLoginFail     = core.ErrorCode{Code: 2000, Msg: "登录失败"}
