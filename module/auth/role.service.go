@@ -19,26 +19,30 @@ func GetRoles(c *gin.Context, roles *[]model.Role) error {
 	err := core.Mysql.Find(&roles).Error
 	if err != nil {
 		core.Log(c).Error(err.Error())
-		return errors.New("c")
+		return errors.New("get role list error")
 	}
 	return nil
 }
 
+// TODO: 多余的，直接在 controller 里调 CURD 方法
 func CreateRole(c *gin.Context, role *model.Role) (err error) {
 
 	return utils.CRUDCreate(c, role)
 }
 
+// TODO: 多余的，直接在 controller 里调 CURD 方法
 //根据id删除角色记录，返回被删除id 与 报错信息
 func DeleteRoleById(c *gin.Context, deleteRoleReq *DeleteRoleReq) (uint, error) {
 	return utils.CURDDeleteByiD(c, &model.Role{}, deleteRoleReq.ID)
 }
 
+// TODO: 多余的，直接在 controller 里调 CURD 方法
 //根据id更新角色记录，返回被更新的id 与 报错信息
 func UpdateRoleById(c *gin.Context, updateRoleReq map[string]any) (uint, error) {
 	return utils.CRUDUpdateByID(c, &model.Role{}, updateRoleReq)
 }
 
+// TODO: 多余的，直接在 controller 里调 CURD 方法
 func AddPerm(c *gin.Context, relRolePermission *model.RelRolePermission) error {
 	return utils.CRUDCreate(c, relRolePermission)
 }

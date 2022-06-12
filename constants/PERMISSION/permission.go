@@ -1,5 +1,6 @@
 package PERMISSION
 
+// TODO: 写一个脚本自动扫描所有权限并写 DB，避免需要手动创建
 var (
 	// 超级管理员权限
 	ADMIN = "ADMIN"

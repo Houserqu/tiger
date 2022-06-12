@@ -18,10 +18,11 @@ func Controller(r *gin.Engine) {
 	api.POST("create", createRole)
 	api.POST("delete", deleteRole)
 	api.POST("update", updateRole)
-	api.POST("getRoleById", getRoleById)
+	api.POST("getRoleById", getRoleById) // TODO: 改成 api.GET("detail", getRoleById) , 保持这个规范
 
 	//为角色添加权限
 	api.POST("addPerm", addPerm)
+	// TODO: 删除权限接口，也需要支持删除多个权限
 }
 
 type GetRoleReq struct {
@@ -153,6 +154,7 @@ type AddPermReq struct {
 	PermissionID string `json:"permission_id" binding:"required"`
 }
 
+// TODO: 添加权限借口需要支持一次添加多个权限，所以 PermissionID 应该是 PermissionIDs，id 数组
 // @Summary 为角色添加权限
 // @Tags 角色
 // @Router /api/role/addPerm [post]
@@ -170,7 +172,8 @@ func addPerm(c *gin.Context) {
 		PermissionID: addPermReq.PermissionID,
 	}
 
-	//TODO 判断该角色是否已有此权限
+	// TODO 判断该角色是否已有此权限
+	// TODO: 可以不用判断，直接用 upsert 参考 https://gorm.io/zh_CN/docs/create.html#Upsert-%E5%8F%8A%E5%86%B2%E7%AA%81
 	/**
 	*
 	**/
