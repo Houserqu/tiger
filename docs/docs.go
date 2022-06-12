@@ -288,33 +288,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/perm/create": {
-            "post": {
-                "tags": [
-                    "权限"
-                ],
-                "summary": "添加权限",
-                "parameters": [
-                    {
-                        "description": "参数",
-                        "name": "params",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/auth.CreatePermReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "number"
-                        }
-                    }
-                }
-            }
-        },
         "/api/perm/list": {
             "get": {
                 "tags": [
@@ -326,33 +299,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/model.Permission"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/perm/update": {
-            "post": {
-                "tags": [
-                    "权限"
-                ],
-                "summary": "更新权限",
-                "parameters": [
-                    {
-                        "description": "参数",
-                        "name": "params",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/auth.UpdatePermReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "number"
                         }
                     }
                 }
@@ -560,6 +506,33 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/user/addUserRoles": {
+            "post": {
+                "tags": [
+                    "用户"
+                ],
+                "summary": "添加用户角色",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.AddUserRolesReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.RelUserRole"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -577,25 +550,6 @@ const docTemplate = `{
                     }
                 },
                 "role_id": {
-                    "type": "string"
-                }
-            }
-        },
-        "auth.CreatePermReq": {
-            "type": "object",
-            "required": [
-                "desc",
-                "id",
-                "type"
-            ],
-            "properties": {
-                "desc": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "type": {
                     "type": "string"
                 }
             }
@@ -647,23 +601,6 @@ const docTemplate = `{
             ],
             "properties": {
                 "role_id": {
-                    "type": "string"
-                }
-            }
-        },
-        "auth.UpdatePermReq": {
-            "type": "object",
-            "required": [
-                "id"
-            ],
-            "properties": {
-                "desc": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "type": {
                     "type": "string"
                 }
             }
@@ -823,6 +760,20 @@ const docTemplate = `{
                 }
             }
         },
+        "model.RelUserRole": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "role_id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "model.Role": {
             "type": "object",
             "properties": {
@@ -905,6 +856,24 @@ const docTemplate = `{
                 },
                 "path": {
                     "type": "string"
+                }
+            }
+        },
+        "user.AddUserRolesReq": {
+            "type": "object",
+            "required": [
+                "role_id",
+                "user_id"
+            ],
+            "properties": {
+                "role_id": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "user_id": {
+                    "type": "integer"
                 }
             }
         }

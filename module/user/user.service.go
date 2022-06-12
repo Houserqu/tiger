@@ -3,7 +3,9 @@ package user
 import (
 	"errors"
 
+	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 	"houserqu.com/tiger/core"
 	"houserqu.com/tiger/model"
 )
@@ -48,4 +50,27 @@ func UpdateModel(id uint, name string, email string) (user model.User, err error
 
 	err = core.Mysql.Model(&user).Updates(map[string]interface{}{"name": name, "email": email}).Error
 	return
+}
+
+func AddUserRoles(c *gin.Context, addUserRolesReq *AddUserRolesReq) (relUserRoles []model.RelUserRole, err error) {
+	//生成所有UserRole实体
+	for _, v := range addUserRolesReq.RoleID {
+		relUserRole := model.RelUserRole{
+			UserID: addUserRolesReq.UserID,
+			RoleID: v,
+		}
+
+		relUserRoles = append(relUserRoles, relUserRole)
+	}
+
+	//循环添加UserRole
+	for _, relUserRole := range relUserRoles {
+		//在遇见冲突时，不做任何操作
+		err = core.Mysql.Clauses(clause.OnConflict{DoNothing: true}).Create(&relUserRole).Error
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return relUserRoles, nil
 }

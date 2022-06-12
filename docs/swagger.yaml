@@ -11,19 +11,6 @@ definitions:
     - permission_ids
     - role_id
     type: object
-  auth.CreatePermReq:
-    properties:
-      desc:
-        type: string
-      id:
-        type: string
-      type:
-        type: string
-    required:
-    - desc
-    - id
-    - type
-    type: object
   auth.CreateRoleReq:
     properties:
       name:
@@ -56,17 +43,6 @@ definitions:
         type: string
     required:
     - role_id
-    type: object
-  auth.UpdatePermReq:
-    properties:
-      desc:
-        type: string
-      id:
-        type: string
-      type:
-        type: string
-    required:
-    - id
     type: object
   auth.UpdateRoleReq:
     properties:
@@ -170,6 +146,15 @@ definitions:
       updated_at:
         type: string
     type: object
+  model.RelUserRole:
+    properties:
+      id:
+        type: integer
+      role_id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
   model.Role:
     properties:
       created_at:
@@ -226,6 +211,18 @@ definitions:
     - id
     - name
     - path
+    type: object
+  user.AddUserRolesReq:
+    properties:
+      role_id:
+        items:
+          type: integer
+        type: array
+      user_id:
+        type: integer
+    required:
+    - role_id
+    - user_id
     type: object
 info:
   contact: {}
@@ -404,23 +401,6 @@ paths:
       summary: 更新页面
       tags:
       - 页面
-  /api/perm/create:
-    post:
-      parameters:
-      - description: 参数
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/auth.CreatePermReq'
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: number
-      summary: 添加权限
-      tags:
-      - 权限
   /api/perm/list:
     get:
       responses:
@@ -429,23 +409,6 @@ paths:
           schema:
             $ref: '#/definitions/model.Permission'
       summary: 权限列表
-      tags:
-      - 权限
-  /api/perm/update:
-    post:
-      parameters:
-      - description: 参数
-        in: body
-        name: params
-        required: true
-        schema:
-          $ref: '#/definitions/auth.UpdatePermReq'
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: number
-      summary: 更新权限
       tags:
       - 权限
   /api/role/addPerms:
@@ -576,4 +539,21 @@ paths:
       summary: 更新角色
       tags:
       - 角色
+  /api/user/addUserRoles:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/user.AddUserRolesReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.RelUserRole'
+      summary: 添加用户角色
+      tags:
+      - 用户
 swagger: "2.0"

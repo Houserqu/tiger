@@ -46,6 +46,7 @@ func UpdateRoleById(c *gin.Context, updateRoleReq map[string]any) (uint, error) 
 //给角色添加权限
 func AddPerms(c *gin.Context, addPermsReq *AddPermsReq) (relRolePermissions []model.RelRolePermission, err error) {
 
+	//生成所有RolePermission实体
 	for _, v := range addPermsReq.PermissionIDs {
 		relRolePermission := model.RelRolePermission{
 			RoleID:       addPermsReq.RoleID,
@@ -55,6 +56,7 @@ func AddPerms(c *gin.Context, addPermsReq *AddPermsReq) (relRolePermissions []mo
 		relRolePermissions = append(relRolePermissions, relRolePermission)
 	}
 
+	//循环添加RolePermission
 	for _, relRolePermission := range relRolePermissions {
 		//在遇见冲突时，不做任何操作
 		err = core.Mysql.Clauses(clause.OnConflict{DoNothing: true}).Create(&relRolePermission).Error

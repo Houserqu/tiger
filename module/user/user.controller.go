@@ -32,6 +32,8 @@ func Controller(r *gin.Engine) {
 	api.POST("/create", middleware.CheckPerm(PERMISSION.USER_CREATE), CreateUser)     // 创建
 	api.POST("/update", middleware.CheckPerm(PERMISSION.USER_UPDATE), UpdateUser)     // 更新
 	api.POST("/delete/:id", middleware.CheckPerm(PERMISSION.USER_DELETE), DeleteUser) // 删除
+
+	api.POST("/addUserRoles", middleware.CheckPerm(PERMISSION.USER_ADD_ROLES), addUserRoles) //添加角色
 }
 
 func GetUser(c *gin.Context) {
@@ -127,4 +129,30 @@ func DeleteUser(c *gin.Context) {
 	}
 
 	core.ResSuccess(c, id)
+}
+
+type AddUserRolesReq struct {
+	UserID uint   `json:"user_id" binding:"required"`
+	RoleID []uint `json:"role_id" binding:"required"`
+}
+
+// @Summary 添加用户角色
+// @Tags 用户
+// @Router /api/user/addUserRoles [post]
+// @Param params body user.AddUserRolesReq true "参数"
+// @Success 200 {object} model.RelUserRole
+func addUserRoles(c *gin.Context) {
+	var addUserRolesReq AddUserRolesReq
+	if err := c.ShouldBindJSON(&addUserRolesReq); err != nil {
+		core.ResError(c, constants.ErrParam, err.Error())
+		return
+	}
+
+	relUserRoles, err := AddUserRoles(c, &addUserRolesReq)
+	if err != nil {
+		core.ResError(c, constants.ErrAddUserRoles, err.Error())
+		return
+	}
+
+	core.ResSuccess(c, relUserRoles)
 }
