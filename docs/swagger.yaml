@@ -1,5 +1,5 @@
 definitions:
-  auth.AddPermReq:
+  auth.AddPermsReq:
     properties:
       permission_ids:
         items:
@@ -31,6 +31,18 @@ definitions:
     required:
     - name
     type: object
+  auth.DelPermsReq:
+    properties:
+      permission_ids:
+        items:
+          type: string
+        type: array
+      role_id:
+        type: string
+    required:
+    - permission_ids
+    - role_id
+    type: object
   auth.DeleteRoleReq:
     properties:
       id:
@@ -44,13 +56,6 @@ definitions:
         type: string
     required:
     - role_id
-    type: object
-  auth.GetRoleReq:
-    properties:
-      id:
-        type: integer
-    required:
-    - id
     type: object
   auth.UpdatePermReq:
     properties:
@@ -443,7 +448,7 @@ paths:
       summary: 更新权限
       tags:
       - 权限
-  /api/role/addPerm:
+  /api/role/addPerms:
     post:
       parameters:
       - description: 参数
@@ -451,7 +456,7 @@ paths:
         name: params
         required: true
         schema:
-          $ref: '#/definitions/auth.AddPermReq'
+          $ref: '#/definitions/auth.AddPermsReq'
       responses:
         "200":
           description: OK
@@ -477,6 +482,23 @@ paths:
       summary: 创建角色
       tags:
       - 角色
+  /api/role/delPerms:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/auth.DelPermsReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: number
+      summary: 为角色移除权限
+      tags:
+      - 角色
   /api/role/delete:
     post:
       parameters:
@@ -494,15 +516,14 @@ paths:
       summary: 删除角色
       tags:
       - 角色
-  /api/role/getRoleById:
-    post:
+  /api/role/detail/{id}:
+    get:
       parameters:
-      - description: 参数
-        in: body
-        name: params
+      - description: 角色 ID
+        in: path
+        name: id
         required: true
-        schema:
-          $ref: '#/definitions/auth.GetRoleReq'
+        type: integer
       responses:
         "200":
           description: OK

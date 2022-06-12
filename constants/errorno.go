@@ -39,6 +39,7 @@ var (
 	ErrGetRole      = core.ErrorCode{Code: 2305, Msg: "获取角色失败(无此角色)"}
 	ErrAddPerm      = core.ErrorCode{Code: 2306, Msg: "添加角色权限失败"}
 	ErrGetRolePerms = core.ErrorCode{Code: 2307, Msg: "获取角色权限列表失败"}
+	ErrDelPerms     = core.ErrorCode{Code: 2308, Msg: "删除权限失败"}
 
 	//配置权限相关
 	ErrGetPerms   = core.ErrorCode{Code: 2401, Msg: "获取权限列表失败"}

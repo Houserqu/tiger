@@ -13,12 +13,9 @@ func ControllerPermisson(r *gin.Engine) {
 	//创建 group 并绑定中间件
 	api := r.Group("/api/perm", middleware.CheckLogin(), middleware.CheckPerm(PERMISSION.AUTH_ALL))
 
-	// TODO： 保留一个 list 接口就可以了，权限数据不需要手动创建和编辑
 	api.GET("list", getPermissionList)
-	api.POST("create", createPerm)
-	// api.POST("delete", deleteMenu)
-	api.POST("update", updatePerm)
-	// api.POST("getRoleById", getRoleById)
+	//api.POST("create", createPerm)
+	//api.POST("update", updatePerm)
 }
 
 // @Summary 权限列表

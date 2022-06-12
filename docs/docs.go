@@ -358,7 +358,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/role/addPerm": {
+        "/api/role/addPerms": {
             "post": {
                 "tags": [
                     "角色"
@@ -371,7 +371,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/auth.AddPermReq"
+                            "$ref": "#/definitions/auth.AddPermsReq"
                         }
                     }
                 ],
@@ -412,6 +412,33 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/role/delPerms": {
+            "post": {
+                "tags": [
+                    "角色"
+                ],
+                "summary": "为角色移除权限",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "params",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/auth.DelPermsReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
         "/api/role/delete": {
             "post": {
                 "tags": [
@@ -439,21 +466,19 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/role/getRoleById": {
-            "post": {
+        "/api/role/detail/{id}": {
+            "get": {
                 "tags": [
                     "角色"
                 ],
                 "summary": "根据id获取角色",
                 "parameters": [
                     {
-                        "description": "参数",
-                        "name": "params",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/auth.GetRoleReq"
-                        }
+                        "type": "integer",
+                        "description": "角色 ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -538,7 +563,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "auth.AddPermReq": {
+        "auth.AddPermsReq": {
             "type": "object",
             "required": [
                 "permission_ids",
@@ -586,6 +611,24 @@ const docTemplate = `{
                 }
             }
         },
+        "auth.DelPermsReq": {
+            "type": "object",
+            "required": [
+                "permission_ids",
+                "role_id"
+            ],
+            "properties": {
+                "permission_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "role_id": {
+                    "type": "string"
+                }
+            }
+        },
         "auth.DeleteRoleReq": {
             "type": "object",
             "required": [
@@ -605,17 +648,6 @@ const docTemplate = `{
             "properties": {
                 "role_id": {
                     "type": "string"
-                }
-            }
-        },
-        "auth.GetRoleReq": {
-            "type": "object",
-            "required": [
-                "id"
-            ],
-            "properties": {
-                "id": {
-                    "type": "integer"
                 }
             }
         },

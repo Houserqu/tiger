@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 	"houserqu.com/tiger/constants"
 	"houserqu.com/tiger/constants/PERMISSION"
@@ -18,12 +20,11 @@ func Controller(r *gin.Engine) {
 	api.POST("create", createRole)
 	api.POST("delete", deleteRole)
 	api.POST("update", updateRole)
-	api.POST("getRoleById", getRoleById) // TODO: 改成 api.GET("detail", getRoleById) , 保持这个规范
+	api.GET("detail/:id", getRoleById)
 
 	//为角色权限操作
-	api.POST("addPerm", addPerm)
-	// TODO: 删除权限接口，也需要支持删除多个权限
-
+	api.POST("addPerms", addPerms)
+	api.POST("delPerms", delPerms)
 	api.POST("getRolePerms", getRolePerms)
 }
 
@@ -33,18 +34,18 @@ type GetRoleReq struct {
 
 // @Summary 根据id获取角色
 // @Tags 角色
-// @Router /api/role/getRoleById [post]
-// @Param params body auth.GetRoleReq true "参数"
+// @Router /api/role/detail/{id} [get]
+// @Param id path int true "角色 ID"
 // @Success 200 {object} model.Role
 func getRoleById(c *gin.Context) {
 	//参数校验
-	var getRoleReq GetRoleReq
-	if err := c.ShouldBindJSON(&getRoleReq); err != nil {
-		core.ResError(c, constants.ErrParam, err.Error())
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		core.ResError(c, constants.ErrParam, "")
 		return
 	}
 
-	role, err := GetRoleById(c, getRoleReq.ID)
+	role, err := GetRoleById(c, uint(id))
 	if err != nil {
 		core.ResError(c, constants.ErrGetRole, err.Error())
 		return
@@ -151,30 +152,56 @@ func updateRole(c *gin.Context) {
 	core.ResSuccess(c, id)
 }
 
-type AddPermReq struct {
+type AddPermsReq struct {
 	RoleID        string   `json:"role_id" binding:"required"`
 	PermissionIDs []string `json:"permission_ids" binding:"required"`
 }
 
 // @Summary 为角色添加权限
 // @Tags 角色
-// @Router /api/role/addPerm [post]
-// @Param params body auth.AddPermReq true "参数"
+// @Router /api/role/addPerms [post]
+// @Param params body auth.AddPermsReq true "参数"
 // @Success 200 {number} 1
-func addPerm(c *gin.Context) {
-	var addPermReq AddPermReq
-	if err := c.ShouldBindJSON(&addPermReq); err != nil {
+func addPerms(c *gin.Context) {
+	var addPermsReq AddPermsReq
+	if err := c.ShouldBindJSON(&addPermsReq); err != nil {
 		core.ResError(c, constants.ErrParam, err.Error())
 		return
 	}
 
-	relRolePermissions, err := AddPerm(c, &addPermReq)
+	relRolePermissions, err := AddPerms(c, &addPermsReq)
 	if err != nil {
 		core.ResError(c, constants.ErrAddPerm, err.Error())
 		return
 	}
 
 	core.ResSuccess(c, relRolePermissions)
+}
+
+type DelPermsReq struct {
+	RoleID        string   `json:"role_id" binding:"required"`
+	PermissionIDs []string `json:"permission_ids" binding:"required"`
+}
+
+// @Summary 为角色移除权限
+// @Tags 角色
+// @Router /api/role/delPerms [post]
+// @Param params body auth.DelPermsReq true "参数"
+// @Success 200 {number} 1
+func delPerms(c *gin.Context) {
+	var delPermsReq DelPermsReq
+	if err := c.ShouldBindJSON(&delPermsReq); err != nil {
+		core.ResError(c, constants.ErrParam, err.Error())
+		return
+	}
+
+	err := DelPerms(c, &delPermsReq)
+	if err != nil {
+		core.ResError(c, constants.ErrDelPerms, err.Error())
+		return
+	}
+
+	core.ResSuccess(c, delPermsReq.PermissionIDs)
 }
 
 type GetRolePermsReq struct {
