@@ -16,17 +16,23 @@ func Controller(r *gin.Engine) {
 	//创建 group 并绑定中间件
 	api := r.Group("/api/role", middleware.CheckLogin(), middleware.CheckPerm(PERMISSION.AUTH_ALL))
 
-	//角色操作相关接口
+	// 角色操作相关接口
 	api.GET("list", getRoleList)
 	api.POST("create", createRole)
 	api.POST("delete", deleteRole)
 	api.POST("update", updateRole)
 	api.GET("detail/:id", getRoleById)
 
-	//为角色权限操作
+	// 角色权限操作
 	api.POST("addPerms", addPerms)
 	api.POST("delPerms", delPerms)
-	api.GET("getRolePerms", getRolePerms)
+	api.GET("perms", getRolePerms)
+
+	// 角色用户操作
+	// TODO: 参考【角色权限操作】三个接口实现一遍
+	api.POST("addUsers", addPerms)
+	api.POST("delUsers", delPerms)
+	api.GET("users", getRolePerms)
 }
 
 type GetRoleReq struct {
