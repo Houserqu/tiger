@@ -25,92 +25,42 @@ func GetRoles(c *gin.Context, roles *[]model.Role) error {
 	return nil
 }
 
-// TODO: 多余的，直接在 controller 里调 CURD 方法
-func CreateRole(c *gin.Context, role *model.Role) (err error) {
-
-	return utils.CRUDCreate(c, role)
-}
-
-// TODO: 多余的，直接在 controller 里调 CURD 方法
-//根据id删除角色记录，返回被删除id 与 报错信息
-func DeleteRoleById(c *gin.Context, deleteRoleReq *DeleteRoleReq) (uint, error) {
-	return utils.CURDDeleteByiD(c, &model.Role{}, deleteRoleReq.ID)
-}
-
-// TODO: 多余的，直接在 controller 里调 CURD 方法
-//根据id更新角色记录，返回被更新的id 与 报错信息
-func UpdateRoleById(c *gin.Context, updateRoleReq map[string]any) (uint, error) {
-	return utils.CRUDUpdateByID(c, &model.Role{}, updateRoleReq)
-}
-
 //给角色添加权限
-func AddPerms(c *gin.Context, addPermsReq *AddPermsReq) (relRolePermissions []model.RelRolePermission, err error) {
-
+func AddPerms(c *gin.Context, roleId uint, permissionIds []string) (relRolePermissions []model.RelRolePermission, err error) {
 	//生成所有RolePermission实体
-	for _, v := range addPermsReq.PermissionIDs {
+	for _, v := range permissionIds {
 		relRolePermission := model.RelRolePermission{
-			RoleID:       addPermsReq.RoleID,
+			RoleID:       roleId,
 			PermissionID: v,
 		}
 
 		relRolePermissions = append(relRolePermissions, relRolePermission)
 	}
 
-	//循环添加RolePermission
-	for _, relRolePermission := range relRolePermissions {
-		//在遇见冲突时，不做任何操作
-		err = core.Mysql.Clauses(clause.OnConflict{DoNothing: true}).Create(&relRolePermission).Error
-		if err != nil {
-			return nil, err
-		}
+	// 批量创建（在遇见冲突时，不做任何操作）
+	err = core.Mysql.Clauses(clause.OnConflict{DoNothing: true}).Create(&relRolePermissions).Error
+	if err != nil {
+		return nil, err
 	}
+
 	return relRolePermissions, nil
 
 }
 
-func DelPerms(c *gin.Context, delPermsReq *DelPermsReq) (err error) {
-
-	//获取要删除权限的实体
-	var relRolePermissions []model.RelRolePermission
-	for _, v := range delPermsReq.PermissionIDs {
-		var relRolePermission model.RelRolePermission
-		err = core.Mysql.Where("role_id = ? and permission_id = ?", delPermsReq.RoleID, v).Find(&relRolePermission).Error
-		if err != nil {
-			return err
-		}
-		relRolePermissions = append(relRolePermissions, relRolePermission)
-	}
-
-	for _, v := range relRolePermissions {
-		_, err = utils.CURDDeleteByiD(c, &v, v.ID)
-		if err != nil {
-			return err
-		}
-
-	}
-
-	return nil
+// 给角色删除权限
+func DelPerms(c *gin.Context, roleId uint, permissionIds []string) (err error) {
+	err = core.Mysql.Where("role_id = ? AND permission_id IN ?", roleId, permissionIds).Delete(&model.RelRolePermission{}).Error
+	return
 }
 
-func GetRolePerms(c *gin.Context, getRolePermsReq *GetRolePermsReq, permissions *[]model.Permission) (err error) {
-	//查角色权限ID
-	var relRolePermission []model.RelRolePermission
-	err = core.Mysql.Where("role_id = ?", getRolePermsReq.RoleID).Find(&relRolePermission).Error
-	if err != nil {
-		return
-	}
+// 获取角色的所有权限
+func GetRolePerms(c *gin.Context, roleId uint) (permissions []model.Permission, err error) {
+	err = core.Mysql.Table("auth_rel_role_permission").
+		Select("auth_permission.*").
+		Joins("left join auth_permission on auth_rel_role_permission.permission_id = auth_permission.id").
+		Where("auth_rel_role_permission.role_id = ?", roleId).
+		Scan(&permissions).
+		Error
 
-	//获取permissionId
-	var permissionIds []string
-	for _, v := range relRolePermission {
-		permissionIds = append(permissionIds, v.PermissionID)
-	}
-
-	//查权限列表
-	err = core.Mysql.Where("id IN ?", permissionIds).Find(permissions).Error
-	if err != nil {
-		return
-	}
-
-	return err
+	return
 }

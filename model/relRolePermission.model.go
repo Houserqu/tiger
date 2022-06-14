@@ -1,9 +1,8 @@
 package model
 
 type RelRolePermission struct {
-	ID           uint   `json:"id" gorm:"primaryKey"`
-	RoleID       string `json:"role_id"`
-	PermissionID string `json:"permission_id"`
+	RoleID       uint   `json:"role_id" gorm:"primaryKey"`
+	PermissionID string `json:"permission_id" gorm:"primaryKey"`
 }
 
 func (RelRolePermission) TableName() string {

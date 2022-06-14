@@ -254,7 +254,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "name": "perPage",
+                        "name": "per_page",
                         "in": "query"
                     }
                 ],
@@ -438,20 +438,17 @@ const docTemplate = `{
             }
         },
         "/api/role/getRolePerms": {
-            "post": {
+            "get": {
                 "tags": [
                     "角色"
                 ],
                 "summary": "根据角色id获取角色权限",
                 "parameters": [
                     {
-                        "description": "参数",
-                        "name": "params",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/auth.GetRolePermsReq"
-                        }
+                        "type": "integer",
+                        "name": "role_id",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -577,7 +574,7 @@ const docTemplate = `{
                     }
                 },
                 "role_id": {
-                    "type": "string"
+                    "type": "integer"
                 }
             }
         },
@@ -606,7 +603,7 @@ const docTemplate = `{
                     }
                 },
                 "role_id": {
-                    "type": "string"
+                    "type": "integer"
                 }
             }
         },
@@ -618,17 +615,6 @@ const docTemplate = `{
             "properties": {
                 "id": {
                     "type": "integer"
-                }
-            }
-        },
-        "auth.GetRolePermsReq": {
-            "type": "object",
-            "required": [
-                "role_id"
-            ],
-            "properties": {
-                "role_id": {
-                    "type": "string"
                 }
             }
         },

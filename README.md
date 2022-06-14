@@ -55,3 +55,13 @@ go build --tags=production
 ```
 
 生产环境构建会删除 swagger 相关功能
+
+### 生成 swagger 文档
+
+```bash
+ swag init -p snakecase
+```
+
+### 规范
+
+接口参数用蛇行命名法

@@ -9,6 +9,7 @@ import (
 	"houserqu.com/tiger/core"
 	"houserqu.com/tiger/middleware"
 	"houserqu.com/tiger/model"
+	"houserqu.com/tiger/utils"
 )
 
 func Controller(r *gin.Engine) {
@@ -25,7 +26,7 @@ func Controller(r *gin.Engine) {
 	//为角色权限操作
 	api.POST("addPerms", addPerms)
 	api.POST("delPerms", delPerms)
-	api.POST("getRolePerms", getRolePerms)
+	api.GET("getRolePerms", getRolePerms)
 }
 
 type GetRoleReq struct {
@@ -91,7 +92,7 @@ func createRole(c *gin.Context) {
 		Name: createRoleReq.Name,
 	}
 
-	err := CreateRole(c, &role)
+	err := utils.CRUDCreate(c, &role)
 	if err != nil {
 		core.ResError(c, constants.ErrCreateRole, err.Error())
 		return
@@ -117,7 +118,7 @@ func deleteRole(c *gin.Context) {
 		return
 	}
 
-	id, err := DeleteRoleById(c, &deleteRoleReq)
+	id, err := utils.CURDDeleteByID(c, &model.Role{}, deleteRoleReq.ID)
 	if err != nil {
 		core.ResError(c, constants.ErrDeleteRole, err.Error())
 		return
@@ -143,7 +144,7 @@ func updateRole(c *gin.Context) {
 		return
 	}
 
-	id, err := UpdateRoleById(c, updateRoleReq)
+	id, err := utils.CRUDUpdateByID(c, &model.Role{}, updateRoleReq)
 	if err != nil {
 		core.ResError(c, constants.ErrUpdateRole, err.Error())
 		return
@@ -153,7 +154,7 @@ func updateRole(c *gin.Context) {
 }
 
 type AddPermsReq struct {
-	RoleID        string   `json:"role_id" binding:"required"`
+	RoleID        uint     `json:"role_id" binding:"required"`
 	PermissionIDs []string `json:"permission_ids" binding:"required"`
 }
 
@@ -169,7 +170,7 @@ func addPerms(c *gin.Context) {
 		return
 	}
 
-	relRolePermissions, err := AddPerms(c, &addPermsReq)
+	relRolePermissions, err := AddPerms(c, addPermsReq.RoleID, addPermsReq.PermissionIDs)
 	if err != nil {
 		core.ResError(c, constants.ErrAddPerm, err.Error())
 		return
@@ -179,7 +180,7 @@ func addPerms(c *gin.Context) {
 }
 
 type DelPermsReq struct {
-	RoleID        string   `json:"role_id" binding:"required"`
+	RoleID        uint     `json:"role_id" binding:"required"`
 	PermissionIDs []string `json:"permission_ids" binding:"required"`
 }
 
@@ -195,7 +196,7 @@ func delPerms(c *gin.Context) {
 		return
 	}
 
-	err := DelPerms(c, &delPermsReq)
+	err := DelPerms(c, delPermsReq.RoleID, delPermsReq.PermissionIDs)
 	if err != nil {
 		core.ResError(c, constants.ErrDelPerms, err.Error())
 		return
@@ -205,27 +206,26 @@ func delPerms(c *gin.Context) {
 }
 
 type GetRolePermsReq struct {
-	RoleID string `json:"role_id" binding:"required"`
+	RoleID uint `form:"role_id" binding:"required"`
 }
 
 // @Summary 根据角色id获取角色权限
 // @Tags 角色
-// @Router /api/role/getRolePerms [post]
-// @Param params body auth.GetRolePermsReq true "参数"
+// @Router /api/role/getRolePerms [get]
+// @Param params query auth.GetRolePermsReq true "参数"
 // @Success 200 {object} model.Permission
 func getRolePerms(c *gin.Context) {
-	var rolePerms []model.Permission
 	var getRolePermsReq GetRolePermsReq
-	if err := c.ShouldBindJSON(&getRolePermsReq); err != nil {
+	if err := c.ShouldBindQuery(&getRolePermsReq); err != nil {
 		core.ResError(c, constants.ErrParam, err.Error())
 		return
 	}
 
-	err := GetRolePerms(c, &getRolePermsReq, &rolePerms)
+	permissions, err := GetRolePerms(c, getRolePermsReq.RoleID)
 	if err != nil {
 		core.ResError(c, constants.ErrGetRolePerms, err.Error())
 		return
 	}
 
-	core.ResSuccess(c, rolePerms)
+	core.ResSuccess(c, permissions)
 }

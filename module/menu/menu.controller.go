@@ -97,7 +97,7 @@ func deleteMenu(c *gin.Context) {
 		return
 	}
 
-	id, err := utils.CURDDeleteByiD(c, &model.Menu{}, deleteMenuReq.ID)
+	id, err := utils.CURDDeleteByID(c, &model.Menu{}, deleteMenuReq.ID)
 	if err != nil {
 		core.ResError(c, constants.ErrDeleteMenu, err.Error())
 		return

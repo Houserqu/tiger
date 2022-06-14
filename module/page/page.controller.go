@@ -125,7 +125,7 @@ func deletePage(c *gin.Context) {
 		return
 	}
 
-	id, err := utils.CURDDeleteByiD(c, &model.Page{}, deletePageReq.ID)
+	id, err := utils.CURDDeleteByID(c, &model.Page{}, deletePageReq.ID)
 	if err != nil {
 		core.ResError(c, constants.ErrDeletePage, err.Error())
 		return

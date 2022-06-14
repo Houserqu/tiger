@@ -6,7 +6,7 @@ definitions:
           type: string
         type: array
       role_id:
-        type: string
+        type: integer
     required:
     - permission_ids
     - role_id
@@ -25,7 +25,7 @@ definitions:
           type: string
         type: array
       role_id:
-        type: string
+        type: integer
     required:
     - permission_ids
     - role_id
@@ -36,13 +36,6 @@ definitions:
         type: integer
     required:
     - id
-    type: object
-  auth.GetRolePermsReq:
-    properties:
-      role_id:
-        type: string
-    required:
-    - role_id
     type: object
   auth.UpdateRoleReq:
     properties:
@@ -390,7 +383,7 @@ paths:
         name: path
         type: string
       - in: query
-        name: perPage
+        name: per_page
         type: integer
       responses: {}
       summary: 页面列表
@@ -508,14 +501,12 @@ paths:
       tags:
       - 角色
   /api/role/getRolePerms:
-    post:
+    get:
       parameters:
-      - description: 参数
-        in: body
-        name: params
+      - in: query
+        name: role_id
         required: true
-        schema:
-          $ref: '#/definitions/auth.GetRolePermsReq'
+        type: integer
       responses:
         "200":
           description: OK

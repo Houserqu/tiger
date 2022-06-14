@@ -90,7 +90,7 @@ func DelUserRoles(c *gin.Context, delUserRolesReq *DelUserRolesReq) (err error) 
 	}
 
 	for _, v := range relUserRoles {
-		_, err = utils.CURDDeleteByiD(c, &v, v.ID)
+		_, err = utils.CURDDeleteByID(c, &v, v.ID)
 		if err != nil {
 			return err
 		}

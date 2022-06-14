@@ -78,7 +78,7 @@ func CRUDReadByID[M any](c *gin.Context, model *M, id uint) error {
 }
 
 // 根据 id 删除记录
-func CURDDeleteByiD[M any](c *gin.Context, model *M, id uint) (uint, error) {
+func CURDDeleteByID[M any](c *gin.Context, model *M, id uint) (uint, error) {
 	err := core.Mysql.Delete(model, id).Error
 	if err != nil {
 		core.Log(c).Error(err)
