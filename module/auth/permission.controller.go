@@ -2,7 +2,7 @@ package auth
 
 import (
 	"github.com/gin-gonic/gin"
-	"houserqu.com/tiger/constants"
+	"houserqu.com/tiger/constants/ERR"
 	"houserqu.com/tiger/constants/PERMISSION"
 	"houserqu.com/tiger/core"
 	"houserqu.com/tiger/middleware"
@@ -25,7 +25,7 @@ func getPermissionList(c *gin.Context) {
 	err := GetPerms(c, &perms)
 
 	if err != nil {
-		core.ResError(c, constants.ErrGetPerms, err.Error())
+		core.ResError(c, ERR.GetPerms, err.Error())
 		return
 	}
 

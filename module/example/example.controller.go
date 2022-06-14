@@ -2,7 +2,7 @@ package example
 
 import (
 	"github.com/gin-gonic/gin"
-	"houserqu.com/tiger/constants"
+	"houserqu.com/tiger/constants/ERR"
 	"houserqu.com/tiger/core"
 )
 
@@ -23,7 +23,7 @@ func GetModel(c *gin.Context) {
 	// 根据 ID 查找
 	data, err := GetModelByID()
 	if err != nil {
-		core.ResErrorWithData(c, constants.ErrNotFound, "model 不存在", err.Error())
+		core.ResErrorWithData(c, ERR.NotFound, "model 不存在", err.Error())
 		return
 	}
 
@@ -32,5 +32,5 @@ func GetModel(c *gin.Context) {
 
 func ErrorExample(c *gin.Context) {
 	// 根据 ID 查找
-	core.ResError(c, constants.ErrCreateFail, "用户失败了")
+	core.ResError(c, ERR.CreateFail, "用户失败了")
 }

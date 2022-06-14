@@ -3,7 +3,7 @@ package middleware
 import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"houserqu.com/tiger/constants"
+	"houserqu.com/tiger/constants/ERR"
 	"houserqu.com/tiger/core"
 )
 
@@ -13,7 +13,7 @@ func CheckLogin() gin.HandlerFunc {
 		userId := session.Get("userId")
 
 		if userId == nil {
-			core.ResError(c, constants.ErrNotLogin, "")
+			core.ResError(c, ERR.NotLogin, "")
 			c.Abort()
 			return
 		}

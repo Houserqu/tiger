@@ -2,7 +2,7 @@ package menu
 
 import (
 	"github.com/gin-gonic/gin"
-	"houserqu.com/tiger/constants"
+	"houserqu.com/tiger/constants/ERR"
 	"houserqu.com/tiger/constants/PERMISSION"
 	"houserqu.com/tiger/core"
 	"houserqu.com/tiger/middleware"
@@ -28,7 +28,7 @@ func getMenus(c *gin.Context) {
 	var menus []model.Menu
 	err := GetMenus(c, &menus)
 	if err != nil {
-		core.ResError(c, constants.ErrGetMenus, err.Error())
+		core.ResError(c, ERR.GetMenus, err.Error())
 		return
 	}
 
@@ -53,7 +53,7 @@ func createMenu(c *gin.Context) {
 	//参数校验
 	var createMenuReq CreateMenuReq
 	if err := c.ShouldBindJSON(&createMenuReq); err != nil {
-		core.ResError(c, constants.ErrParam, err.Error())
+		core.ResError(c, ERR.Param, err.Error())
 		return
 	}
 
@@ -74,7 +74,7 @@ func createMenu(c *gin.Context) {
 
 	err := utils.CRUDCreate(c, &menu)
 	if err != nil {
-		core.ResError(c, constants.ErrCreateMenu, err.Error())
+		core.ResError(c, ERR.CreateMenu, err.Error())
 		return
 	}
 	core.ResSuccess(c, menu)
@@ -93,13 +93,13 @@ func deleteMenu(c *gin.Context) {
 	//参数校验
 	var deleteMenuReq DeleteMenuReq
 	if err := c.ShouldBindJSON(&deleteMenuReq); err != nil {
-		core.ResError(c, constants.ErrParam, err.Error())
+		core.ResError(c, ERR.Param, err.Error())
 		return
 	}
 
 	id, err := utils.CURDDeleteByID(c, &model.Menu{}, deleteMenuReq.ID)
 	if err != nil {
-		core.ResError(c, constants.ErrDeleteMenu, err.Error())
+		core.ResError(c, ERR.DeleteMenu, err.Error())
 		return
 	}
 
@@ -125,13 +125,13 @@ func updateMenu(c *gin.Context) {
 	//参数校验
 	var updateMenuReq map[string]any
 	if err := c.ShouldBindJSON(&updateMenuReq); err != nil {
-		core.ResError(c, constants.ErrParam, err.Error())
+		core.ResError(c, ERR.Param, err.Error())
 		return
 	}
 
 	id, err := utils.CRUDUpdateByID(c, &model.Menu{}, updateMenuReq)
 	if err != nil {
-		core.ResError(c, constants.ErrUpdateMenu, err.Error())
+		core.ResError(c, ERR.UpdateMenu, err.Error())
 		return
 	}
 

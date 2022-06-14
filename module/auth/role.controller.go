@@ -4,7 +4,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"houserqu.com/tiger/constants"
+	"houserqu.com/tiger/constants/ERR"
 	"houserqu.com/tiger/constants/PERMISSION"
 	"houserqu.com/tiger/core"
 	"houserqu.com/tiger/middleware"
@@ -42,13 +42,13 @@ func getRoleById(c *gin.Context) {
 	//参数校验
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		core.ResError(c, constants.ErrParam, "")
+		core.ResError(c, ERR.Param, "")
 		return
 	}
 
 	role, err := GetRoleById(c, uint(id))
 	if err != nil {
-		core.ResError(c, constants.ErrGetRole, err.Error())
+		core.ResError(c, ERR.GetRole, err.Error())
 		return
 	}
 
@@ -64,7 +64,7 @@ func getRoleList(c *gin.Context) {
 	err := GetRoles(c, &roles)
 
 	if err != nil {
-		core.ResError(c, constants.ErrGetRoles, err.Error())
+		core.ResError(c, ERR.GetRoles, err.Error())
 		return
 	}
 
@@ -84,7 +84,7 @@ func createRole(c *gin.Context) {
 	//参数校验
 	var createRoleReq CreateRoleReq
 	if err := c.ShouldBindJSON(&createRoleReq); err != nil {
-		core.ResError(c, constants.ErrParam, err.Error())
+		core.ResError(c, ERR.Param, err.Error())
 		return
 	}
 
@@ -94,7 +94,7 @@ func createRole(c *gin.Context) {
 
 	err := utils.CRUDCreate(c, &role)
 	if err != nil {
-		core.ResError(c, constants.ErrCreateRole, err.Error())
+		core.ResError(c, ERR.CreateRole, err.Error())
 		return
 	}
 
@@ -114,13 +114,13 @@ func deleteRole(c *gin.Context) {
 	//参数校验
 	var deleteRoleReq DeleteRoleReq
 	if err := c.ShouldBindJSON(&deleteRoleReq); err != nil {
-		core.ResError(c, constants.ErrParam, err.Error())
+		core.ResError(c, ERR.Param, err.Error())
 		return
 	}
 
 	id, err := utils.CURDDeleteByID(c, &model.Role{}, deleteRoleReq.ID)
 	if err != nil {
-		core.ResError(c, constants.ErrDeleteRole, err.Error())
+		core.ResError(c, ERR.DeleteRole, err.Error())
 		return
 	}
 
@@ -140,13 +140,13 @@ type UpdateRoleReq struct {
 func updateRole(c *gin.Context) {
 	var updateRoleReq map[string]any
 	if err := c.ShouldBindJSON(&updateRoleReq); err != nil {
-		core.ResError(c, constants.ErrParam, err.Error())
+		core.ResError(c, ERR.Param, err.Error())
 		return
 	}
 
 	id, err := utils.CRUDUpdateByID(c, &model.Role{}, updateRoleReq)
 	if err != nil {
-		core.ResError(c, constants.ErrUpdateRole, err.Error())
+		core.ResError(c, ERR.UpdateRole, err.Error())
 		return
 	}
 
@@ -166,13 +166,13 @@ type AddPermsReq struct {
 func addPerms(c *gin.Context) {
 	var addPermsReq AddPermsReq
 	if err := c.ShouldBindJSON(&addPermsReq); err != nil {
-		core.ResError(c, constants.ErrParam, err.Error())
+		core.ResError(c, ERR.Param, err.Error())
 		return
 	}
 
 	relRolePermissions, err := AddPerms(c, addPermsReq.RoleID, addPermsReq.PermissionIDs)
 	if err != nil {
-		core.ResError(c, constants.ErrAddPerm, err.Error())
+		core.ResError(c, ERR.AddPerm, err.Error())
 		return
 	}
 
@@ -192,13 +192,13 @@ type DelPermsReq struct {
 func delPerms(c *gin.Context) {
 	var delPermsReq DelPermsReq
 	if err := c.ShouldBindJSON(&delPermsReq); err != nil {
-		core.ResError(c, constants.ErrParam, err.Error())
+		core.ResError(c, ERR.Param, err.Error())
 		return
 	}
 
 	err := DelPerms(c, delPermsReq.RoleID, delPermsReq.PermissionIDs)
 	if err != nil {
-		core.ResError(c, constants.ErrDelPerms, err.Error())
+		core.ResError(c, ERR.DelPerms, err.Error())
 		return
 	}
 
@@ -217,13 +217,13 @@ type GetRolePermsReq struct {
 func getRolePerms(c *gin.Context) {
 	var getRolePermsReq GetRolePermsReq
 	if err := c.ShouldBindQuery(&getRolePermsReq); err != nil {
-		core.ResError(c, constants.ErrParam, err.Error())
+		core.ResError(c, ERR.Param, err.Error())
 		return
 	}
 
 	permissions, err := GetRolePerms(c, getRolePermsReq.RoleID)
 	if err != nil {
-		core.ResError(c, constants.ErrGetRolePerms, err.Error())
+		core.ResError(c, ERR.GetRolePerms, err.Error())
 		return
 	}
 

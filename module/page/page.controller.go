@@ -2,7 +2,7 @@ package page
 
 import (
 	"github.com/gin-gonic/gin"
-	"houserqu.com/tiger/constants"
+	"houserqu.com/tiger/constants/ERR"
 	"houserqu.com/tiger/core"
 	"houserqu.com/tiger/middleware"
 	"houserqu.com/tiger/model"
@@ -34,7 +34,7 @@ func Controller(r *gin.Engine) {
 func getPage(c *gin.Context) {
 	page, err := GetPageByPath(c, c.Query("path"))
 	if err != nil {
-		core.ResError(c, constants.ErrGetPage, err.Error())
+		core.ResError(c, ERR.GetPage, err.Error())
 		return
 	}
 
@@ -48,7 +48,7 @@ func getPage(c *gin.Context) {
 func getPages(c *gin.Context) {
 	var pageListReq PageListReq
 	if err := c.ShouldBindQuery(&pageListReq); err != nil {
-		core.ResError(c, constants.ErrParam, err.Error())
+		core.ResError(c, ERR.Param, err.Error())
 		return
 	}
 
@@ -60,7 +60,7 @@ func getPages(c *gin.Context) {
 	var pages []model.Page
 	total, err := utils.CRUDPageList(c, &model.Page{}, &pages, where)
 	if err != nil {
-		core.ResError(c, constants.ErrGetPage, err.Error())
+		core.ResError(c, ERR.GetPage, err.Error())
 		return
 	}
 
@@ -87,7 +87,7 @@ func createPage(c *gin.Context) {
 	// 参数校验
 	var createPageReq CreatePageReq
 	if err := c.ShouldBindJSON(&createPageReq); err != nil {
-		core.ResError(c, constants.ErrParam, err.Error())
+		core.ResError(c, ERR.Param, err.Error())
 		return
 	}
 
@@ -101,7 +101,7 @@ func createPage(c *gin.Context) {
 
 	err := utils.CRUDCreate(c, &page)
 	if err != nil {
-		core.ResError(c, constants.ErrCreatePage, err.Error())
+		core.ResError(c, ERR.CreatePage, err.Error())
 		return
 	}
 
@@ -121,13 +121,13 @@ func deletePage(c *gin.Context) {
 	// 参数校验
 	var deletePageReq DeletePageReq
 	if err := c.ShouldBindJSON(&deletePageReq); err != nil {
-		core.ResError(c, constants.ErrParam, err.Error())
+		core.ResError(c, ERR.Param, err.Error())
 		return
 	}
 
 	id, err := utils.CURDDeleteByID(c, &model.Page{}, deletePageReq.ID)
 	if err != nil {
-		core.ResError(c, constants.ErrDeletePage, err.Error())
+		core.ResError(c, ERR.DeletePage, err.Error())
 		return
 	}
 
@@ -152,13 +152,13 @@ func updatePage(c *gin.Context) {
 	// 参数校验
 	var updatePageReq map[string]any
 	if err := c.ShouldBindJSON(&updatePageReq); err != nil {
-		core.ResError(c, constants.ErrParam, err.Error())
+		core.ResError(c, ERR.Param, err.Error())
 		return
 	}
 
 	id, err := utils.CRUDUpdateByID(c, &model.Page{}, updatePageReq)
 	if err != nil {
-		core.ResError(c, constants.ErrUpdatePage, err.Error())
+		core.ResError(c, ERR.UpdatePage, err.Error())
 		return
 	}
 

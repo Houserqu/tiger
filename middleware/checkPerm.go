@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"houserqu.com/tiger/constants"
+	"houserqu.com/tiger/constants/ERR"
 	"houserqu.com/tiger/core"
 	"houserqu.com/tiger/model"
 )
@@ -54,7 +54,7 @@ func CheckPerm(needPermissions ...string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		userPermissions, err := getUserPermissions(c.GetUint("userId")) // 登录中间件 set
 		if err != nil {
-			core.ResError(c, constants.ErrNoPermission, err.Error())
+			core.ResError(c, ERR.NoPermission, err.Error())
 			c.Abort()
 			return
 		}
@@ -75,7 +75,7 @@ func CheckPerm(needPermissions ...string) gin.HandlerFunc {
 			}
 		}
 
-		core.ResError(c, constants.ErrNoPermission, "")
+		core.ResError(c, ERR.NoPermission, "")
 		c.Abort()
 	}
 }
