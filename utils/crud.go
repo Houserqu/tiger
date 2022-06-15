@@ -101,6 +101,9 @@ func CRUDCreate[M any](c *gin.Context, model *M) error {
 
 // 根据 id 更新记录
 func CRUDUpdateByID[M any](c *gin.Context, model *M, params map[string]any) (uint, error) {
+	if params["id"] == nil {
+		return 0, errors.New("id empty")
+	}
 
 	id := uint(params["id"].(float64))
 

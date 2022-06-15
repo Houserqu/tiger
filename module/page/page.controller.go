@@ -134,15 +134,6 @@ func deletePage(c *gin.Context) {
 	core.ResSuccess(c, id)
 }
 
-type UpdatePageReq struct {
-	ID     uint   `json:"id" binding:"required"`
-	Name   string `json:"name" binding:"required"`
-	Path   string `json:"path" binding:"required"`
-	Icon   string `json:"icon"`
-	Config string `json:"config" binding:"required"`
-	Extend string `form:"extend"`
-}
-
 // @Summary 更新页面
 // @Tags 页面
 // @Router /api/page/update [post]
@@ -151,10 +142,7 @@ type UpdatePageReq struct {
 func updatePage(c *gin.Context) {
 	// 参数校验
 	var updatePageReq map[string]any
-	if err := c.ShouldBindJSON(&updatePageReq); err != nil {
-		core.ResError(c, ERR.Param, err.Error())
-		return
-	}
+	c.ShouldBindJSON(&updatePageReq)
 
 	id, err := utils.CRUDUpdateByID(c, &model.Page{}, updatePageReq)
 	if err != nil {
